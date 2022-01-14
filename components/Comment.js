@@ -23,8 +23,6 @@ const Comment = () => {
         <input
           className={style.input}
           type="text"
-          value=""
-          onChange=""
           placeholder="댓글 쓰기..."
           required
         />

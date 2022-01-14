@@ -10,7 +10,7 @@
 }
 .today_list {
   width: 100%;
-  height: 680px;
+  height: auto;
   margin-top: 40px;
 }
 
@@ -22,7 +22,8 @@
 
 .tomorrow_list {
   width: 100%;
-  height: 680px;
+  min-height: 680px;
+  height: auto;
 
   margin-top: 40px;
 }
@@ -30,6 +31,7 @@
 .inner {
   position: relative;
   width: 63%;
+  height: auto;
   margin: 0 auto;
 }
 .title {
@@ -50,17 +52,23 @@
   color: #9b9999;
 }
 .cody_container {
+  position: relative;
+  height: auto;
   margin-top: 18px;
+  overflow-x: scroll;
 }
 .cody {
   width: 260px;
   height: 381px;
   background-color: #d8d8d8;
   border-radius: 22px;
+  margin-bottom: 40px;
+  overflow: hidden;
 }
 .tag {
   position: relative;
   width: 100%;
+  margin: 50px 0;
 }
 .more {
   position: relative;
@@ -68,7 +76,6 @@
   height: 40px;
   border: 1px solid #c1c1c1;
   border-radius: 12px;
-  top: 50px;
   right: 20px;
   margin: 0 auto;
   font-family: pretendard;
@@ -77,4 +84,7 @@
   color: #777777;
   padding-top: 9px;
   padding-left: 28px;
+}
+.img {
+  width: 260px;
 }

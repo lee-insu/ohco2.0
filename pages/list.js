@@ -1,20 +1,28 @@
 import { Col, Row, List, Card } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import style from "../styles/List.module.css";
 import "antd/dist/antd.css";
 import Link from "next/link";
+import { GET_CODY, TEST } from "../graphQL/queries";
+import { useQuery } from "@apollo/client";
 
 const list = () => {
-  const data = [
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-  ];
+  //
+  const [cody, getCody] = useState([]);
+  const { data } = useQuery(GET_CODY);
+
+  console.log(data);
+
+  useEffect(() => {
+    if (data) {
+      getCody(data.codylist);
+    }
+  }, [data]);
+
+  const handleFilter = (e) => {
+    console.log(e);
+  };
+
   return (
     <div className={style.container}>
       <div className={style.banner}>
@@ -34,10 +42,16 @@ const list = () => {
                   </div>
                   <div className={style.plus}>+</div>
                 </div>
-                <ul className={style.ul}>
-                  <li className={style.li}>테마입니다</li>
-                  <li className={style.li}>테마입니다</li>
-                </ul>
+                <div
+                  name="dd"
+                  onClick={() => handleFilter(name)}
+                  className={style.filter_title_menu}
+                >
+                  <div className={style.filter_menu_container}>
+                    <div className={style.filter_menu_list}>테마입니다</div>
+                    <div className={style.filter_menu_list}>테마입니다</div>
+                  </div>
+                </div>
               </div>
             </Col>
 
@@ -50,15 +64,23 @@ const list = () => {
               xl={20}
             >
               <Row className={style.c} gutter={[8, 24]}>
-                {data.map((item, i) => (
-                  <Link key={i} href={`/item/${item.id}`}>
-                    <Col xs={12} sm={12} md={8} lg={8} xl={6}>
-                      <div id={item.id} className={style.b}>
-                        <div className={style.a}></div>
-                      </div>
-                    </Col>
-                  </Link>
-                ))}
+                {cody
+                  ? cody.map((item, i) => (
+                      <Link key={i} href={`/item/${item.id}`}>
+                        <Col xs={12} sm={12} md={8} lg={8} xl={6}>
+                          <div className={style.cody_li}>
+                            <div className={style.cody_img}>
+                              <img className={style.img} src={item.img_url} />
+                              <div className={style.des}>
+                                {item.category.style}
+                              </div>
+                              <div className={style.item_container}></div>
+                            </div>
+                          </div>
+                        </Col>
+                      </Link>
+                    ))
+                  : null}
               </Row>
             </Col>
           </Row>

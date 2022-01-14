@@ -1,0 +1,157 @@
+{
+  "cody_list": [
+    {
+      "id": "1",
+      "concept_id": "000001",
+      "img_url": "https://image.musinsa.com/mfile_s01/_street_images/78026/street_61d64b5678d1d.jpg?",
+      "information": {
+        "name": "홍시영",
+        "general": "30e",
+        "instagram": "@hong",
+        "shop": "https://www.musinsa.com/mz/streetsnap/view/78026"
+      },
+      "category": {
+        "weather": "sunny",
+        "temperature": "early_winter",
+        "sex": "m",
+        "style": "casual",
+        "theme": "칼바람이 부는 날씨"
+      },
+      "products": [
+        {
+          "product": "recommand product"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "concept_id": "000002",
+      "img_url": "https://www.musinsa.com/mz/streetsnap/view/77723",
+      "information": {
+        "name": "스윙스",
+        "general": "30e",
+        "instagram": "@hong",
+        "shop": "https://www.musinsa.com/mz/streetsnap/view/77723"
+      },
+      "category": {
+        "weather": "sunny",
+        "temperature": "early_winter",
+        "sex": "m",
+        "style": "casual",
+        "theme": "따뜻하고 포근한 날씨"
+      },
+      "products": [
+        {
+          "product": "recommand product"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "concept_id": "000003",
+      "img_url": "https://image.musinsa.com/mfile_s01/_street_images/77615/street_61d5291721169.jpg?",
+      "information": {
+        "name": "천재노창",
+        "general": "30e",
+        "instagram": "@hong",
+        "shop": "https://image.musinsa.com/mfile_s01/_street_images/77615/street_61d5291721169.jpg?"
+      },
+      "category": {
+        "weather": "sunny",
+        "temperature": "early_winter",
+        "sex": "m",
+        "style": "casual",
+        "theme": "따뜻하고 포근한 날씨"
+      },
+      "products": [
+        {
+          "product": "recommand product"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "concept_id": "000004",
+      "img_url": "https://image.musinsa.com/mfile_s01/_street_images/77982/street_61d4f1d2932e9.jpg?20220105102405",
+      "information": {
+        "name": "빈지노",
+        "general": "30e",
+        "instagram": "@hong",
+        "shop": "https://hong.com"
+      },
+      "category": {
+        "weather": "sunny",
+        "temperature": "early_winter",
+        "sex": "m",
+        "style": "casual",
+        "theme": "따뜻하고 포근한 날씨"
+      },
+      "products": [
+        {
+          "product": "recommand product"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "concept_id": "000005",
+      "img_url": "https://image.musinsa.com/mfile_s01/_street_images/78052/street_61d79683a4001.jpg?20220107102625",
+      "information": {
+        "name": "쿤타",
+        "general": "40e",
+        "instagram": "@hong",
+        "shop": "https://hong.com"
+      },
+      "category": {
+        "weather": "sunny",
+        "temperature": "early_winter",
+        "sex": "m",
+        "style": "casual",
+        "theme": "따뜻하고 포근한 날씨"
+      },
+      "products": [
+        {
+          "product": "recommand product"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "concept_id": "000006",
+      "img_url": "https://image.musinsa.com/mfile_s01/_street_images/77629/street_61d6800157e9f.jpg?",
+      "information": {
+        "name": "비오",
+        "general": "20e",
+        "instagram": "@hong",
+        "shop": "https://hong.com"
+      },
+      "category": {
+        "weather": "sunny",
+        "temperature": "early_winter",
+        "sex": "m",
+        "style": "casual",
+        "theme": "따뜻하고 포근한 날씨"
+      },
+      "products": [
+        {
+          "product": "recommand product"
+        }
+      ]
+    },
+    {
+      "variables": {},
+      "query": "{\n  id\n  img_url\n  category {\n    temperature\n    __typename\n  }\n}",
+      "id": "MgUgQCN"
+    },
+    {
+      "variables": {},
+      "query": "{\n  id\n  img_url\n  category {\n    temperature\n    __typename\n  }\n}",
+      "id": "W3v5BVD"
+    },
+    {
+      "variables": {},
+      "query": "{\n  id\n  img_url\n  category {\n    temperature\n    __typename\n  }\n}",
+      "id": "QpVmobN"
+    }
+  ]
+}

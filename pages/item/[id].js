@@ -3,9 +3,22 @@ import "antd/dist/antd.css";
 import { useRouter } from "next/router";
 import Comment from "../../components/Comment.js";
 import style from "../../styles/Detail.module.css";
-const Detail = () => {
-  const router = useRouter();
-  const id = router.query.id;
+import axios from "axios";
+import { useQuery } from "@apollo/client";
+import { GET_ID_CODY } from "../../graphQL/queries";
+import { useState, useEffect } from "react";
+const Detail = ({ item }) => {
+  const [codyItem, getCodyItem] = useState([]);
+
+  const { loading, error, data } = useQuery(GET_ID_CODY, {
+    variables: { id: String(item) },
+  });
+
+  useEffect(() => {
+    if (data) {
+      getCodyItem(data.codyitem);
+    }
+  }, [data]);
 
   return (
     <div className={style.container}>
@@ -108,3 +121,13 @@ const Detail = () => {
 };
 
 export default Detail;
+
+export async function getServerSideProps(context) {
+  const id = context.params.id;
+
+  return {
+    props: {
+      item: id,
+    },
+  };
+}
