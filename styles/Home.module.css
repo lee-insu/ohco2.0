@@ -51,11 +51,13 @@
   font-size: 15px;
   color: #9b9999;
 }
+
+/*  아래 삭제 */
+
 .cody_container {
   position: relative;
   height: auto;
   margin-top: 18px;
-  overflow-x: scroll;
 }
 .cody {
   width: 260px;

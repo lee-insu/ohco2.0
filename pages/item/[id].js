@@ -5,7 +5,7 @@ import Comment from "../../components/Comment.js";
 import style from "../../styles/Detail.module.css";
 import axios from "axios";
 import { useQuery } from "@apollo/client";
-import { GET_ID_CODY } from "../../graphQL/queries";
+import { GET_ID_CODY } from "../../graphQL/data";
 import { useState, useEffect } from "react";
 const Detail = ({ item }) => {
   const [codyItem, getCodyItem] = useState([]);
@@ -20,6 +20,7 @@ const Detail = ({ item }) => {
     }
   }, [data]);
 
+  console.log(codyItem);
   return (
     <div className={style.container}>
       <div className={style.banner}></div>

@@ -47,8 +47,6 @@
 
 .filter_container {
   width: 100%;
-
-  border-bottom: 1px solid #e4e4e4;
   height: 82px;
 }
 .filter_list {
@@ -56,7 +54,8 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 17px 0 5px 0;
+  padding: 17px 0 12px 0;
+  border-bottom: 1px solid #e4e4e4;
 }
 .filter_text > :nth-child(1) {
   font-family: pretendard;
@@ -112,17 +111,6 @@
 .cody {
   width: 280px;
   height: 471px;
-  background-color: #9d9d9d;
-}
-
-.b {
-  width: 280px;
-  height: 431px;
-  background-color: #e4e4e4;
-}
-.a {
-  width: 280px;
-  height: 381px;
   background-color: #9d9d9d;
 }
 

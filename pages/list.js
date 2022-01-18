@@ -3,15 +3,19 @@ import React, { useEffect, useState } from "react";
 import style from "../styles/List.module.css";
 import "antd/dist/antd.css";
 import Link from "next/link";
-import { GET_CODY, TEST } from "../graphQL/queries";
+import { GET_CODY_LIST } from "../graphQL/schema";
 import { useQuery } from "@apollo/client";
 
 const list = () => {
-  //
-  const [cody, getCody] = useState([]);
-  const { data } = useQuery(GET_CODY);
+  const filterList = [
+    { id: "테마" },
+    { id: "스타일" },
+    { id: "계절" },
+    { id: "성별" },
+  ];
 
-  console.log(data);
+  const [cody, getCody] = useState([]);
+  const { data } = useQuery(GET_CODY_LIST);
 
   useEffect(() => {
     if (data) {
@@ -20,7 +24,7 @@ const list = () => {
   }, [data]);
 
   const handleFilter = (e) => {
-    console.log(e);
+    console.log(e.target);
   };
 
   return (
@@ -35,23 +39,38 @@ const list = () => {
             <Col className={style.filter} xs={0} sm={0} md={4} lg={4} xl={4}>
               <Col className={style.filter_title}>필터</Col>
               <div className={style.filter_container}>
-                <div className={style.filter_list}>
+                {filterList.map((filter, i) => (
+                  <div
+                    key={i}
+                    name={filter.id}
+                    onClick={(name) => handleFilter(name)}
+                    className={style.filter_list}
+                  >
+                    <div className={style.filter_text}>
+                      <div>{filter.id}</div>
+                      <div>모든 {filter.id}</div>
+                    </div>
+                    <div className={style.plus}>+</div>
+                  </div>
+                ))}
+
+                {/* <div className={style.filter_list}>
                   <div className={style.filter_text}>
                     <div>테마</div>
                     <div>모든 테마</div>
                   </div>
                   <div className={style.plus}>+</div>
-                </div>
-                <div
+                </div> */}
+                {/* <div
                   name="dd"
-                  onClick={() => handleFilter(name)}
+                  onClick={(name) => handleFilter(name)}
                   className={style.filter_title_menu}
                 >
                   <div className={style.filter_menu_container}>
                     <div className={style.filter_menu_list}>테마입니다</div>
                     <div className={style.filter_menu_list}>테마입니다</div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </Col>
 
@@ -63,7 +82,7 @@ const list = () => {
               lg={20}
               xl={20}
             >
-              <Row className={style.c} gutter={[8, 24]}>
+              <Row className={style.row} gutter={[8, 4]}>
                 {cody
                   ? cody.map((item, i) => (
                       <Link key={i} href={`/item/${item.id}`}>
