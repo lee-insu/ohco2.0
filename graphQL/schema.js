@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const GET_CODY_MAIN = gql`
-  query CodyMain($offset: Int, $limit: Int) {
-    codymain(offset: $offset, limit: $limit) {
+  query CodyMain($season: String, $offset: Int, $limit: Int) {
+    codymain(seoson: $season, offset: $offset, limit: $limit) {
       id
       concept_id
       img_url
@@ -18,7 +18,7 @@ const GET_CODY_LIST = gql`
       img_url
       category {
         weather
-        temperature
+        season
         sex
         style
         theme
@@ -35,7 +35,7 @@ const GET_CODY_ID = gql`
       img_url
       category {
         weather
-        temperature
+        season
         sex
         style
         theme

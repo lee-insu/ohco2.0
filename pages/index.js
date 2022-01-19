@@ -7,8 +7,32 @@ import { useEffect, useState } from "react";
 import Banner from "../components/banner";
 import Temperature from "../components/Temperature";
 import CodyList from "../components/CodyList";
+import handleGeoSuccess from "../service/location";
+import axios from "axios";
 
 export default function Home() {
+  const [area, getArea] = useState("");
+  const [temp, getTemp] = useState("");
+  const [weather, getWeather] = useState("");
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(handleGeo);
+
+    function handleGeo(position) {
+      try {
+        handleGeoSuccess(position).then(
+          axios.spread((res1, res2) => {
+            getArea(res1.data.documents[0].region_2depth_name);
+            getTemp(Math.round(res2.data.main.temp) - 273);
+            getWeather(res2.data.weather[0].main);
+          })
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, []);
+
   return (
     <div className={style.container}>
       <div className={style.banner}>
@@ -19,10 +43,10 @@ export default function Home() {
           <div className={style.title}>
             <div className={style.style_title}>today style</div>
             <div className={style.location}>
-              <Temperature />
+              <Temperature temp={temp} weather={weather} area={area} />
             </div>
           </div>
-          <CodyList />
+          <CodyList temp={temp} />
         </div>
       </div>
       <div className={style.sub_banner}></div>

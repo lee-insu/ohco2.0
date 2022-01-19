@@ -6,22 +6,64 @@ import { useQuery } from "@apollo/client";
 import style from "../styles/CodyList.module.css";
 import Link from "next/link";
 
-const CodyList = () => {
+const tempCody = (temp) => {
+  let season = "";
+  switch (true) {
+    case temp < -3:
+      season = "early_winter";
+      break;
+    case temp < 4:
+      season = "early_winter";
+      break;
+    case temp < 8:
+      season = "early_winter";
+      break;
+    case temp < 11:
+      season = "early_winter";
+      break;
+    case temp < 16:
+      season = "early_winter";
+      break;
+    case temp < 19:
+      season = "early_winter";
+      break;
+    case temp < 22:
+      season = "early_winter";
+      break;
+    case temp < 27:
+      season = "early_winter";
+      break;
+    case temp < 35:
+      season = "early_winter";
+      break;
+    default:
+      return season;
+  }
+
+  return season;
+};
+
+const CodyList = ({ temp }) => {
   const [cody, getCody] = useState([]);
   const [loadmore, setLoadmore] = useState(4);
+  const [season, handleSeoson] = useState("");
 
   const { loading, error, data } = useQuery(GET_CODY_MAIN, {
     variables: {
       offset: 0,
       limit: loadmore,
+      season,
     },
   });
 
   useEffect(() => {
+    const tempSeason = tempCody(temp);
+    handleSeoson(tempSeason);
+
     if (data) {
       getCody(data.codymain);
     }
-  }, [data]);
+  }, [data, temp]);
 
   const handleFetchData = () => {
     setLoadmore((e) => e + 4);

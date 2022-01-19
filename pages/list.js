@@ -15,6 +15,7 @@ const list = () => {
   ];
 
   const [cody, getCody] = useState([]);
+  const [acitveFilter, setActiveFilter] = useState(false);
   const { data } = useQuery(GET_CODY_LIST);
 
   useEffect(() => {
@@ -46,31 +47,15 @@ const list = () => {
                     onClick={(name) => handleFilter(name)}
                     className={style.filter_list}
                   >
-                    <div className={style.filter_text}>
-                      <div>{filter.id}</div>
-                      <div>모든 {filter.id}</div>
+                    <div name={filter.id} className={style.filter_text}>
+                      <div name={filter.id}>{filter.id}</div>
+                      <div name={filter.id}>모든 {filter.id}</div>
                     </div>
-                    <div className={style.plus}>+</div>
+                    <div name={filter.id} className={style.plus}>
+                      +
+                    </div>
                   </div>
                 ))}
-
-                {/* <div className={style.filter_list}>
-                  <div className={style.filter_text}>
-                    <div>테마</div>
-                    <div>모든 테마</div>
-                  </div>
-                  <div className={style.plus}>+</div>
-                </div> */}
-                {/* <div
-                  name="dd"
-                  onClick={(name) => handleFilter(name)}
-                  className={style.filter_title_menu}
-                >
-                  <div className={style.filter_menu_container}>
-                    <div className={style.filter_menu_list}>테마입니다</div>
-                    <div className={style.filter_menu_list}>테마입니다</div>
-                  </div>
-                </div> */}
               </div>
             </Col>
 
