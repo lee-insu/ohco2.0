@@ -10,6 +10,28 @@ const GET_CODY_MAIN = gql`
   }
 `;
 
+const GET_CODY_FILTER = gql`
+  query CodyFilter(
+    $season: String
+    $weather: String
+    $style: String
+    $sex: String
+    $theme: String
+  ) {
+    codyfilter(
+      season: $season
+      weather: $weather
+      style: $style
+      sex: $sex
+      theme: $theme
+    ) {
+      id
+      concept_id
+      img_url
+    }
+  }
+`;
+
 const GET_CODY_LIST = gql`
   query Codylist {
     codylist {
@@ -53,4 +75,4 @@ const GET_CODY_ID = gql`
   }
 `;
 
-export { GET_CODY_MAIN, GET_CODY_LIST, GET_CODY_ID };
+export { GET_CODY_MAIN, GET_CODY_LIST, GET_CODY_ID, GET_CODY_FILTER };
