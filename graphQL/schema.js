@@ -12,22 +12,29 @@ const GET_CODY_MAIN = gql`
 
 const GET_CODY_FILTER = gql`
   query CodyFilter(
-    $season: String
     $weather: String
-    $style: String
+    $season: String
     $sex: String
+    $style: String
     $theme: String
   ) {
     codyfilter(
-      season: $season
       weather: $weather
-      style: $style
+      season: $season
       sex: $sex
+      style: $style
       theme: $theme
     ) {
       id
       concept_id
       img_url
+      category {
+        weather
+        season
+        sex
+        style
+        theme
+      }
     }
   }
 `;
