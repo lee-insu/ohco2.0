@@ -5,7 +5,6 @@ import "antd/dist/antd.css";
 import Link from "next/link";
 import { GET_CODY_FILTER } from "../graphQL/schema";
 import { useQuery } from "@apollo/client";
-import ListNav from "../components/ListNav";
 
 const list = () => {
   const filterList = [
@@ -60,7 +59,7 @@ const list = () => {
   const [filWeather, setFilWeather] = useState("");
   const [filSex, setFilSex] = useState("");
   const [filSeason, setFilSeason] = useState("");
-  const [filterActive, setFilterActive] = useState(false);
+  const [filterArray, getFilterArray] = useState([]);
 
   const { data } = useQuery(GET_CODY_FILTER, {
     variables: {
@@ -76,7 +75,13 @@ const list = () => {
     if (data) {
       getCody(data.codyfilter);
     }
-  }, [data]);
+
+    const filter = [filSeason, filSex, filStyle, filTheme, filWeather];
+    if (filter) {
+      getFilterArray(...[filter]);
+      getFilterArray((prevState) => prevState.filter((item) => item != ""));
+    }
+  }, [data, filSeason, filSex, filStyle, filTheme, filWeather]);
 
   const handleFilter = (filterId) => {
     switch (filterId) {
@@ -141,6 +146,37 @@ const list = () => {
     }
   };
 
+  const deleteFilter = (list) => {
+    getFilterArray((prevState) => prevState.filter((item) => item != list));
+    switch (list) {
+      case "칼바람이 부는 날씨":
+      case "따뜻하고 포근한 날씨":
+        setFilTheme("");
+        break;
+      case "캐주얼":
+      case "포멀":
+      case "스트릿":
+        setFilStyle("");
+        break;
+      case "봄":
+      case "여름":
+      case "가을":
+      case "겨울":
+        setFilSeason("");
+        break;
+      case "맑음":
+      case "흐림":
+      case "비":
+        setFilWeather("");
+        break;
+      case "남":
+      case "여":
+        setFilSex("");
+        break;
+      default:
+    }
+  };
+
   const handleChange = (e) => {
     const {
       target: { value },
@@ -170,11 +206,6 @@ const list = () => {
     });
   };
 
-  // 여기서 작업,
-  // 이 페이지에서 nav를 가져와야 할 거 같음
-  // 똑같이 배열에 담는 대신 filteractive가 true로 봐꼈을 떄 switch 문으로
-  //해당 리스트 값만 초기화 시키기
-
   return (
     <div className={style.container}>
       <div className={style.banner}>
@@ -182,14 +213,16 @@ const list = () => {
       </div>
       <div className={style.list_container}>
         <nav className={style.nav}>
-          <ListNav
-            season={filSeason}
-            weather={filWeather}
-            sex={filSex}
-            styles={filStyle}
-            theme={filTheme}
-            active={filterActive}
-          />
+          <div className={style.mobile_filter}>필터</div>
+          {filterArray.map((list, i) => (
+            <div
+              className={style.filter_li}
+              key={i}
+              onClick={() => deleteFilter(list)}
+            >
+              {list ? list : null}
+            </div>
+          ))}
         </nav>
         <div className={style.inner}>
           <Row>
