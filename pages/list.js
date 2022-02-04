@@ -5,6 +5,7 @@ import "antd/dist/antd.css";
 import Link from "next/link";
 import { GET_CODY_FILTER } from "../graphQL/schema";
 import { useQuery } from "@apollo/client";
+import useInfiniteScroll from "../hooks/useInfiniteScroll";
 
 const list = () => {
   const filterList = [
@@ -60,6 +61,11 @@ const list = () => {
   const [filSex, setFilSex] = useState("");
   const [filSeason, setFilSeason] = useState("");
   const [filterArray, getFilterArray] = useState([]);
+  const fetchMoreEl = useRef(null);
+  const [hasNext, setHasNext] = useState(true);
+  const intersecting = useInfiniteScroll(fetchMoreEl);
+  const codyLen = Object.keys(cody).length;
+  const [isCount, setIsCount] = useState(codyLen + 4);
 
   const { data } = useQuery(GET_CODY_FILTER, {
     variables: {
@@ -68,6 +74,7 @@ const list = () => {
       sex: filSex,
       style: filStyle,
       theme: filTheme,
+      count: isCount,
     },
   });
 
@@ -82,6 +89,25 @@ const list = () => {
       getFilterArray((prevState) => prevState.filter((item) => item != ""));
     }
   }, [data, filSeason, filSex, filStyle, filTheme, filWeather]);
+
+  useEffect(() => {
+    if (intersecting && hasNext) {
+      setIsCount((prevState) => prevState + 4);
+    }
+
+    if (intersecting && codyLen + 8 < isCount) {
+      setHasNext(false);
+    }
+
+    return () => {
+      if (intersecting && codyLen == isCount) {
+        setHasNext(true);
+      }
+      if (codyLen + 10 < isCount) {
+        setIsCount(codyLen + 8);
+      }
+    };
+  }, [intersecting]);
 
   const handleFilter = (filterId) => {
     switch (filterId) {
@@ -311,6 +337,7 @@ const list = () => {
           </Row>
         </div>
       </div>
+      <div ref={fetchMoreEl}></div>
     </div>
   );
 };

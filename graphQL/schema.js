@@ -17,6 +17,7 @@ const GET_CODY_FILTER = gql`
     $sex: String
     $style: String
     $theme: String
+    $count: Int
   ) {
     codyfilter(
       weather: $weather
@@ -24,6 +25,7 @@ const GET_CODY_FILTER = gql`
       sex: $sex
       style: $style
       theme: $theme
+      count: $count
     ) {
       id
       concept_id
