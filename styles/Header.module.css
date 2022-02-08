@@ -16,6 +16,7 @@
   flex: none;
   font-family: Staatliches;
   font-size: 45px;
+  cursor: pointer;
 }
 .nav {
   margin-left: auto;
@@ -28,4 +29,5 @@
   font-family: Roboto;
   font-weight: 400;
   font-size: 15px;
+  cursor: pointer;
 }
