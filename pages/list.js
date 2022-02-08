@@ -6,6 +6,17 @@ import Link from "next/link";
 import { GET_CODY_FILTER } from "../graphQL/schema";
 import { useQuery } from "@apollo/client";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
+import { fireStore } from "../service/firebase";
+import {
+  setDoc,
+  doc,
+  collection,
+  getDocs,
+  query,
+  deleteDoc,
+} from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 const list = () => {
   const filterList = [
@@ -49,6 +60,9 @@ const list = () => {
       ],
     },
   ];
+  const useremail = useSelector((state) => state.email.email);
+  const router = useRouter();
+  const [bookmark, getBookmark] = useState([]);
 
   const [cody, getCody] = useState([]);
   const [filterData, setFilterData] = useState(filterList);
@@ -108,6 +122,17 @@ const list = () => {
       }
     };
   }, [intersecting]);
+
+  useEffect(async () => {
+    if (useremail) {
+      const q = await query(
+        collection(fireStore, "bookmark", useremail, "like")
+      );
+      const data = await getDocs(q);
+      const newData = data.docs.map((doc) => doc.id);
+      getBookmark(newData);
+    }
+  }, [useremail]);
 
   const handleFilter = (filterId) => {
     switch (filterId) {
@@ -232,6 +257,34 @@ const list = () => {
     });
   };
 
+  const activeBookmark = async (id) => {
+    if (useremail) {
+      if (confirm("이 코디를 옷장에 저장할까요?")) {
+        await setDoc(doc(fireStore, "bookmark", useremail, "like", id), {
+          active: true,
+        });
+        const q = await query(
+          collection(fireStore, "bookmark", useremail, "like")
+        );
+        const data = await getDocs(q);
+        const newData = data.docs.map((doc) => doc.id);
+        getBookmark(newData);
+      } else {
+        return;
+      }
+    } else {
+      router.push("/login");
+    }
+  };
+
+  const unactiveBookmark = async (id) => {
+    await deleteDoc(doc(fireStore, "bookmark", useremail, "like", id));
+    const q = await query(collection(fireStore, "bookmark", useremail, "like"));
+    const data = await getDocs(q);
+    const newData = data.docs.map((doc) => doc.id);
+    getBookmark(newData);
+  };
+
   return (
     <div className={style.container}>
       <div className={style.banner}>
@@ -317,10 +370,32 @@ const list = () => {
               <Row className={style.row} gutter={[8, 4]}>
                 {cody
                   ? cody.map((item, i) => (
-                      <Link key={i} href={`/item/${item.id}`}>
-                        <Col xs={12} sm={12} md={8} lg={8} xl={6}>
+                      <Col
+                        key={i}
+                        className={style.li_container}
+                        xs={12}
+                        sm={12}
+                        md={8}
+                        lg={8}
+                        xl={6}
+                      >
+                        <img
+                          onClick={
+                            bookmark.includes(item.id)
+                              ? () => unactiveBookmark(item.id)
+                              : () => activeBookmark(item.id)
+                          }
+                          className={style.bookmark}
+                          src={
+                            bookmark.includes(item.id)
+                              ? "/icon/icons8-bookmark-filled.svg"
+                              : "/icon/icons8-bookmark.svg"
+                          }
+                        />
+
+                        <Link href={`/item/${item.id}`}>
                           <div className={style.cody_li}>
-                            <div className={style.cody_img}>
+                            <div className={style.cody_img_container}>
                               <img className={style.img} src={item.img_url} />
                               <div className={style.des}>
                                 {item.category.style}
@@ -328,8 +403,8 @@ const list = () => {
                               <div className={style.item_container}></div>
                             </div>
                           </div>
-                        </Col>
-                      </Link>
+                        </Link>
+                      </Col>
                     ))
                   : null}
               </Row>

@@ -2,6 +2,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 
 import displayName from "./user";
+import email from "./email";
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
@@ -12,6 +13,7 @@ const reducer = (state, action) => {
   }
   return combineReducers({
     displayName,
+    email,
   })(state, action);
 };
 

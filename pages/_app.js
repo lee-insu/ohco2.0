@@ -5,8 +5,9 @@ import { client } from "../service/apollo";
 import { wrapper } from "../store";
 import { useEffect } from "react";
 import { authService } from "../service/firebase";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as userAction from "../store/modules/user";
+import * as emailAction from "../store/modules/email";
 
 function MyApp({ Component, pageProps }) {
   const dispatch = useDispatch();
@@ -15,12 +16,10 @@ function MyApp({ Component, pageProps }) {
     authService.onAuthStateChanged((user) => {
       if (user) {
         dispatch(userAction.getUser(user.displayName));
+        dispatch(emailAction.getEmail(user.email));
       }
     });
   }, []);
-
-  const state = useSelector((state) => state);
-  console.log(state);
 
   return (
     <ApolloProvider client={client}>
