@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 const handleWeather = (weather) => {
-  console.log(weather);
   let main = "";
   switch (weather) {
     case "Clear":
