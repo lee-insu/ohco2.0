@@ -24,15 +24,22 @@ const Header = () => {
             <div>LIST</div>
           </Link>
           {displayName.isLogin ? (
-            <div onClick={logout}>LOGOUT</div>
+            <>
+              <div onClick={logout}>LOGOUT</div>
+              <Link href="/mypage">
+                <div>MYPAGE</div>
+              </Link>
+            </>
           ) : (
-            <Link href="/login">
-              <div>LOGIN</div>
-            </Link>
+            <>
+              <Link href="/login">
+                <div>LOGIN</div>
+              </Link>
+              <Link href="/login">
+                <div>MYPAGE</div>
+              </Link>
+            </>
           )}
-          <Link href="/mypage">
-            <div>MYPAGE</div>
-          </Link>
         </nav>
       </div>
     </div>

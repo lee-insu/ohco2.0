@@ -84,4 +84,26 @@ const GET_CODY_ID = gql`
   }
 `;
 
-export { GET_CODY_MAIN, GET_CODY_LIST, GET_CODY_ID, GET_CODY_FILTER };
+const GET_CODY_BOOKMARK = gql`
+  query Codyarray($id: [String]) {
+    codyarray(id: $id) {
+      id
+      img_url
+      category {
+        weather
+        season
+        sex
+        style
+        theme
+      }
+    }
+  }
+`;
+
+export {
+  GET_CODY_MAIN,
+  GET_CODY_LIST,
+  GET_CODY_ID,
+  GET_CODY_FILTER,
+  GET_CODY_BOOKMARK,
+};

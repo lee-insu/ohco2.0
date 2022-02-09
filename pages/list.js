@@ -379,31 +379,32 @@ const list = () => {
                         lg={8}
                         xl={6}
                       >
-                        <img
-                          onClick={
-                            bookmark.includes(item.id)
-                              ? () => unactiveBookmark(item.id)
-                              : () => activeBookmark(item.id)
-                          }
-                          className={style.bookmark}
-                          src={
-                            bookmark.includes(item.id)
-                              ? "/icon/icons8-bookmark-filled.svg"
-                              : "/icon/icons8-bookmark.svg"
-                          }
-                        />
-
-                        <Link href={`/item/${item.id}`}>
-                          <div className={style.cody_li}>
+                        <div className={style.cody_li}>
+                          <Link href={`/item/${item.id}`}>
                             <div className={style.cody_img_container}>
                               <img className={style.img} src={item.img_url} />
-                              <div className={style.des}>
-                                {item.category.style}
-                              </div>
-                              <div className={style.item_container}></div>
                             </div>
+                          </Link>
+                          <div className={style.item_container}>
+                            <div className={style.item_category}>
+                              <div>{item.category.style}</div>
+                              <div>{item.category.theme}</div>
+                            </div>
+                            <img
+                              onClick={
+                                bookmark.includes(item.id)
+                                  ? () => unactiveBookmark(item.id)
+                                  : () => activeBookmark(item.id)
+                              }
+                              className={style.bookmark}
+                              src={
+                                bookmark.includes(item.id)
+                                  ? "/icon/icons8-bookmark-filled.svg"
+                                  : "/icon/icons8-bookmark.svg"
+                              }
+                            />
                           </div>
-                        </Link>
+                        </div>
                       </Col>
                     ))
                   : null}
