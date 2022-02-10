@@ -5,7 +5,7 @@ import Comment from "../../components/Comment.js";
 import style from "../../styles/Detail.module.css";
 import axios from "axios";
 import { useQuery } from "@apollo/client";
-import { GET_CODY_ID } from "../../graphQL/schema";
+import { GET_CODY_ID, GET_USER_CODY_LIST } from "../../graphQL/schema";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { fireStore } from "../../service/firebase";
@@ -17,21 +17,29 @@ import {
   doc,
   setDoc,
 } from "firebase/firestore";
+import Link from "next/link";
 
 const Detail = ({ item }) => {
   const [codyItem, getCodyItem] = useState([]);
+  const [userItem, getUserItem] = useState([]);
   const [bookmarkId, getBookmarkId] = useState([]);
   const userinfo = useSelector((state) => state);
   const [activeBookmark, setActiveBookmark] = useState(false);
+  const [kk, kkk] = useState();
   const router = useRouter();
 
-  const { loading, error, data } = useQuery(GET_CODY_ID, {
+  const { loading, error, data: data_id } = useQuery(GET_CODY_ID, {
     variables: { id: String(item) },
+  });
+  const { data: userData } = useQuery(GET_USER_CODY_LIST, {
+    variables: {
+      user_id: codyItem ? codyItem.user_id : codyItem.user_id,
+    },
   });
 
   useEffect(async () => {
-    if (data) {
-      getCodyItem(data.codyitem);
+    if (data_id) {
+      getCodyItem(data_id.codyitem);
     }
     if (userinfo.displayName.isLogin) {
       const q = await query(
@@ -41,13 +49,22 @@ const Detail = ({ item }) => {
       const newData = data.docs.map((doc) => doc.id);
       getBookmarkId(newData);
     }
-  }, [data, activeBookmark]);
+  }, [data_id, activeBookmark]);
 
   useEffect(() => {
     if (bookmarkId.includes(item)) {
       setActiveBookmark(true);
     }
   }, [bookmarkId]);
+
+  useEffect(() => {
+    if (userData) {
+      if (userData.usercodylist != null) {
+        let [...array] = userData.usercodylist;
+        getUserItem(array.sort(() => Math.random() - 0.5));
+      }
+    }
+  }, [userData]);
 
   const handleBookmark = async () => {
     switch (activeBookmark) {
@@ -164,11 +181,22 @@ const Detail = ({ item }) => {
               <div className={style.sub_head}>이 회원님의 다른 코디</div>
               <div className={style.cody_ul_container}>
                 <ul className={style.cody_ul}>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
+                  {userItem
+                    ? userItem.map((item) => (
+                        <li id={item.id}>
+                          <Link href={`/item/${item.id}`}>
+                            <img
+                              className={style.usercody_img}
+                              src={item.img_url}
+                            />
+                          </Link>
+                          <div className={style.info_category}>
+                            <div>{item.category.style}</div>
+                            <div>{item.category.theme}</div>
+                          </div>
+                        </li>
+                      ))
+                    : null}
                 </ul>
               </div>
             </Col>

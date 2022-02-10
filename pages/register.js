@@ -76,6 +76,7 @@ const register = () => {
             autoComplete="new-password"
             onChange={onChange}
             value={password}
+            placeholder="영문+숫자 8자 이상"
             required
           />
           <div className={style.text}>닉네임</div>
