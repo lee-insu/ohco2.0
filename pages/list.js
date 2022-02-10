@@ -63,6 +63,7 @@ const list = () => {
   const useremail = useSelector((state) => state.email.email);
   const router = useRouter();
   const [bookmark, getBookmark] = useState([]);
+  const [bookmarkReset, setBookmarkReset] = useState(0);
 
   const [cody, getCody] = useState([]);
   const [filterData, setFilterData] = useState(filterList);
@@ -132,7 +133,7 @@ const list = () => {
       const newData = data.docs.map((doc) => doc.id);
       getBookmark(newData);
     }
-  }, [useremail]);
+  }, [useremail, bookmarkReset]);
 
   const handleFilter = (filterId) => {
     switch (filterId) {
@@ -263,12 +264,7 @@ const list = () => {
         await setDoc(doc(fireStore, "bookmark", useremail, "like", id), {
           active: true,
         });
-        const q = await query(
-          collection(fireStore, "bookmark", useremail, "like")
-        );
-        const data = await getDocs(q);
-        const newData = data.docs.map((doc) => doc.id);
-        getBookmark(newData);
+        setBookmarkReset((counter) => (counter += 1));
       } else {
         return;
       }
@@ -279,10 +275,7 @@ const list = () => {
 
   const unactiveBookmark = async (id) => {
     await deleteDoc(doc(fireStore, "bookmark", useremail, "like", id));
-    const q = await query(collection(fireStore, "bookmark", useremail, "like"));
-    const data = await getDocs(q);
-    const newData = data.docs.map((doc) => doc.id);
-    getBookmark(newData);
+    setBookmarkReset((counter) => (counter += 1));
   };
 
   return (

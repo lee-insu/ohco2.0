@@ -7,18 +7,72 @@ import axios from "axios";
 import { useQuery } from "@apollo/client";
 import { GET_CODY_ID } from "../../graphQL/schema";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { fireStore } from "../../service/firebase";
+import {
+  collection,
+  getDocs,
+  query,
+  deleteDoc,
+  doc,
+  setDoc,
+} from "firebase/firestore";
+
 const Detail = ({ item }) => {
   const [codyItem, getCodyItem] = useState([]);
+  const [bookmarkId, getBookmarkId] = useState([]);
+  const userinfo = useSelector((state) => state);
+  const [activeBookmark, setActiveBookmark] = useState(false);
+  const router = useRouter();
 
   const { loading, error, data } = useQuery(GET_CODY_ID, {
     variables: { id: String(item) },
   });
 
-  useEffect(() => {
+  useEffect(async () => {
     if (data) {
       getCodyItem(data.codyitem);
     }
-  }, [data]);
+    if (userinfo.displayName.isLogin) {
+      const q = await query(
+        collection(fireStore, "bookmark", userinfo.email.email, "like")
+      );
+      const data = await getDocs(q);
+      const newData = data.docs.map((doc) => doc.id);
+      getBookmarkId(newData);
+    }
+  }, [data, activeBookmark]);
+
+  useEffect(() => {
+    if (bookmarkId.includes(item)) {
+      setActiveBookmark(true);
+    }
+  }, [bookmarkId]);
+
+  const handleBookmark = async () => {
+    switch (activeBookmark) {
+      case true:
+        await deleteDoc(
+          doc(fireStore, "bookmark", userinfo.email.email, "like", item)
+        );
+        setActiveBookmark(false);
+
+        break;
+      case false:
+        if (userinfo.displayName.isLogin) {
+          await setDoc(
+            doc(fireStore, "bookmark", userinfo.email.email, "like", item),
+            {
+              active: true,
+            }
+          );
+          setActiveBookmark(true);
+        } else {
+          router.push("/login");
+        }
+      default:
+    }
+  };
 
   return (
     <div className={style.container}>
@@ -89,7 +143,19 @@ const Detail = ({ item }) => {
                     </div>
                   </li>
                 </ul>
-                <button className={style.bookmark}></button>
+                <div className={style.bookmark_container}>
+                  <div onClick={handleBookmark} className={style.bookmark}>
+                    <img
+                      className={style.bookmark_icon}
+                      src={
+                        !activeBookmark
+                          ? "/icon/icons8-bookmark.svg"
+                          : "/icon/icons8-bookmark-filled.svg"
+                      }
+                    />
+                    <div>관심 코디 북마크</div>
+                  </div>
+                </div>
               </div>
             </Col>
           </Row>

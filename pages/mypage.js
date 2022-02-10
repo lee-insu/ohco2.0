@@ -14,6 +14,7 @@ const mypage = () => {
 
   const [pick, getPick] = useState([]);
   const [bookmark, getBookmark] = useState([]);
+  const [triger, setTriger] = useState(false);
 
   const { data } = useQuery(GET_CODY_BOOKMARK, {
     variables: {
@@ -29,8 +30,9 @@ const mypage = () => {
       const data = await getDocs(q);
       const newData = data.docs.map((doc) => doc.id);
       getPick(newData);
+      setTriger(false);
     }
-  }, []);
+  }, [triger]);
 
   useEffect(() => {
     if (data) {
@@ -41,12 +43,7 @@ const mypage = () => {
   const unactiveBookmark = async (id) => {
     if (confirm("이 코디를 북마크에서 뺄까요?")) {
       await deleteDoc(doc(fireStore, "bookmark", user.email.email, "like", id));
-      const q = await query(
-        collection(fireStore, "bookmark", user.email.email, "like")
-      );
-      const data = await getDocs(q);
-      const newData = data.docs.map((doc) => doc.id);
-      getPick(newData);
+      setTriger(true);
     }
   };
 
