@@ -283,7 +283,7 @@ const Detail = ({ item }) => {
             ) : null}
           </Row>
           <div className={style.comment_container}>
-            <Comment />
+            <Comment item={item} />
           </div>
         </div>
       ) : (

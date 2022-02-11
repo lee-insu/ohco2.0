@@ -8,6 +8,7 @@ import { authService } from "../service/firebase";
 import { useDispatch } from "react-redux";
 import * as userAction from "../store/modules/user";
 import * as emailAction from "../store/modules/email";
+import * as uidAction from "../store/modules/uid";
 
 function MyApp({ Component, pageProps }) {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ function MyApp({ Component, pageProps }) {
       if (user) {
         dispatch(userAction.getUser(user.displayName));
         dispatch(emailAction.getEmail(user.email));
+        dispatch(uidAction.getUid(user.uid));
       }
     });
   }, []);

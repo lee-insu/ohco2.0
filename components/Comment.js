@@ -1,28 +1,92 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import style from "../styles/Comment.module.css";
-const Comment = () => {
+import {
+  addDoc,
+  doc,
+  collection,
+  getDocs,
+  query,
+  deleteDoc,
+  orderBy,
+} from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { fireStore } from "../service/firebase";
+
+const Comment = ({ item }) => {
+  const [write, setWrite] = useState("");
+  const [comments, getComments] = useState([]);
+  const [triger, setTriger] = useState(0);
+  const userinfo = useSelector((state) => state);
+  const router = useRouter();
+
+  const onChange = (e) => {
+    const value = e.target.value;
+    if (userinfo.displayName.isLogin) {
+      setWrite(value);
+    } else {
+      router.push("/login");
+    }
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    await addDoc(collection(fireStore, "comments", item, "comment"), {
+      writer: userinfo.email.email,
+      comment: write,
+      nickname: userinfo.displayName.displayName,
+      uid: userinfo.uid.uid,
+      time: `${new Date().getFullYear()}년 ${
+        new Date().getMonth() + 1
+      }월 ${new Date().getDate()}일 ${new Date().getHours()}시 ${new Date().getMinutes()}분 `,
+    });
+    setWrite("");
+    setTriger((counter) => (counter += 1));
+  };
+
+  const deleteCmt = async (id, uid) => {
+    if (uid === userinfo.uid.uid) {
+      if (confirm("댓글을 삭제할까요?")) {
+        await deleteDoc(doc(fireStore, "comments", item, "comment", id));
+        setTriger((counter) => (counter += 1));
+      }
+    } else {
+      alert("댓글 작성자가 아닙니다");
+    }
+  };
+
+  useEffect(async () => {
+    const q = await query(
+      collection(fireStore, "comments", item, "comment"),
+      orderBy("time")
+    );
+    const snap = await getDocs(q).size;
+    console.log(snap);
+    const data = await getDocs(q);
+    const newData = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    getComments(newData);
+  }, [triger]);
+
   return (
     <div className={style.container}>
       <div className={style.title}>댓글 0개</div>
       <ul className={style.ul}>
-        <li>
-          <div className={style.user}>user</div>
-          <div className={style.comment}>comment</div>
-        </li>
-        <li>
-          <div className={style.user}>user</div>
-          <div className={style.comment}>comment</div>
-        </li>
-        <li>
-          <div className={style.user}>user</div>
-          <div className={style.comment}>comment</div>
-        </li>
+        {comments
+          ? comments.map((cmt, i) => (
+              <li onClick={() => deleteCmt(cmt.id, cmt.uid)} key={i}>
+                <div className={style.user}>{cmt.nickname}</div>
+                <div className={style.comment}>{cmt.comment}</div>
+              </li>
+            ))
+          : null}
       </ul>
 
-      <form className={style.form}>
+      <form onSubmit={onSubmit} className={style.form}>
         <input
           className={style.input}
           type="text"
+          value={write}
+          onChange={onChange}
           placeholder="댓글 쓰기..."
           required
         />
