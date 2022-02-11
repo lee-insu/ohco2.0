@@ -78,7 +78,12 @@ const GET_CODY_ID = gql`
         shop
       }
       products {
-        product
+        product_id
+        img_url
+        name
+        brand
+        shop_url
+        price
       }
     }
   }

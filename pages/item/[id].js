@@ -23,9 +23,11 @@ const Detail = ({ item }) => {
   const [codyItem, getCodyItem] = useState([]);
   const [userItem, getUserItem] = useState([]);
   const [bookmarkId, getBookmarkId] = useState([]);
+  const [productId, getProductId] = useState([]);
+  const [productReset, setProductReset] = useState(0);
   const userinfo = useSelector((state) => state);
   const [activeBookmark, setActiveBookmark] = useState(false);
-  const [kk, kkk] = useState();
+
   const router = useRouter();
 
   const { loading, error, data: data_id } = useQuery(GET_CODY_ID, {
@@ -54,6 +56,8 @@ const Detail = ({ item }) => {
   useEffect(() => {
     if (bookmarkId.includes(item)) {
       setActiveBookmark(true);
+    } else {
+      setActiveBookmark(false);
     }
   }, [bookmarkId]);
 
@@ -65,6 +69,17 @@ const Detail = ({ item }) => {
       }
     }
   }, [userData]);
+
+  useEffect(async () => {
+    if (userinfo.displayName.isLogin && codyItem.products) {
+      const q = await query(
+        collection(fireStore, "products", userinfo.email.email, "like")
+      );
+      const data = await getDocs(q);
+      const newData = data.docs.map((doc) => doc.id);
+      getProductId(newData);
+    }
+  }, [codyItem, productReset]);
 
   const handleBookmark = async () => {
     switch (activeBookmark) {
@@ -89,6 +104,29 @@ const Detail = ({ item }) => {
         }
       default:
     }
+  };
+
+  const activeProduct = async (id) => {
+    if (userinfo.displayName.isLogin) {
+      if (confirm("이 상품을 옷장에 저장할까요?")) {
+        await setDoc(
+          doc(fireStore, "products", userinfo.email.email, "like", id),
+          {
+            active: true,
+          }
+        );
+      }
+      setProductReset((counter) => (counter += 1));
+    } else {
+      router.push("/login");
+    }
+  };
+
+  const unactiveProduct = async (id) => {
+    await deleteDoc(
+      doc(fireStore, "products", userinfo.email.email, "like", id)
+    );
+    setProductReset((counter) => (counter += 1));
   };
 
   return (
@@ -183,7 +221,7 @@ const Detail = ({ item }) => {
                 <ul className={style.cody_ul}>
                   {userItem
                     ? userItem.map((item) => (
-                        <li id={item.id}>
+                        <li key={item.id}>
                           <Link href={`/item/${item.id}`}>
                             <img
                               className={style.usercody_img}
@@ -200,28 +238,49 @@ const Detail = ({ item }) => {
                 </ul>
               </div>
             </Col>
-            <Col lg={24} xl={24} className={style.list_container}>
-              <div className={style.sub_head}>이 코디와 연관된 옷</div>
-              <div className={style.cody_ul_container}>
-                <ul className={style.product_ul}>
-                  <li>
-                    <div className={style.product}></div>
-                  </li>
-                  <li>
-                    <div className={style.product}></div>
-                  </li>
-                  <li>
-                    <div className={style.product}></div>
-                  </li>
-                  <li>
-                    <div className={style.product}></div>
-                  </li>
-                  <li>
-                    <div className={style.product}></div>
-                  </li>
-                </ul>
-              </div>
-            </Col>
+            {codyItem.products ? (
+              <Col lg={24} xl={24} className={style.list_container}>
+                <div className={style.sub_head}>이 코디와 연관된 옷</div>
+                <div className={style.cody_ul_container}>
+                  <ul className={style.product_ul}>
+                    {codyItem.products.map((item) => (
+                      <li key={item.product_id} className={style.product_li}>
+                        <img
+                          onClick={
+                            productId.includes(item.product_id)
+                              ? () => unactiveProduct(item.product_id)
+                              : () => activeProduct(item.product_id)
+                          }
+                          className={style.product_bookmark}
+                          src={
+                            productId.includes(item.product_id)
+                              ? "/icon/icons8-bookmark-filled.svg"
+                              : "/icon/icons8-bookmark.svg"
+                          }
+                        />
+
+                        <Link href={item.shop_url}>
+                          <img
+                            className={style.product_img}
+                            src={item.img_url}
+                          />
+                        </Link>
+                        <div className={style.product_category}>
+                          <div>{item.brand}</div>
+                          <div>{item.name}</div>
+                          <div>
+                            {item.price
+                              ? item.price.toLocaleString("en-US")
+                              : 0}
+                            원
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Col>
+            ) : null}
           </Row>
           <div className={style.comment_container}>
             <Comment />
