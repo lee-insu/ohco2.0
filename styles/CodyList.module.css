@@ -6,13 +6,31 @@
 }
 .cody {
   width: 260px;
-  height: 381px;
-  background-color: #d8d8d8;
-  border-radius: 22px;
+  height: 431px;
+
   margin-bottom: 40px;
   overflow: hidden;
   cursor: pointer;
 }
+
+.cody_info_container {
+  width: 100%;
+}
+
+.cody_info_container :nth-child(1) {
+  font-family: pretendard;
+  font-weight: 400;
+  font-size: 15px;
+  margin-top: 7px;
+
+  color: #9d9d9d;
+}
+.cody_info_container :nth-child(2) {
+  font-family: pretendard;
+  font-weight: 500;
+  font-size: 15px;
+}
+
 .tag {
   position: relative;
   width: 100%;
@@ -36,4 +54,8 @@
 }
 .img {
   width: 260px;
+  height: 381px;
+  border-radius: 22px;
+  overflow: hidden;
+  object-fit: cover;
 }

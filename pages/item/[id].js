@@ -271,7 +271,7 @@ const Detail = ({ item }) => {
                           }
                         />
 
-                        <Link href={item.shop_url}>
+                        <Link href={`/product/${item.product_id}`}>
                           <img
                             className={style.product_img}
                             src={item.img_url}

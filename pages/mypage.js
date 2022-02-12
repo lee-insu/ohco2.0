@@ -23,6 +23,8 @@ const mypage = () => {
     },
   });
 
+  //timestamp 추가 후 desc
+
   useEffect(async () => {
     if (user.displayName.isLogin) {
       const q = await query(
@@ -127,7 +129,7 @@ const mypage = () => {
                   xl={6}
                 >
                   <div className={style.li}>
-                    <Link href={`/item/33`}>
+                    <Link href={`/product/${item.id}`}>
                       <div className={style.product_img_container}>
                         <img className={style.product_img} src={item.img_url} />
                       </div>

@@ -59,7 +59,6 @@ const CodyList = ({ temp }) => {
   useEffect(() => {
     const tempSeason = tempCody(temp);
     handleSeoson(tempSeason);
-
     if (data) {
       getCody(data.codymain);
     }
@@ -73,11 +72,15 @@ const CodyList = ({ temp }) => {
     <div>
       <Row className={style.cody_container} type="flex">
         {cody ? (
-          cody.map((img) => (
-            <Link key={img.id} href={`/item/${img.id}`}>
+          cody.map((item) => (
+            <Link key={item.id} href={`/item/${item.id}`}>
               <Col xs={6} sm={6} md={6} lg={6} xl={6}>
                 <div className={style.cody}>
-                  <img className={style.img} src={img.img_url} />
+                  <img className={style.img} src={item.img_url} />
+                  <div className={style.cody_info_container}>
+                    <div>{item.category.style}</div>
+                    <div>{item.category.theme}</div>
+                  </div>
                 </div>
               </Col>
             </Link>

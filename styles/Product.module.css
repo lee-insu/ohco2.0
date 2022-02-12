@@ -1,0 +1,97 @@
+.container {
+  width: 100%;
+}
+
+.banner {
+  height: 122px;
+}
+
+.inner {
+  width: 1008px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.info_container {
+  width: 100%;
+}
+
+.img_container {
+  border-right: 1px solid #dbdbdb;
+}
+.img {
+  width: 452px;
+  height: 452px;
+  background-color: rgb(230, 230, 230);
+  border-radius: 22px;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.detail_container {
+  padding-left: 52px;
+}
+
+.title {
+  font-family: pretendard;
+  font-weight: 700;
+  font-size: 18px;
+  text-decoration-line: underline;
+}
+
+.ul {
+  width: 100%;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.ul > li {
+  width: 100%;
+  display: flex;
+  margin-top: 15px;
+}
+.question {
+  width: 50%;
+  font-family: pretendard;
+  font-weight: 500;
+  font-size: 18px;
+}
+.answer {
+  position: relative;
+  width: 100%;
+  font-family: pretendard;
+  font-weight: 500;
+  font-size: 18px;
+  color: #808080;
+}
+
+.answer > a {
+  position: relative;
+  width: 100%;
+  font-family: pretendard;
+  font-weight: 500;
+  font-size: 18px;
+  color: #808080;
+}
+
+.shop_link {
+  width: 100%;
+  height: 84px;
+  margin-top: 85px;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  border: 1px solid #8d8d8d;
+  border-radius: 20px;
+  margin-bottom: 0;
+  position: relative;
+  padding: 30px 0 0 31%;
+  cursor: pointer;
+  position: relative;
+  font-family: pretendard;
+  font-weight: 400;
+  color: #252525;
+  font-size: 18px;
+  margin-left: 5px;
+  bottom: 3px;
+}

@@ -6,6 +6,13 @@ const GET_CODY_MAIN = gql`
       id
       user_id
       img_url
+      category {
+        weather
+        season
+        sex
+        style
+        theme
+      }
     }
   }
 `;
