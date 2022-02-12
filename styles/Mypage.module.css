@@ -72,9 +72,9 @@
   width: 223px;
   height: 100%;
   overflow: hidden;
-
   margin-bottom: 15px;
 }
+
 .row {
   margin-top: 50px;
 }
@@ -83,7 +83,13 @@
   height: 306px;
   border-radius: 27px;
   overflow: hidden;
-  background-color: #b7b7b7;
+}
+
+.product_img_container {
+  width: 223px;
+  height: 223px;
+  border-radius: 27px;
+  overflow: hidden;
 }
 
 .img {
@@ -91,34 +97,59 @@
   height: 306px;
   object-fit: cover;
 }
+
+.product_container {
+  margin-top: 50px;
+}
+
+.product_img {
+  width: 223px;
+  height: 223px;
+  object-fit: cover;
+}
 .bookmark_info_container {
   width: 100%;
+  position: relative;
   height: 50px;
   display: flex;
   justify-content: space-between;
 }
 
-.boomark_info_category {
+.bookmark_info_category {
   margin-top: 5px;
 }
 
-.boomark_info_category > :nth-child(1) {
+.bookmark_info_category > :nth-child(1) {
   font-family: pretendard;
   font-weight: 300;
   font-size: 13px;
   color: #969696;
 }
 
-.boomark_info_category > :nth-child(2) {
+.bookmark_info_category > :nth-child(2) {
   font-family: pretendard;
   font-weight: 500;
   font-size: 14px;
   color: #000;
 }
+
+.bookmark_info_category > :nth-child(3) {
+  font-family: pretendard;
+  font-weight: 300;
+  font-size: 14px;
+  color: #000;
+}
 .bookmark {
   width: 24px;
+  z-index: 200;
+  cursor: pointer;
+}
+
+.product_bookmark {
+  position: relative;
+  width: 24px;
   top: 15px;
-  right: 10%;
+
   z-index: 200;
   cursor: pointer;
 }

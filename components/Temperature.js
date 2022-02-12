@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 const handleWeather = (weather) => {
   let main = "";
+
+  console.log(weather);
   switch (weather) {
     case "Clear":
       main = "맑음";
@@ -27,6 +29,8 @@ const handleWeather = (weather) => {
     case "Mist":
       main = "안개";
       break;
+    case "Haze":
+      main = "뿌옇";
     default:
       return main;
   }

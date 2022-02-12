@@ -106,13 +106,25 @@ const Detail = ({ item }) => {
     }
   };
 
-  const activeProduct = async (id) => {
+  const activeProduct = async (item) => {
     if (userinfo.displayName.isLogin) {
       if (confirm("이 상품을 옷장에 저장할까요?")) {
+        console.log(item);
         await setDoc(
-          doc(fireStore, "products", userinfo.email.email, "like", id),
+          doc(
+            fireStore,
+            "products",
+            userinfo.email.email,
+            "like",
+            item.product_id
+          ),
           {
             active: true,
+            product_id: item.product_id,
+            img_url: item.img_url,
+            name: item.name,
+            brand: item.brand,
+            price: item.price,
           }
         );
       }
@@ -249,7 +261,7 @@ const Detail = ({ item }) => {
                           onClick={
                             productId.includes(item.product_id)
                               ? () => unactiveProduct(item.product_id)
-                              : () => activeProduct(item.product_id)
+                              : () => activeProduct(item)
                           }
                           className={style.product_bookmark}
                           src={
