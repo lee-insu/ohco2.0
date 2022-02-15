@@ -128,6 +128,19 @@ const GET_CODY_BOOKMARK = gql`
   }
 `;
 
+const GET_PRODUCT = gql`
+  query Product($id: ID!) {
+    product(id: $id) {
+      product_id
+      img_url
+      price
+      name
+      brand
+      shop_url
+    }
+  }
+`;
+
 export {
   GET_CODY_MAIN,
   GET_CODY_LIST,
@@ -135,4 +148,5 @@ export {
   GET_CODY_FILTER,
   GET_CODY_BOOKMARK,
   GET_USER_CODY_LIST,
+  GET_PRODUCT,
 };
