@@ -74,7 +74,7 @@ const CodyList = ({ temp }) => {
         {cody ? (
           cody.map((item) => (
             <Link key={item.id} href={`/item/${item.id}`}>
-              <Col xs={6} sm={6} md={6} lg={6} xl={6}>
+              <Col xs={12} sm={8} md={8} lg={8} xl={6}>
                 <div className={style.cody}>
                   <img className={style.img} src={item.img_url} />
                   <div className={style.cody_info_container}>

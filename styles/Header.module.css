@@ -3,13 +3,13 @@
   height: 65px;
   position: relative;
   border-bottom: 1px solid #e4e4e4;
+  background-color: #fff;
 }
 .inner {
   position: relative;
   width: 95.8%;
   height: 100%;
   margin: 0 auto;
-
   display: flex;
 }
 .logo {
@@ -30,4 +30,49 @@
   font-weight: 400;
   font-size: 15px;
   cursor: pointer;
+}
+
+.logo_m {
+  flex: none;
+  font-family: Staatliches;
+  font-size: 45px;
+  cursor: pointer;
+}
+
+.toggle {
+  width: 100%;
+  position: relative;
+  text-align: right;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.toggle > img {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  right: 10px;
+  bottom: 3px;
+}
+
+.close {
+  width: 24px;
+  height: 24px;
+}
+
+.menu_btn {
+  font-family: pretendard;
+  font-weight: 500;
+  font-size: 17px;
+}
+.logout {
+  color: rgb(255, 100, 100);
+  font-family: pretendard;
+  font-weight: 500;
+  font-size: 17px;
 }

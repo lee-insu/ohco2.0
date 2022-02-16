@@ -53,7 +53,7 @@ export default function Home() {
       <div className={style.tomorrow_list}>
         <div className={style.inner}>
           <div className={style.title}>
-            <div className={style.style_title}>recommend style</div>
+            <div className={style.style_title}>weekend style</div>
             <div className={style.location}>천안시, 흐림</div>
           </div>
           <Row className={style.cody_container} type="flex">

@@ -51,42 +51,50 @@
   font-size: 15px;
   color: #9b9999;
 }
+@media screen and (min-width: 1560px) and (max-width: 1600px) {
+  .inner {
+    width: 70%;
+  }
+}
 
-/*  아래 삭제 */
+@media screen and (min-width: 1440px) and (max-width: 1560px) {
+  .inner {
+    width: 80%;
+  }
+}
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+  .inner {
+    width: 90%;
+  }
+}
 
-.cody_container {
-  position: relative;
-  height: auto;
-  margin-top: 18px;
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+  .inner {
+    width: 90%;
+  }
 }
-.cody {
-  width: 260px;
-  height: 381px;
-  background-color: #d8d8d8;
-  border-radius: 22px;
-  margin-bottom: 40px;
-  overflow: hidden;
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .inner {
+    width: 95%;
+  }
+  .banner {
+    height: 320px;
+  }
 }
-.tag {
-  position: relative;
-  width: 100%;
-  margin: 50px 0;
+@media screen and (min-width: 390px) and (max-width: 768px) {
+  .inner {
+    width: 95%;
+  }
+  .banner {
+    height: 320px;
+  }
 }
-.more {
-  position: relative;
-  width: 100px;
-  height: 40px;
-  border: 1px solid #c1c1c1;
-  border-radius: 12px;
-  right: 20px;
-  margin: 0 auto;
-  font-family: pretendard;
-  font-weight: 400;
-  font-size: 15px;
-  color: #777777;
-  padding-top: 9px;
-  padding-left: 28px;
-}
-.img {
-  width: 260px;
+@media screen and (max-width: 390px) {
+  .inner {
+    width: 97%;
+  }
+  .banner {
+    height: 280px;
+  }
 }

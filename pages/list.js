@@ -1,4 +1,4 @@
-import { Col, Row, List, Card } from "antd";
+import { Col, Row, List, Card, Drawer, Menu } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import style from "../styles/List.module.css";
 import "antd/dist/antd.css";
@@ -81,14 +81,15 @@ const list = () => {
   const intersecting = useInfiniteScroll(fetchMoreEl);
   const codyLen = Object.keys(cody).length;
   const [isCount, setIsCount] = useState(codyLen + 4);
+  const [visible, setVisible] = useState(false);
 
   const { data } = useQuery(GET_CODY_FILTER, {
     variables: {
-      weather: filWeather,
-      season: filSeason,
-      sex: filSex,
-      style: filStyle,
-      theme: filTheme,
+      weather: filWeather.value,
+      season: filSeason.value,
+      sex: filSex.value,
+      style: filStyle.value,
+      theme: filTheme.value,
       count: isCount,
     },
   });
@@ -98,9 +99,17 @@ const list = () => {
       getCody(data.codyfilter);
     }
 
-    const filter = [filSeason, filSex, filStyle, filTheme, filWeather];
+    const filter = [
+      filSeason.value,
+      filSex.value,
+      filStyle.value,
+      filTheme.value,
+      filWeather.value,
+    ];
+
     if (filter) {
-      getFilterArray(...[filter]);
+      const filternull = filter.filter((fil) => fil != null);
+      getFilterArray(...[filternull]);
       getFilterArray((prevState) => prevState.filter((item) => item != ""));
     }
   }, [data, filSeason, filSex, filStyle, filTheme, filWeather]);
@@ -164,19 +173,19 @@ const list = () => {
   const clickFilter = async (filter) => {
     switch (true) {
       case filter.id == "스타일":
-        await setFilStyle(filter.value);
+        await setFilStyle(filter);
         break;
       case filter.id == "테마":
-        await setFilTheme(filter.value);
+        await setFilTheme(filter);
         break;
       case filter.id == "계절":
-        await setFilSeason(filter.value);
+        await setFilSeason(filter);
         break;
       case filter.id == "날씨":
-        await setFilWeather(filter.value);
+        await setFilWeather(filter);
         break;
       case filter.id == "성별":
-        await setFilSex(filter.value);
+        await setFilSex(filter);
         break;
       default:
     }
@@ -278,6 +287,14 @@ const list = () => {
     setBookmarkReset((counter) => (counter += 1));
   };
 
+  const showDrawer = () => {
+    setVisible(!visible);
+  };
+
+  const onClose = () => {
+    setVisible(!visible);
+  };
+
   return (
     <div className={style.container}>
       <div className={style.banner}>
@@ -285,7 +302,67 @@ const list = () => {
       </div>
       <div className={style.list_container}>
         <nav className={style.nav}>
-          <div className={style.mobile_filter}>필터</div>
+          <div onClick={showDrawer} className={style.mobile_filter}>
+            필터
+          </div>
+          <Drawer
+            placement="top"
+            onClose={onClose}
+            visible={visible}
+            destroyOnClose="true"
+            width="100%"
+            height="100%"
+            closeIcon={<img className={style.close} src="/icon/close.svg" />}
+          >
+            {filterData.map((filter, i) => (
+              <Col className={style.filter_list_container} key={i} xl={24}>
+                <div
+                  name={filter.id}
+                  onClick={
+                    acitveFilter && filter.id === activeId
+                      ? () => setActiveFilter(false)
+                      : () => handleFilter(filter.id)
+                  }
+                  className={style.filter_list}
+                >
+                  <div name={filter.id} className={style.filter_text}>
+                    <div name={filter.id}>{filter.id}</div>
+                    {filStyle.id == filter.id ||
+                    filSex.id == filter.id ||
+                    filTheme.id == filter.id ||
+                    filWeather.id == filter.id ||
+                    filSeason.id == filter.id ? (
+                      selectFilter(filter.id)
+                    ) : (
+                      <div name={filter.id}>모든 {filter.id}</div>
+                    )}
+                  </div>
+                  <div name={filter.id} className={style.plus}>
+                    {acitveFilter && filter.id === activeId ? "-" : "+"}
+                  </div>
+                </div>
+                {filter.id == activeId && acitveFilter ? (
+                  <div className={style.filter_title_menu}>
+                    <div className={style.filter_menu_container}>
+                      {filter.filter.map((fil, i) => (
+                        <div key={i} className={style.filter_menu_list}>
+                          <input
+                            type="checkbox"
+                            value={fil.value}
+                            name={fil.id}
+                            onChange={(e) => handleChange(e)}
+                            onClick={() => clickFilter(fil)}
+                            checked={fil.isChecked}
+                          />
+                          <div>{fil.value}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+              </Col>
+            ))}
+          </Drawer>
           {filterArray.map((list, i) => (
             <div
               className={style.filter_li}
@@ -298,7 +375,7 @@ const list = () => {
         </nav>
         <div className={style.inner}>
           <Row>
-            <Col className={style.filter} xs={0} sm={0} md={4} lg={4} xl={4}>
+            <Col className={style.filter} xs={0} sm={0} md={0} lg={4} xl={4}>
               <Col className={style.filter_title}>필터</Col>
               <div className={style.filter_container}>
                 {filterData.map((filter, i) => (
@@ -356,7 +433,7 @@ const list = () => {
               className={style.cody_list}
               xs={24}
               sm={24}
-              md={20}
+              md={24}
               lg={20}
               xl={20}
             >
@@ -368,8 +445,8 @@ const list = () => {
                         className={style.li_container}
                         xs={12}
                         sm={12}
-                        md={8}
-                        lg={8}
+                        md={6}
+                        lg={6}
                         xl={6}
                       >
                         <div className={style.cody_li}>
