@@ -38,6 +38,7 @@
   background-color: #f4f4f4;
   border-radius: 12px;
   pointer-events: none;
+  cursor: pointer;
 }
 
 .title {
@@ -243,9 +244,10 @@
     width: 190px;
     height: 258px;
   }
+
   .list_container {
     width: 1024px;
-    margin: 0 20px;
+    margin: 0 auto;
   }
   .cody_list {
     margin-top: 0px;
