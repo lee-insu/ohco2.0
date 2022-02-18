@@ -62,23 +62,41 @@
   margin-top: 50px;
 }
 
+.title_container {
+  width: 96%;
+  display: flex;
+  justify-content: space-between;
+}
+
 .sub_title {
   font-family: pretendard;
   font-weight: 600;
   font-size: 18px;
 }
 
+.item_bookmark_container {
+  width: 100%;
+  padding: 0;
+  position: relative;
+  margin-top: 50px;
+  display: flex;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
 .li {
   width: 223px;
   height: 100%;
   overflow: hidden;
-  margin-bottom: 15px;
   cursor: pointer;
+  list-style: none;
+  margin: 0 12px;
 }
 
 .row {
   margin-top: 50px;
 }
+
 .bookmark_img_container {
   width: 223px;
   height: 306px;
@@ -100,6 +118,7 @@
 }
 
 .product_container {
+  width: 100%;
   margin-top: 50px;
 }
 
@@ -111,7 +130,7 @@
 .bookmark_info_container {
   width: 100%;
   position: relative;
-  height: 50px;
+  height: 100%;
   display: flex;
   justify-content: space-between;
 }
@@ -138,7 +157,8 @@
   font-family: pretendard;
   font-weight: 300;
   font-size: 14px;
-  color: #000;
+  margin-top: 0.3rem;
+  color: rgb(104, 104, 104);
 }
 .bookmark {
   width: 24px;
@@ -153,4 +173,19 @@
 
   z-index: 200;
   cursor: pointer;
+}
+
+.moreBtn {
+  font-family: pretendard;
+  font-weight: 400;
+  font-size: 13px;
+  color: #b7b7b7;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 767px) and (max-width: 1024px) {
+  .inner {
+    width: 98%;
+    height: auto;
+  }
 }

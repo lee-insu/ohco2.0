@@ -15,9 +15,12 @@
   height: 40px;
   position: relative;
   display: flex;
+  white-space: nowrap;
+  overflow-x: scroll;
 }
 
 .filter_li {
+  cursor: pointer;
   font-family: pretendard;
   font-weight: 500;
   font-size: 15px;
@@ -26,7 +29,6 @@
   color: rgb(61, 61, 61);
   background-color: #f4f4f4;
   border-radius: 12px;
-  cursor: pointer;
 }
 
 .mobile_filter {
@@ -226,13 +228,25 @@
   height: 24px;
 }
 
-.close_f {
+.closeBtn {
   width: 100%;
-  height: 50px;
+  height: 60px;
+  padding-top: 1rem;
   text-align: center;
   font-family: pretendard;
-  font-weight: 600;
-  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #000;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.filterReset {
+  text-align: right;
+  font-family: pretendard;
+  font-weight: 400;
+  font-size: 15px;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 992px) and (max-width: 1440px) {

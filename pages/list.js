@@ -295,6 +295,15 @@ const list = () => {
     setVisible(!visible);
   };
 
+  const filterReset = (e) => {
+    e.preventDefault();
+    setFilSeason("");
+    setFilSex("");
+    setFilStyle("");
+    setFilTheme("");
+    setFilWeather("");
+  };
+
   return (
     <div className={style.container}>
       <div className={style.banner}>
@@ -307,12 +316,22 @@ const list = () => {
           </div>
           <Drawer
             placement="top"
+            title={
+              <div onClick={filterReset} className={style.filterReset}>
+                필터 초기화
+              </div>
+            }
             onClose={onClose}
             visible={visible}
             destroyOnClose="true"
             width="100%"
             height="100%"
             closeIcon={<img className={style.close} src="/icon/close.svg" />}
+            footer={
+              <div className={style.closeBtn} onClick={onClose}>
+                필터 적용하기
+              </div>
+            }
           >
             {filterData.map((filter, i) => (
               <Col className={style.filter_list_container} key={i} xl={24}>
