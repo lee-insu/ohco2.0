@@ -4,6 +4,8 @@ import { HYDRATE } from "next-redux-wrapper";
 import displayName from "./user";
 import email from "./email";
 import uid from "./uid";
+import cody from "./cody";
+import product from "./product";
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
@@ -16,6 +18,8 @@ const reducer = (state, action) => {
     displayName,
     email,
     uid,
+    cody,
+    product,
   })(state, action);
 };
 
