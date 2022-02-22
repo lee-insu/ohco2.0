@@ -65,7 +65,7 @@ const login = () => {
       <div className={style.inner}>
         <div className={style.title_container}>
           <div className={style.logo}>OH CO!</div>
-          <div className={style.sub}>오늘의 날씨와 어울리는 코디</div>
+          <div className={style.sub}>사람의 취향을 담는 옷장</div>
         </div>
         <form onSubmit={onSubmit} className={style.form}>
           <div className={style.text}>이메일 주소</div>

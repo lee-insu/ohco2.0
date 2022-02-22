@@ -63,3 +63,33 @@
   color: #fff;
   cursor: pointer;
 }
+@media screen and (min-width: 768px) and (max-width: 1440px) {
+  .banner {
+    height: 61px;
+  }
+}
+
+@media screen and (min-width: 576px) and (max-width: 768px) {
+  .banner {
+    height: 61px;
+  }
+  .form {
+    width: 100%;
+    margin-top: 2rem;
+  }
+}
+@media screen and (max-width: 575px) {
+  .inner {
+    width: 90%;
+  }
+  .banner {
+    height: 41px;
+  }
+  .form {
+    width: 100%;
+    margin-top: 2rem;
+  }
+  .register {
+    margin-top: 25px;
+  }
+}
