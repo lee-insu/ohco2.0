@@ -3,7 +3,6 @@ import "antd/dist/antd.css";
 import { useRouter } from "next/router";
 import Comment from "../../components/Comment.js";
 import style from "../../styles/Detail.module.css";
-import axios from "axios";
 import { useQuery } from "@apollo/client";
 import { GET_CODY_ID, GET_USER_CODY_LIST } from "../../graphQL/schema";
 import { useState, useEffect } from "react";
@@ -147,14 +146,14 @@ const Detail = ({ item }) => {
       {!loading && codyItem.category && codyItem.information ? (
         <div className={style.inner}>
           <Row type="flex" className={style.info_container}>
-            <Col xs={6} sm={6} md={12} lg={12} xl={12}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
               <div className={style.img_container}>
                 <div className={style.img}>
                   <img src={codyItem.img_url} />
                 </div>
               </div>
             </Col>
-            <Col xs={6} sm={6} md={12} lg={12} xl={12}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
               <div className={style.detail_container}>
                 <div className={style.title}>{codyItem.category.theme}</div>
                 <ul className={style.ul}>
@@ -181,7 +180,7 @@ const Detail = ({ item }) => {
                     </div>
                   </li>
                 </ul>
-                <div style={{ marginTop: "34px" }} className={style.title}>
+                <div className={style.info_margin} className={style.title}>
                   Infomation
                 </div>
                 <ul className={style.ul}>
@@ -210,22 +209,21 @@ const Detail = ({ item }) => {
                     </div>
                   </li>
                 </ul>
-                <div className={style.bookmark_container}>
-                  <div onClick={handleBookmark} className={style.bookmark}>
-                    <img
-                      className={style.bookmark_icon}
-                      src={
-                        !activeBookmark
-                          ? "/icon/icons8-bookmark.svg"
-                          : "/icon/icons8-bookmark-filled.svg"
-                      }
-                    />
-                    <div>관심 코디 북마크</div>
-                  </div>
+                <div onClick={handleBookmark} className={style.bookmark}>
+                  <img
+                    className={style.bookmark_icon}
+                    src={
+                      !activeBookmark
+                        ? "/icon/icons8-bookmark.svg"
+                        : "/icon/icons8-bookmark-filled.svg"
+                    }
+                  />
+                  <div>관심 코디 북마크</div>
                 </div>
               </div>
             </Col>
           </Row>
+
           <Row>
             <Col lg={24} xl={24} className={style.list_container}>
               <div className={style.sub_head}>이 회원님의 다른 코디</div>
