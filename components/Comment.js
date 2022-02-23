@@ -16,7 +16,7 @@ import { fireStore } from "../service/firebase";
 const Comment = ({ item }) => {
   const [write, setWrite] = useState("");
   const [comments, getComments] = useState([]);
-  const [triger, setTriger] = useState(0);
+  const [triger, setTriger] = useState(false);
   const userinfo = useSelector((state) => state);
   const router = useRouter();
 
@@ -41,14 +41,14 @@ const Comment = ({ item }) => {
       }월 ${new Date().getDate()}일 ${new Date().getHours()}시 ${new Date().getMinutes()}분 `,
     });
     setWrite("");
-    setTriger((counter) => (counter += 1));
+    setTriger(!triger);
   };
 
   const deleteCmt = async (id, uid) => {
     if (uid === userinfo.uid.uid) {
       if (confirm("댓글을 삭제할까요?")) {
         await deleteDoc(doc(fireStore, "comments", item, "comment", id));
-        setTriger((counter) => (counter += 1));
+        setTriger(!triger);
       }
     } else {
       alert("댓글 작성자가 아닙니다");
@@ -61,7 +61,6 @@ const Comment = ({ item }) => {
       orderBy("time")
     );
     const snap = await getDocs(q).size;
-    console.log(snap);
     const data = await getDocs(q);
     const newData = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     getComments(newData);
@@ -69,7 +68,7 @@ const Comment = ({ item }) => {
 
   return (
     <div className={style.container}>
-      <div className={style.title}>댓글 0개</div>
+      <div className={style.title}>댓글</div>
       <ul className={style.ul}>
         {comments
           ? comments.map((cmt, i) => (

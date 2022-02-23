@@ -136,7 +136,23 @@ const GET_PRODUCT = gql`
       price
       name
       brand
+      cody
       shop_url
+      recommand_products {
+        product_id
+      }
+    }
+  }
+`;
+
+const GET_PRODUCT_ITEMS = gql`
+  query Productarray($id: [String]) {
+    productarray(id: $id) {
+      product_id
+      img_url
+      name
+      brand
+      price
     }
   }
 `;
@@ -149,4 +165,5 @@ export {
   GET_CODY_BOOKMARK,
   GET_USER_CODY_LIST,
   GET_PRODUCT,
+  GET_PRODUCT_ITEMS,
 };
