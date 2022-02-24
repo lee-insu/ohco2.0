@@ -23,7 +23,8 @@ const Detail = ({ item }) => {
   const [userItem, getUserItem] = useState([]);
   const [bookmarkId, getBookmarkId] = useState([]);
   const [productId, getProductId] = useState([]);
-  const [productReset, setProductReset] = useState(0);
+  const [perfumeId, getPerfumeId] = useState([]);
+  const [triger, setTriger] = useState(false);
   const userinfo = useSelector((state) => state);
   const [activeBookmark, setActiveBookmark] = useState(false);
 
@@ -78,7 +79,15 @@ const Detail = ({ item }) => {
       const newData = data.docs.map((doc) => doc.id);
       getProductId(newData);
     }
-  }, [codyItem, productReset]);
+    if (userinfo.displayName.isLogin && codyItem.perfumes) {
+      const q = await query(
+        collection(fireStore, "perfumes", userinfo.email.email, "like")
+      );
+      const data = await getDocs(q);
+      const newData = data.docs.map((doc) => doc.id);
+      getPerfumeId(newData);
+    }
+  }, [codyItem, triger]);
 
   const handleBookmark = async () => {
     switch (activeBookmark) {
@@ -108,7 +117,6 @@ const Detail = ({ item }) => {
   const activeProduct = async (item) => {
     if (userinfo.displayName.isLogin) {
       if (confirm("이 상품을 옷장에 저장할까요?")) {
-        console.log(item);
         await setDoc(
           doc(
             fireStore,
@@ -127,7 +135,7 @@ const Detail = ({ item }) => {
           }
         );
       }
-      setProductReset((counter) => (counter += 1));
+      setTriger(!triger);
     } else {
       router.push("/login");
     }
@@ -137,7 +145,41 @@ const Detail = ({ item }) => {
     await deleteDoc(
       doc(fireStore, "products", userinfo.email.email, "like", id)
     );
-    setProductReset((counter) => (counter += 1));
+    setTriger(!triger);
+  };
+
+  const activePerfume = async (item) => {
+    if (userinfo.displayName.isLogin) {
+      if (confirm("이 향수를 옷장에 저장할까요?")) {
+        await setDoc(
+          doc(
+            fireStore,
+            "perfumes",
+            userinfo.email.email,
+            "like",
+            item.perfume_id
+          ),
+          {
+            active: true,
+            perfume_id: item.perfume_id,
+            img_url: item.img_url,
+            name: item.name,
+            brand: item.brand,
+            price: item.price,
+          }
+        );
+      }
+      setTriger(!triger);
+    } else {
+      router.push("/login");
+    }
+  };
+
+  const unactivePerfume = async (id) => {
+    await deleteDoc(
+      doc(fireStore, "perfumes", userinfo.email.email, "like", id)
+    );
+    setTriger(!triger);
   };
 
   return (
@@ -158,19 +200,19 @@ const Detail = ({ item }) => {
                 <div className={style.title}>{codyItem.category.theme}</div>
                 <ul className={style.ul}>
                   <li>
-                    <div className={style.question}>적정 날씨</div>
+                    <div className={style.question}>날씨</div>
                     <div className={style.answer}>
                       {codyItem.category.weather}
                     </div>
                   </li>
                   <li>
-                    <div className={style.question}>적정 계절</div>
+                    <div className={style.question}>계절</div>
                     <div className={style.answer}>
                       {codyItem.category.season}
                     </div>
                   </li>
                   <li>
-                    <div className={style.question}>적정 성별</div>
+                    <div className={style.question}>성별</div>
                     <div className={style.answer}>{codyItem.category.sex}</div>
                   </li>
                   <li>
@@ -226,6 +268,29 @@ const Detail = ({ item }) => {
 
           <Row>
             <Col lg={24} xl={24} className={style.list_container}>
+              <div className={style.sub_head}>비슷한 분위기의 코디</div>
+              <div className={style.cody_ul_container}>
+                <ul className={style.cody_ul}>
+                  {userItem
+                    ? userItem.map((item) => (
+                        <li key={item.id}>
+                          <Link href={`/item/${item.id}`}>
+                            <img
+                              className={style.usercody_img}
+                              src={item.img_url}
+                            />
+                          </Link>
+                          <div className={style.info_category}>
+                            <div>{item.category.style}</div>
+                            <div>{item.category.theme}</div>
+                          </div>
+                        </li>
+                      ))
+                    : null}
+                </ul>
+              </div>
+            </Col>
+            <Col lg={24} xl={24} className={style.list_container}>
               <div className={style.sub_head}>이 회원님의 다른 코디</div>
               <div className={style.cody_ul_container}>
                 <ul className={style.cody_ul}>
@@ -248,6 +313,50 @@ const Detail = ({ item }) => {
                 </ul>
               </div>
             </Col>
+
+            {codyItem.perfumes ? (
+              <Col lg={24} xl={24} className={style.list_container}>
+                <div className={style.sub_head}>이 코디와 어울리는 향수</div>
+                <div className={style.cody_ul_container}>
+                  <ul className={style.product_ul}>
+                    {codyItem.perfumes.map((item) => (
+                      <li key={item.perfume_id} className={style.product_li}>
+                        <img
+                          onClick={
+                            perfumeId.includes(item.perfume_id)
+                              ? () => unactivePerfume(item.perfume_id)
+                              : () => activePerfume(item)
+                          }
+                          className={style.product_bookmark}
+                          src={
+                            perfumeId.includes(item.perfume_id)
+                              ? "/icon/icons8-bookmark-filled.svg"
+                              : "/icon/icons8-bookmark.svg"
+                          }
+                        />
+
+                        <Link href={`/perfume/${item.perfume_id}`}>
+                          <img
+                            className={style.product_img}
+                            src={item.img_url}
+                          />
+                        </Link>
+                        <div className={style.product_category}>
+                          <div>{item.brand}</div>
+                          <div>{item.name}</div>
+                          <div>
+                            {item.price
+                              ? item.price.toLocaleString("en-US")
+                              : 0}
+                            원
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Col>
+            ) : null}
             {codyItem.products ? (
               <Col lg={24} xl={24} className={style.list_container}>
                 <div className={style.sub_head}>이 코디와 연관된 옷</div>

@@ -92,6 +92,13 @@ const GET_CODY_ID = gql`
         shop_url
         price
       }
+      perfumes {
+        perfume_id
+        img_url
+        name
+        brand
+        price
+      }
     }
   }
 `;
@@ -157,6 +164,23 @@ const GET_PRODUCT_ITEMS = gql`
   }
 `;
 
+const GET_PERFUMES = gql`
+  query Perfume($id: ID!) {
+    perfume(id: $id) {
+      perfume_id
+      img_url
+      price
+      name
+      brand
+      scent
+      mood
+      recommand_codies {
+        id
+      }
+    }
+  }
+`;
+
 export {
   GET_CODY_MAIN,
   GET_CODY_LIST,
@@ -166,4 +190,5 @@ export {
   GET_USER_CODY_LIST,
   GET_PRODUCT,
   GET_PRODUCT_ITEMS,
+  GET_PERFUMES,
 };
