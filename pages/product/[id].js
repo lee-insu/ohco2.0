@@ -63,7 +63,6 @@ const Product = ({ item }) => {
     variables: { id: productItems },
   });
 
-  console.log(productItems);
   const handleBookmark = async () => {
     switch (activeBookmark) {
       case true:

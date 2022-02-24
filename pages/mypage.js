@@ -80,7 +80,7 @@ const mypage = () => {
         <div className={style.ad}>다양한 기능을 준비하고 있습니다..</div>
         <div className={style.bookmark_container}>
           <div className={style.title_container}>
-            <div className={style.sub_title}>나의 북마크</div>
+            <div className={style.sub_title}>관심 있는 코디</div>
             {bookmark.length > 4 ? (
               <Link href="/mypage/cody">
                 <div className={style.moreBtn}>더보기</div>
@@ -110,7 +110,7 @@ const mypage = () => {
         {productsPick ? (
           <div className={style.product_container}>
             <div className={style.title_container}>
-              <div className={style.sub_title}>나의 관심 상품</div>
+              <div className={style.sub_title}>관심 있는 상품</div>
               {productsPick.length > 4 ? (
                 <Link href="/mypage/product">
                   <div className={style.moreBtn}>더보기</div>
