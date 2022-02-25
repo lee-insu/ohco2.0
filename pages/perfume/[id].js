@@ -24,7 +24,7 @@ const Perfume = ({ item }) => {
   const [triger, setTriger] = useState(false);
   const [activeBookmark, setActiveBookmark] = useState(false);
   const [perfume, getPerfume] = useState(null);
-  const [codies, getCodies] = useState([]);
+  const [cody, getCody] = useState([]);
 
   useEffect(async () => {
     if (data) {
@@ -46,16 +46,16 @@ const Perfume = ({ item }) => {
 
   useEffect(() => {
     if (perfume !== null) {
-      perfume.recommand_codies.map((x) => getCodies((prev) => [...prev, x.id]));
+      perfume.recommand_cody.map((x) => getCody((prev) => [...prev, x.id]));
     }
     return () => {
-      getCodies([]);
+      getCody([]);
     };
   }, [perfume, item]);
 
-  const { data: cody } = useQuery(GET_CODY_BOOKMARK, {
+  const { data: codyItem } = useQuery(GET_CODY_BOOKMARK, {
     variables: {
-      id: codies,
+      id: cody,
     },
   });
 
@@ -80,6 +80,7 @@ const Perfume = ({ item }) => {
               price: perfume.price,
               scent: perfume.scent,
               mood: perfume.mood,
+              shop_url: perfume.shop_url,
             }
           );
           setTriger(!triger);
@@ -154,14 +155,14 @@ const Perfume = ({ item }) => {
           ) : null}
         </Row>
         <Row>
-          {cody &&
-          Array.isArray(cody.codyarray) &&
-          cody.codyarray.length !== 0 ? (
+          {codyItem &&
+          Array.isArray(codyItem.codyarray) &&
+          codyItem.codyarray.length !== 0 ? (
             <Col lg={24} xl={24} className={style.list_container}>
               <div className={style.sub_head}>이 향수와 어울리는 코디</div>
               <div className={style.cody_ul_container}>
                 <ul className={style.cody_ul}>
-                  {cody.codyarray.map((item) => (
+                  {codyItem.codyarray.map((item) => (
                     <li key={item.id}>
                       <Link href={`/item/${item.id}`}>
                         <img

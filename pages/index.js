@@ -1,7 +1,5 @@
-import { Col, Row } from "antd";
 import Head from "next/head";
 import Image from "next/image";
-import "antd/dist/antd.css";
 import style from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
 import Banner from "../components/banner";
@@ -9,11 +7,16 @@ import Temperature from "../components/Temperature";
 import CodyList from "../components/CodyList";
 import handleGeoSuccess from "../service/location";
 import axios from "axios";
+import SubList from "../components/SubList";
+import { useQuery } from "@apollo/client";
+import { GET_MUSIC_ARRAY } from "../graphQL/schema";
 
 export default function Home() {
   const [area, getArea] = useState("");
   const [temp, getTemp] = useState("");
   const [weather, getWeather] = useState("");
+
+  const { loading, data: music_data } = useQuery(GET_MUSIC_ARRAY);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(handleGeo);
@@ -50,31 +53,7 @@ export default function Home() {
         </div>
       </div>
       <div className={style.sub_banner}></div>
-      <div className={style.tomorrow_list}>
-        <div className={style.inner}>
-          <div className={style.title}>
-            <div className={style.style_title}>weekend style</div>
-            <div className={style.location}>천안시, 흐림</div>
-          </div>
-          <Row className={style.cody_container} type="flex">
-            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-              <div className={style.cody}></div>
-            </Col>
-            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-              <div className={style.cody}></div>
-            </Col>
-            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-              <div className={style.cody}></div>
-            </Col>
-            <Col xs={6} sm={6} md={6} lg={6} xl={6}>
-              <div className={style.cody}></div>
-            </Col>
-          </Row>
-          <div className={style.tag}>
-            <div className={style.more}>더보기</div>
-          </div>
-        </div>
-      </div>
+      <SubList data={!loading ? music_data.musicarray : false} />
     </div>
   );
 }

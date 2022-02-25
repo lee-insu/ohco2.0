@@ -92,6 +92,14 @@ const GET_CODY_ID = gql`
         shop_url
         price
       }
+      music {
+        id
+        artist
+        album
+        name
+        mood
+        img_url
+      }
       perfumes {
         perfume_id
         img_url
@@ -106,6 +114,22 @@ const GET_CODY_ID = gql`
 const GET_USER_CODY_LIST = gql`
   query Usercodylist($user_id: String) {
     usercodylist(user_id: $user_id) {
+      id
+      img_url
+      category {
+        weather
+        season
+        sex
+        style
+        theme
+      }
+    }
+  }
+`;
+
+const GET_SIMILAR_LIST = gql`
+  query Usersimilarlist($theme: String) {
+    usersimilarlist(theme: $theme) {
       id
       img_url
       category {
@@ -174,7 +198,38 @@ const GET_PERFUMES = gql`
       brand
       scent
       mood
-      recommand_codies {
+      shop_url
+      recommand_cody {
+        id
+      }
+    }
+  }
+`;
+
+const GET_MUSIC = gql`
+  query Music($id: ID!) {
+    music(id: $id) {
+      id
+      artist
+      album
+      name
+      mood
+      img_url
+      music_url
+      recommand_cody {
+        id
+      }
+    }
+  }
+`;
+
+const GET_MUSIC_ARRAY = gql`
+  query Musicarray {
+    musicarray {
+      id
+      name
+      mood
+      recommand_cody {
         id
       }
     }
@@ -191,4 +246,7 @@ export {
   GET_PRODUCT,
   GET_PRODUCT_ITEMS,
   GET_PERFUMES,
+  GET_SIMILAR_LIST,
+  GET_MUSIC,
+  GET_MUSIC_ARRAY,
 };

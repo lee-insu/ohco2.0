@@ -4,7 +4,11 @@ import { useRouter } from "next/router";
 import Comment from "../../components/Comment.js";
 import style from "../../styles/Detail.module.css";
 import { useQuery } from "@apollo/client";
-import { GET_CODY_ID, GET_USER_CODY_LIST } from "../../graphQL/schema";
+import {
+  GET_CODY_ID,
+  GET_SIMILAR_LIST,
+  GET_USER_CODY_LIST,
+} from "../../graphQL/schema";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { fireStore } from "../../service/firebase";
@@ -24,6 +28,7 @@ const Detail = ({ item }) => {
   const [bookmarkId, getBookmarkId] = useState([]);
   const [productId, getProductId] = useState([]);
   const [perfumeId, getPerfumeId] = useState([]);
+  const [musicId, getMusicId] = useState([]);
   const [triger, setTriger] = useState(false);
   const userinfo = useSelector((state) => state);
   const [activeBookmark, setActiveBookmark] = useState(false);
@@ -36,6 +41,11 @@ const Detail = ({ item }) => {
   const { data: userData } = useQuery(GET_USER_CODY_LIST, {
     variables: {
       user_id: codyItem ? codyItem.user_id : codyItem.user_id,
+    },
+  });
+  const { data: similarData } = useQuery(GET_SIMILAR_LIST, {
+    variables: {
+      theme: data_id ? data_id.codyitem.category.theme : null,
     },
   });
 
@@ -86,6 +96,14 @@ const Detail = ({ item }) => {
       const data = await getDocs(q);
       const newData = data.docs.map((doc) => doc.id);
       getPerfumeId(newData);
+    }
+    if (userinfo.displayName.isLogin && codyItem.music) {
+      const q = await query(
+        collection(fireStore, "music", userinfo.email.email, "like")
+      );
+      const data = await getDocs(q);
+      const newData = data.docs.map((doc) => doc.id);
+      getMusicId(newData);
     }
   }, [codyItem, triger]);
 
@@ -182,6 +200,33 @@ const Detail = ({ item }) => {
     setTriger(!triger);
   };
 
+  const activeMusic = async (item) => {
+    if (userinfo.displayName.isLogin) {
+      if (confirm("이 곡을 저장할까요?")) {
+        await setDoc(
+          doc(fireStore, "music", userinfo.email.email, "like", item.id),
+          {
+            active: true,
+            id: item.id,
+            img_url: item.img_url,
+            name: item.name,
+            artist: item.artist,
+            album: item.album,
+            mood: item.mood,
+          }
+        );
+      }
+      setTriger(!triger);
+    } else {
+      router.push("/login");
+    }
+  };
+
+  const unactiveMusic = async (id) => {
+    await deleteDoc(doc(fireStore, "music", userinfo.email.email, "like", id));
+    setTriger(!triger);
+  };
+
   return (
     <div className={style.container}>
       <div className={style.banner}></div>
@@ -271,8 +316,8 @@ const Detail = ({ item }) => {
               <div className={style.sub_head}>비슷한 분위기의 코디</div>
               <div className={style.cody_ul_container}>
                 <ul className={style.cody_ul}>
-                  {userItem
-                    ? userItem.map((item) => (
+                  {similarData
+                    ? similarData.usersimilarlist.slice(0, 6).map((item) => (
                         <li key={item.id}>
                           <Link href={`/item/${item.id}`}>
                             <img
@@ -313,10 +358,48 @@ const Detail = ({ item }) => {
                 </ul>
               </div>
             </Col>
+            {codyItem.music ? (
+              <Col lg={24} xl={24} className={style.list_container}>
+                <div className={style.sub_head}>이 코디를 담은 곡</div>
+                <div className={style.cody_ul_container}>
+                  <ul className={style.product_ul}>
+                    {codyItem.music.map((item) => (
+                      <li key={item.id} className={style.product_li}>
+                        <img
+                          onClick={
+                            musicId.includes(item.id)
+                              ? () => unactiveMusic(item.id)
+                              : () => activeMusic(item)
+                          }
+                          className={style.product_bookmark}
+                          src={
+                            musicId.includes(item.id)
+                              ? "/icon/icons8-bookmark-filled.svg"
+                              : "/icon/icons8-bookmark.svg"
+                          }
+                        />
+
+                        <Link href={`/music/${item.id}`}>
+                          <img
+                            className={style.product_img}
+                            src={item.img_url}
+                          />
+                        </Link>
+                        <div className={style.product_category}>
+                          <div>{item.mood}</div>
+                          <div>{item.name}</div>
+                          <div>{item.artist}</div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Col>
+            ) : null}
 
             {codyItem.perfumes ? (
               <Col lg={24} xl={24} className={style.list_container}>
-                <div className={style.sub_head}>이 코디와 어울리는 향수</div>
+                <div className={style.sub_head}>함께 풍기면 좋은 향수</div>
                 <div className={style.cody_ul_container}>
                   <ul className={style.product_ul}>
                     {codyItem.perfumes.map((item) => (
@@ -359,7 +442,7 @@ const Detail = ({ item }) => {
             ) : null}
             {codyItem.products ? (
               <Col lg={24} xl={24} className={style.list_container}>
-                <div className={style.sub_head}>이 코디와 연관된 옷</div>
+                <div className={style.sub_head}>이 코디와 연관된 상품</div>
                 <div className={style.cody_ul_container}>
                   <ul className={style.product_ul}>
                     {codyItem.products.map((item) => (
