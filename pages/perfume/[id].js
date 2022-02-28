@@ -73,7 +73,7 @@ const Perfume = ({ item }) => {
             doc(fireStore, "perfumes", userinfo.email.email, "like", item),
             {
               active: true,
-              product_id: perfume.perfume_id,
+              id: perfume.id,
               img_url: perfume.img_url,
               name: perfume.name,
               brand: perfume.brand,

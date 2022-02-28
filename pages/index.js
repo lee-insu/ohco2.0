@@ -9,14 +9,21 @@ import handleGeoSuccess from "../service/location";
 import axios from "axios";
 import SubList from "../components/SubList";
 import { useQuery } from "@apollo/client";
-import { GET_MUSIC_ARRAY } from "../graphQL/schema";
+import { GET_MUSIC_ARRAY, GET_PERFUMES_ARRAY } from "../graphQL/schema";
 
 export default function Home() {
   const [area, getArea] = useState("");
   const [temp, getTemp] = useState("");
   const [weather, getWeather] = useState("");
+  const music = "music";
+  const perfumes = "perfumes";
 
-  const { loading, data: music_data } = useQuery(GET_MUSIC_ARRAY);
+  const { loading: music_loading, data: music_data } = useQuery(
+    GET_MUSIC_ARRAY
+  );
+  const { loading: perfume_loading, data: perfume_data } = useQuery(
+    GET_PERFUMES_ARRAY
+  );
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(handleGeo);
@@ -53,7 +60,23 @@ export default function Home() {
         </div>
       </div>
       <div className={style.sub_banner}></div>
-      <SubList data={!loading ? music_data.musicarray : false} />
+      <div className={style.today_list}>
+        <div className={style.sub_inner}>
+          <SubList
+            data={!music_loading ? music_data.musicarray : false}
+            theme={music}
+          />
+        </div>
+      </div>
+      <div className={style.sub_banner}></div>
+      <div className={style.today_list}>
+        <div className={style.sub_inner}>
+          <SubList
+            data={!perfume_loading ? perfume_data.perfumesarray : false}
+            theme={perfumes}
+          />
+        </div>
+      </div>
     </div>
   );
 }

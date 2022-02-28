@@ -170,16 +170,10 @@ const Detail = ({ item }) => {
     if (userinfo.displayName.isLogin) {
       if (confirm("이 향수를 옷장에 저장할까요?")) {
         await setDoc(
-          doc(
-            fireStore,
-            "perfumes",
-            userinfo.email.email,
-            "like",
-            item.perfume_id
-          ),
+          doc(fireStore, "perfumes", userinfo.email.email, "like", item.id),
           {
             active: true,
-            perfume_id: item.perfume_id,
+            id: item.id,
             img_url: item.img_url,
             name: item.name,
             brand: item.brand,
@@ -403,22 +397,22 @@ const Detail = ({ item }) => {
                 <div className={style.cody_ul_container}>
                   <ul className={style.product_ul}>
                     {codyItem.perfumes.map((item) => (
-                      <li key={item.perfume_id} className={style.product_li}>
+                      <li key={item.id} className={style.product_li}>
                         <img
                           onClick={
-                            perfumeId.includes(item.perfume_id)
-                              ? () => unactivePerfume(item.perfume_id)
+                            perfumeId.includes(item.id)
+                              ? () => unactivePerfume(item.id)
                               : () => activePerfume(item)
                           }
                           className={style.product_bookmark}
                           src={
-                            perfumeId.includes(item.perfume_id)
+                            perfumeId.includes(item.id)
                               ? "/icon/icons8-bookmark-filled.svg"
                               : "/icon/icons8-bookmark.svg"
                           }
                         />
 
-                        <Link href={`/perfume/${item.perfume_id}`}>
+                        <Link href={`/perfume/${item.id}`}>
                           <img
                             className={style.product_img}
                             src={item.img_url}

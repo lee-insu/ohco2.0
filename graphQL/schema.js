@@ -101,7 +101,7 @@ const GET_CODY_ID = gql`
         img_url
       }
       perfumes {
-        perfume_id
+        id
         img_url
         name
         brand
@@ -191,7 +191,7 @@ const GET_PRODUCT_ITEMS = gql`
 const GET_PERFUMES = gql`
   query Perfume($id: ID!) {
     perfume(id: $id) {
-      perfume_id
+      id
       img_url
       price
       name
@@ -199,6 +199,20 @@ const GET_PERFUMES = gql`
       scent
       mood
       shop_url
+      recommand_cody {
+        id
+      }
+    }
+  }
+`;
+
+const GET_PERFUMES_ARRAY = gql`
+  query Perfumesarray {
+    perfumesarray {
+      id
+      name
+      mood
+      scent
       recommand_cody {
         id
       }
@@ -246,6 +260,7 @@ export {
   GET_PRODUCT,
   GET_PRODUCT_ITEMS,
   GET_PERFUMES,
+  GET_PERFUMES_ARRAY,
   GET_SIMILAR_LIST,
   GET_MUSIC,
   GET_MUSIC_ARRAY,

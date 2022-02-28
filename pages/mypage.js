@@ -163,7 +163,7 @@ const mypage = () => {
         {musicPick ? (
           <div className={style.product_container}>
             <div className={style.title_container}>
-              <div className={style.sub_title}>관심 있는 노래 분위기</div>
+              <div className={style.sub_title}>관심 있는 분위기</div>
               {musicPick.length > 4 ? (
                 <Link href="/mypage/music">
                   <div className={style.moreBtn}>더보기</div>
@@ -202,7 +202,7 @@ const mypage = () => {
             </div>
             <ul className={style.item_bookmark_container}>
               {perfumesPick.slice(0, 4).map((item) => (
-                <li key={item.perfume_id} className={style.li}>
+                <li key={item.id} className={style.li}>
                   <Link href={`/perfume/${item.id}`}>
                     <div className={style.product_img_container}>
                       <img className={style.product_img} src={item.img_url} />
