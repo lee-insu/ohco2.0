@@ -10,8 +10,6 @@ const SubList = ({ data, theme }) => {
   const [codyData, getCodyData] = useState([]);
   const [recommandCody, getRecommandCody] = useState([]);
 
-  console.log(theme);
-
   useEffect(() => {
     if (data !== false) {
       getCodyData(data);
@@ -41,16 +39,20 @@ const SubList = ({ data, theme }) => {
           <div className={style.title}>
             {theme == "music" ? (
               <>
-                <div className={style.style_title}>music mood</div>
+                <div className={style.style_title}>
+                  '{cody.name}' 떠오르는 코디
+                </div>
                 <div className={style.sub_style_title}>
-                  {cody.name}, {cody.mood}
+                  {cody.artist}, {cody.mood}
                 </div>
               </>
             ) : (
               <>
-                <div className={style.style_title}>perfume mood</div>
+                <div className={style.style_title}>
+                  '{cody.name}' 어울리는 코디
+                </div>
                 <div className={style.sub_style_title}>
-                  {cody.name}, {cody.scent}
+                  {cody.brand}, {cody.scent}
                 </div>
               </>
             )}

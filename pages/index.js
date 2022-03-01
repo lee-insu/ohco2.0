@@ -10,6 +10,7 @@ import axios from "axios";
 import SubList from "../components/SubList";
 import { useQuery } from "@apollo/client";
 import { GET_MUSIC_ARRAY, GET_PERFUMES_ARRAY } from "../graphQL/schema";
+import SubItemList from "../components/SubItemList";
 
 export default function Home() {
   const [area, getArea] = useState("");
@@ -62,9 +63,27 @@ export default function Home() {
       <div className={style.sub_banner}></div>
       <div className={style.today_list}>
         <div className={style.sub_inner}>
+          <SubItemList
+            data={!music_loading ? music_data.musicarray : false}
+            theme={music}
+          />
+        </div>
+      </div>
+      <div className={style.sub_banner}></div>
+      <div className={style.today_list}>
+        <div className={style.sub_inner}>
           <SubList
             data={!music_loading ? music_data.musicarray : false}
             theme={music}
+          />
+        </div>
+      </div>
+      <div className={style.sub_banner}></div>
+      <div className={style.today_list}>
+        <div className={style.sub_inner}>
+          <SubItemList
+            data={!perfume_loading ? perfume_data.perfumesarray : false}
+            theme={perfumes}
           />
         </div>
       </div>

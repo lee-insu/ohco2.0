@@ -212,6 +212,8 @@ const GET_PERFUMES_ARRAY = gql`
       id
       name
       mood
+      brand
+      img_url
       scent
       recommand_cody {
         id
@@ -242,7 +244,9 @@ const GET_MUSIC_ARRAY = gql`
     musicarray {
       id
       name
+      img_url
       mood
+      artist
       recommand_cody {
         id
       }
