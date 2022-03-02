@@ -16,9 +16,9 @@ import {
 } from "firebase/firestore";
 import { fireStore } from "../../service/firebase";
 import Link from "next/link";
+import { client } from "../../service/apollo";
 
-const Music = ({ item }) => {
-  const { loading, data } = useQuery(GET_MUSIC, { variables: { id: item } });
+const Music = ({ item, data, loading }) => {
   const userinfo = useSelector((state) => state);
   const router = useRouter();
   const [triger, setTriger] = useState(false);
@@ -27,7 +27,7 @@ const Music = ({ item }) => {
   const [cody, getCody] = useState([]);
   useEffect(async () => {
     if (data) {
-      getMusic(data.music);
+      getMusic(data);
     }
     if (userinfo.displayName.isLogin) {
       const q = await query(
@@ -175,12 +175,18 @@ const Music = ({ item }) => {
 };
 export default Music;
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = async (context) => {
   const id = context.params.id;
+  const { loading, data } = await client.query({
+    query: GET_MUSIC,
+    variables: { id },
+  });
 
   return {
     props: {
       item: id,
+      data: data.music,
+      loading,
     },
   };
-}
+};

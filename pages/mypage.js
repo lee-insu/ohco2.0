@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row } from "antd";
 import "antd/dist/antd.css";
 import style from "../styles/Mypage.module.css";
 import Link from "next/link";
@@ -27,9 +26,6 @@ const mypage = () => {
       id: pick,
     },
   });
-
-  //timestamp 추가 후 desc
-  //북마크 상세 페이지에서 북마크 해제 버튼 다시 만들기
 
   useEffect(async () => {
     if (user.displayName.isLogin) {
@@ -101,11 +97,11 @@ const mypage = () => {
         <div className={style.bookmark_container}>
           <div className={style.title_container}>
             <div className={style.sub_title}>관심 있는 코디</div>
-            {bookmark.length > 4 ? (
+            {bookmark.length > 4 && (
               <Link href="/mypage/cody">
                 <div className={style.moreBtn}>더보기</div>
               </Link>
-            ) : null}
+            )}
           </div>
 
           <ul className={style.item_bookmark_container}>
@@ -131,11 +127,11 @@ const mypage = () => {
           <div className={style.product_container}>
             <div className={style.title_container}>
               <div className={style.sub_title}>관심 있는 상품</div>
-              {productsPick.length > 4 ? (
+              {productsPick.length > 4 && (
                 <Link href="/mypage/product">
                   <div className={style.moreBtn}>더보기</div>
                 </Link>
-              ) : null}
+              )}
             </div>
             <ul className={style.item_bookmark_container}>
               {productsPick.slice(0, 4).map((item) => (
@@ -164,11 +160,11 @@ const mypage = () => {
           <div className={style.product_container}>
             <div className={style.title_container}>
               <div className={style.sub_title}>관심 있는 분위기</div>
-              {musicPick.length > 4 ? (
+              {musicPick.length > 4 && (
                 <Link href="/mypage/music">
                   <div className={style.moreBtn}>더보기</div>
                 </Link>
-              ) : null}
+              )}
             </div>
             <ul className={style.item_bookmark_container}>
               {musicPick.slice(0, 4).map((item) => (
@@ -194,11 +190,11 @@ const mypage = () => {
           <div className={style.product_container}>
             <div className={style.title_container}>
               <div className={style.sub_title}>관심 있는 향수</div>
-              {musicPick.length > 4 ? (
+              {musicPick.length > 4 && (
                 <Link href="/mypage/perfume">
                   <div className={style.moreBtn}>더보기</div>
                 </Link>
-              ) : null}
+              )}
             </div>
             <ul className={style.item_bookmark_container}>
               {perfumesPick.slice(0, 4).map((item) => (

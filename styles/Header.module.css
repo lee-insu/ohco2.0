@@ -32,13 +32,6 @@
   cursor: pointer;
 }
 
-.logo_m {
-  flex: none;
-  font-family: Staatliches;
-  font-size: 45px;
-  cursor: pointer;
-}
-
 .toggle {
   width: 100%;
   position: relative;

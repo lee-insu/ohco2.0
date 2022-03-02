@@ -8,23 +8,21 @@ import CodyList from "../components/CodyList";
 import handleGeoSuccess from "../service/location";
 import axios from "axios";
 import SubList from "../components/SubList";
-import { useQuery } from "@apollo/client";
 import { GET_MUSIC_ARRAY, GET_PERFUMES_ARRAY } from "../graphQL/schema";
 import SubItemList from "../components/SubItemList";
+import { client } from "../service/apollo";
 
-export default function Home() {
+export default function Home({
+  musicArray,
+  musicLoading,
+  perfumeArray,
+  perfumeLoading,
+}) {
   const [area, getArea] = useState("");
   const [temp, getTemp] = useState("");
   const [weather, getWeather] = useState("");
   const music = "music";
   const perfumes = "perfumes";
-
-  const { loading: music_loading, data: music_data } = useQuery(
-    GET_MUSIC_ARRAY
-  );
-  const { loading: perfume_loading, data: perfume_data } = useQuery(
-    GET_PERFUMES_ARRAY
-  );
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(handleGeo);
@@ -63,26 +61,20 @@ export default function Home() {
       <div className={style.sub_banner}></div>
       <div className={style.today_list}>
         <div className={style.sub_inner}>
-          <SubItemList
-            data={!music_loading ? music_data.musicarray : false}
-            theme={music}
-          />
+          <SubItemList data={!musicLoading && musicArray} theme={music} />
         </div>
       </div>
       <div className={style.sub_banner}></div>
       <div className={style.today_list}>
         <div className={style.sub_inner}>
-          <SubList
-            data={!music_loading ? music_data.musicarray : false}
-            theme={music}
-          />
+          <SubList data={!musicLoading && musicArray} theme={music} />
         </div>
       </div>
       <div className={style.sub_banner}></div>
       <div className={style.today_list}>
         <div className={style.sub_inner}>
           <SubItemList
-            data={!perfume_loading ? perfume_data.perfumesarray : false}
+            data={!perfumeLoading && perfumeArray}
             theme={perfumes}
           />
         </div>
@@ -90,12 +82,27 @@ export default function Home() {
       <div className={style.sub_banner}></div>
       <div className={style.today_list}>
         <div className={style.sub_inner}>
-          <SubList
-            data={!perfume_loading ? perfume_data.perfumesarray : false}
-            theme={perfumes}
-          />
+          <SubList data={!perfumeLoading && perfumeArray} theme={perfumes} />
         </div>
       </div>
     </div>
   );
 }
+export const getStaticProps = async () => {
+  const { loading: music_loading, data: music_data } = await client.query({
+    query: GET_MUSIC_ARRAY,
+  });
+
+  const { loading: perfume_loading, data: perfume_data } = await client.query({
+    query: GET_PERFUMES_ARRAY,
+  });
+
+  return {
+    props: {
+      musicArray: music_data?.musicarray,
+      musicLoading: music_loading,
+      perfumeArray: perfume_data?.perfumesarray,
+      perfumeLoading: perfume_loading,
+    },
+  };
+};

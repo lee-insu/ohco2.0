@@ -16,12 +16,9 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { fireStore } from "../../service/firebase";
+import { client } from "../../service/apollo";
 
-const Product = ({ item }) => {
-  const { loading, data } = useQuery(GET_PRODUCT, {
-    variables: { id: item },
-  });
-
+const Product = ({ item, data, loading }) => {
   const userinfo = useSelector((state) => state);
   const router = useRouter();
   const [product, getProduct] = useState(null);
@@ -31,7 +28,7 @@ const Product = ({ item }) => {
 
   useEffect(async () => {
     if (data) {
-      getProduct(data.product);
+      getProduct(data);
     }
 
     if (userinfo.displayName.isLogin) {
@@ -187,12 +184,18 @@ const Product = ({ item }) => {
 
 export default Product;
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = async (context) => {
   const id = context.params.id;
+  const { loading, data } = await client.query({
+    query: GET_PRODUCT,
+    variables: { id },
+  });
 
   return {
     props: {
       item: id,
+      data: data.product,
+      loading,
     },
   };
-}
+};

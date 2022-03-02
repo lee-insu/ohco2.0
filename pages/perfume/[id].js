@@ -16,9 +16,9 @@ import {
 } from "firebase/firestore";
 import { fireStore } from "../../service/firebase";
 import Link from "next/link";
+import { client } from "../../service/apollo";
 
-const Perfume = ({ item }) => {
-  const { loading, data } = useQuery(GET_PERFUMES, { variables: { id: item } });
+const Perfume = ({ item, data, loading }) => {
   const userinfo = useSelector((state) => state);
   const router = useRouter();
   const [triger, setTriger] = useState(false);
@@ -28,7 +28,7 @@ const Perfume = ({ item }) => {
 
   useEffect(async () => {
     if (data) {
-      getPerfume(data.perfume);
+      getPerfume(data);
     }
     if (userinfo.displayName.isLogin) {
       const q = await query(
@@ -188,12 +188,18 @@ const Perfume = ({ item }) => {
 
 export default Perfume;
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = async (context) => {
   const id = context.params.id;
+  const { loading, data } = await client.query({
+    query: GET_PERFUMES,
+    variables: { id },
+  });
 
   return {
     props: {
       item: id,
+      data: data.perfume,
+      loading,
     },
   };
-}
+};

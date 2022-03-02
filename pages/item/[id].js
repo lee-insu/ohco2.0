@@ -21,8 +21,9 @@ import {
   setDoc,
 } from "firebase/firestore";
 import Link from "next/link";
+import { client } from "../../service/apollo.js";
 
-const Detail = ({ item }) => {
+const Detail = ({ item, codyData, loading }) => {
   const [codyItem, getCodyItem] = useState([]);
   const [userItem, getUserItem] = useState([]);
   const [bookmarkId, getBookmarkId] = useState([]);
@@ -35,9 +36,6 @@ const Detail = ({ item }) => {
 
   const router = useRouter();
 
-  const { loading, error, data: data_id } = useQuery(GET_CODY_ID, {
-    variables: { id: String(item) },
-  });
   const { data: userData } = useQuery(GET_USER_CODY_LIST, {
     variables: {
       user_id: codyItem ? codyItem.user_id : codyItem.user_id,
@@ -45,13 +43,13 @@ const Detail = ({ item }) => {
   });
   const { data: similarData } = useQuery(GET_SIMILAR_LIST, {
     variables: {
-      theme: data_id ? data_id.codyitem.category.theme : null,
+      theme: codyData && codyData.category.theme,
     },
   });
 
   useEffect(async () => {
-    if (data_id) {
-      getCodyItem(data_id.codyitem);
+    if (codyData) {
+      getCodyItem(codyData);
     }
     if (userinfo.displayName.isLogin) {
       const q = await query(
@@ -61,7 +59,7 @@ const Detail = ({ item }) => {
       const newData = data.docs.map((doc) => doc.id);
       getBookmarkId(newData);
     }
-  }, [data_id, activeBookmark]);
+  }, [codyData, activeBookmark]);
 
   useEffect(() => {
     if (bookmarkId.includes(item)) {
@@ -310,22 +308,21 @@ const Detail = ({ item }) => {
               <div className={style.sub_head}>비슷한 분위기의 코디</div>
               <div className={style.cody_ul_container}>
                 <ul className={style.cody_ul}>
-                  {similarData
-                    ? similarData.usersimilarlist.slice(0, 6).map((item) => (
-                        <li key={item.id}>
-                          <Link href={`/item/${item.id}`}>
-                            <img
-                              className={style.usercody_img}
-                              src={item.img_url}
-                            />
-                          </Link>
-                          <div className={style.info_category}>
-                            <div>{item.category.style}</div>
-                            <div>{item.category.theme}</div>
-                          </div>
-                        </li>
-                      ))
-                    : null}
+                  {similarData &&
+                    similarData.usersimilarlist.slice(0, 6).map((item) => (
+                      <li key={item.id}>
+                        <Link href={`/item/${item.id}`}>
+                          <img
+                            className={style.usercody_img}
+                            src={item.img_url}
+                          />
+                        </Link>
+                        <div className={style.info_category}>
+                          <div>{item.category.style}</div>
+                          <div>{item.category.theme}</div>
+                        </div>
+                      </li>
+                    ))}
                 </ul>
               </div>
             </Col>
@@ -391,7 +388,7 @@ const Detail = ({ item }) => {
               </Col>
             ) : null}
 
-            {codyItem.perfumes ? (
+            {codyItem.perfumes && (
               <Col lg={24} xl={24} className={style.list_container}>
                 <div className={style.sub_head}>함께 풍기면 좋은 향수</div>
                 <div className={style.cody_ul_container}>
@@ -433,8 +430,8 @@ const Detail = ({ item }) => {
                   </ul>
                 </div>
               </Col>
-            ) : null}
-            {codyItem.products ? (
+            )}
+            {codyItem.products && (
               <Col lg={24} xl={24} className={style.list_container}>
                 <div className={style.sub_head}>이 코디와 연관된 상품</div>
                 <div className={style.cody_ul_container}>
@@ -476,7 +473,7 @@ const Detail = ({ item }) => {
                   </ul>
                 </div>
               </Col>
-            ) : null}
+            )}
           </Row>
           <div className={style.comment_container}>
             <Comment item={item} />
@@ -491,12 +488,19 @@ const Detail = ({ item }) => {
 
 export default Detail;
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = async (context) => {
   const id = context.params.id;
+
+  const { loading, data } = await client.query({
+    query: GET_CODY_ID,
+    variables: { id },
+  });
 
   return {
     props: {
       item: id,
+      codyData: data?.codyitem,
+      loading,
     },
   };
-}
+};

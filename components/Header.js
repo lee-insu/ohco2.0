@@ -60,7 +60,7 @@ const Header = () => {
       <MobileView>
         <div className={style.container}>
           <Link href="/">
-            <div className={style.logo_m}>OH CO!</div>
+            <div className={style.logo}>OH CO!</div>
           </Link>
           <button className={style.toggle} onClick={showDrawer}>
             <img src="/icon/menu.svg" />

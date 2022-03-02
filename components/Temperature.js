@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 const handleWeather = (weather) => {
   let main = "";
 
-  console.log(weather);
   switch (weather) {
     case "Clear":
       main = "맑음";

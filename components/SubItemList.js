@@ -51,8 +51,8 @@ const SubItemList = ({ data, theme }) => {
                           </>
                         ) : (
                           <>
-                            <div>{item.mood}</div>
                             <div>{item.name}</div>
+                            <div>{item.mood}</div>
                             <div>{item.scent}</div>
                           </>
                         )}
