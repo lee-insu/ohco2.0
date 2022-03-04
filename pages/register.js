@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "../styles/Register.module.css";
 import { authService } from "../service/firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useRouter } from "next/router";
+import Privacy from "../components/Privacy";
+import { useSelector } from "react-redux";
 
 const register = () => {
+  const isLogin = useSelector((state) => state.displayName.isLogin);
+
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
+
+  useEffect(() => {
+    if (isLogin) {
+      router.replace("/");
+    }
+  }, [isLogin]);
 
   const onChange = (e) => {
     const {
@@ -88,6 +98,7 @@ const register = () => {
             value={nickname}
             required
           />
+          <Privacy />
           <input className={style.register} type="submit" value="회원가입" />
         </form>
       </div>

@@ -44,6 +44,19 @@
   font-weight: 300;
   src: url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
 }
+
+@font-face {
+  font-family: Roboto;
+  font-weight: 400;
+  src: url("/fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Staatliches;
+  font-weight: 400;
+  src: url("/fonts/Staatliches.ttf") format("truetype");
+}
+
 html,
 body {
   padding: 0;

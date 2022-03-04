@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import style from "../styles/Login.module.css";
 import { authService } from "../service/firebase";
 import {
@@ -7,11 +7,20 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const login = () => {
+  const isLogin = useSelector((state) => state.displayName.isLogin);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    if (isLogin) {
+      router.replace("/");
+    }
+  }, [isLogin]);
 
   const onChange = (e) => {
     const {
