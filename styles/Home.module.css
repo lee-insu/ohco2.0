@@ -5,8 +5,7 @@
 }
 .banner {
   width: 100%;
-  height: 380px;
-  background-color: aliceblue;
+  height: 480px;
 }
 .today_list {
   width: 100%;
@@ -16,8 +15,7 @@
 
 .sub_banner {
   width: 100%;
-  height: 190px;
-  background-color: azure;
+  height: auto;
 }
 
 .sub_list {
@@ -94,7 +92,7 @@
     width: 95%;
   }
   .banner {
-    height: 320px;
+    height: 480px;
   }
   .sub_inner {
     width: 95%;
@@ -105,7 +103,7 @@
     width: 95%;
   }
   .banner {
-    height: 320px;
+    height: 380px;
   }
   .sub_inner {
     width: 95%;
@@ -116,7 +114,7 @@
     width: 97%;
   }
   .banner {
-    height: 280px;
+    height: 380px;
   }
   .sub_inner {
     width: 97%;

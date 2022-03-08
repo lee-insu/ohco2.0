@@ -45,11 +45,11 @@ const list = () => {
       ],
     },
     {
-      id: "날씨",
+      id: "분위기",
       filter: [
-        { id: "날씨", value: "맑음", isChecked: false },
-        { id: "날씨", value: "흐림", isChecked: false },
-        { id: "날씨", value: "비", isChecked: false },
+        { id: "분위기", value: "시크한", isChecked: false },
+        { id: "분위기", value: "당당한", isChecked: false },
+        { id: "분위기", value: "활기찬", isChecked: false },
       ],
     },
     {
@@ -72,7 +72,7 @@ const list = () => {
 
   const [filTheme, setFilTheme] = useState("");
   const [filStyle, setFilStyle] = useState("");
-  const [filWeather, setFilWeather] = useState("");
+  const [filMood, setFilMood] = useState("");
   const [filSex, setFilSex] = useState("");
   const [filSeason, setFilSeason] = useState("");
   const [filterArray, getFilterArray] = useState([]);
@@ -85,7 +85,7 @@ const list = () => {
 
   const { data } = useQuery(GET_CODY_FILTER, {
     variables: {
-      weather: filWeather.value,
+      mood: filMood.value,
       season: filSeason.value,
       sex: filSex.value,
       style: filStyle.value,
@@ -104,7 +104,7 @@ const list = () => {
       filSex.value,
       filStyle.value,
       filTheme.value,
-      filWeather.value,
+      filMood.value,
     ];
 
     if (filter) {
@@ -112,7 +112,7 @@ const list = () => {
       getFilterArray(...[filternull]);
       getFilterArray((prevState) => prevState.filter((item) => item != ""));
     }
-  }, [data, filSeason, filSex, filStyle, filTheme, filWeather]);
+  }, [data, filSeason, filSex, filStyle, filTheme, filMood]);
 
   useEffect(() => {
     if (intersecting && hasNext) {
@@ -162,7 +162,7 @@ const list = () => {
         setActiveFilter(true);
         setActiveId(filterId);
         break;
-      case "날씨":
+      case "분위기":
         setActiveFilter(true);
         setActiveId(filterId);
         break;
@@ -181,8 +181,8 @@ const list = () => {
       case filter.id == "계절":
         await setFilSeason(filter);
         break;
-      case filter.id == "날씨":
-        await setFilWeather(filter);
+      case filter.id == "분위기":
+        await setFilMood(filter);
         break;
       case filter.id == "성별":
         await setFilSex(filter);
@@ -197,8 +197,8 @@ const list = () => {
         return <div name={filter}>{filSex.value}</div>;
       case filter == filStyle.id:
         return <div name={filter}>{filStyle.value}</div>;
-      case filter == filWeather.id:
-        return <div name={filter}>{filWeather.value}</div>;
+      case filter == filMood.id:
+        return <div name={filter}>{filMood.value}</div>;
       case filter == filSeason.id:
         return <div name={filter}>{filSeason.value}</div>;
       case filter == filTheme.id:
@@ -225,10 +225,10 @@ const list = () => {
       case "겨울":
         setFilSeason("");
         break;
-      case "맑음":
-      case "흐림":
-      case "비":
-        setFilWeather("");
+      case "시크한":
+      case "활기찬":
+      case "당당한":
+        setFilMood("");
         break;
       case "남":
       case "여":
@@ -255,7 +255,7 @@ const list = () => {
           case item.id == "계절":
             item.isChecked = item.value === value;
             break;
-          case item.id == "날씨":
+          case item.id == "분위기":
             item.isChecked = item.value === value;
             break;
           case item.id == "성별":
@@ -301,7 +301,7 @@ const list = () => {
     setFilSex("");
     setFilStyle("");
     setFilTheme("");
-    setFilWeather("");
+    setFilMood("");
   };
 
   return (
@@ -349,7 +349,7 @@ const list = () => {
                     {filStyle.id == filter.id ||
                     filSex.id == filter.id ||
                     filTheme.id == filter.id ||
-                    filWeather.id == filter.id ||
+                    filMood.id == filter.id ||
                     filSeason.id == filter.id ? (
                       selectFilter(filter.id)
                     ) : (
@@ -413,7 +413,7 @@ const list = () => {
                         {filStyle.id == filter.id ||
                         filSex.id == filter.id ||
                         filTheme.id == filter.id ||
-                        filWeather.id == filter.id ||
+                        filMood.id == filter.id ||
                         filSeason.id == filter.id ? (
                           selectFilter(filter.id)
                         ) : (

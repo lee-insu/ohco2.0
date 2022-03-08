@@ -58,19 +58,29 @@ export default function Home({
           <CodyList temp={temp} />
         </div>
       </div>
-      <div className={style.sub_banner}></div>
+      <picture>
+        <source srcset="/img/large_music.svg" media="(min-width: 769px)" />
+        <source srcset="/img/medium_music.svg" media="(max-width: 768px)" />
+        <source srcset="/img/small_music.svg" media="(max-width: 390px)" />
+        <img src="/img/large_music.svg" alt="이미지" />
+      </picture>
+
       <div className={style.today_list}>
         <div className={style.sub_inner}>
           <SubItemList data={!musicLoading && musicArray} theme={music} />
         </div>
       </div>
-      <div className={style.sub_banner}></div>
       <div className={style.today_list}>
         <div className={style.sub_inner}>
           <SubList data={!musicLoading && musicArray} theme={music} />
         </div>
       </div>
-      <div className={style.sub_banner}></div>
+      <picture>
+        <source srcset="/img/large_perfume.svg" media="(min-width: 769px)" />
+        <source srcset="/img/medium_perfume.svg" media="(max-width: 768px)" />
+        <source srcset="/img/small_perfume.svg" media="(max-width: 390px)" />
+        <img src="/img/large_perfume.svg" alt="이미지" />
+      </picture>
       <div className={style.today_list}>
         <div className={style.sub_inner}>
           <SubItemList
@@ -79,7 +89,6 @@ export default function Home({
           />
         </div>
       </div>
-      <div className={style.sub_banner}></div>
       <div className={style.today_list}>
         <div className={style.sub_inner}>
           <SubList data={!perfumeLoading && perfumeArray} theme={perfumes} />

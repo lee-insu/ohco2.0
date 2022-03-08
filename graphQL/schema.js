@@ -7,7 +7,7 @@ const GET_CODY_MAIN = gql`
       user_id
       img_url
       category {
-        weather
+        mood
         season
         sex
         style
@@ -19,7 +19,7 @@ const GET_CODY_MAIN = gql`
 
 const GET_CODY_FILTER = gql`
   query CodyFilter(
-    $weather: String
+    $mood: String
     $season: String
     $sex: String
     $style: String
@@ -27,7 +27,7 @@ const GET_CODY_FILTER = gql`
     $count: Int
   ) {
     codyfilter(
-      weather: $weather
+      mood: $mood
       season: $season
       sex: $sex
       style: $style
@@ -38,7 +38,7 @@ const GET_CODY_FILTER = gql`
       user_id
       img_url
       category {
-        weather
+        mood
         season
         sex
         style
@@ -55,7 +55,7 @@ const GET_CODY_LIST = gql`
       user_id
       img_url
       category {
-        weather
+        mood
         season
         sex
         style
@@ -72,7 +72,7 @@ const GET_CODY_ID = gql`
       user_id
       img_url
       category {
-        weather
+        mood
         season
         sex
         style
@@ -117,7 +117,7 @@ const GET_USER_CODY_LIST = gql`
       id
       img_url
       category {
-        weather
+        mood
         season
         sex
         style
@@ -133,7 +133,7 @@ const GET_SIMILAR_LIST = gql`
       id
       img_url
       category {
-        weather
+        mood
         season
         sex
         style
@@ -149,7 +149,7 @@ const GET_CODY_BOOKMARK = gql`
       id
       img_url
       category {
-        weather
+        mood
         season
         sex
         style

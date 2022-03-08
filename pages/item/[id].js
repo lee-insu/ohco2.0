@@ -237,10 +237,8 @@ const Detail = ({ item, codyData, loading }) => {
                 <div className={style.title}>{codyItem.category.theme}</div>
                 <ul className={style.ul}>
                   <li>
-                    <div className={style.question}>날씨</div>
-                    <div className={style.answer}>
-                      {codyItem.category.weather}
-                    </div>
+                    <div className={style.question}>성별</div>
+                    <div className={style.answer}>{codyItem.category.sex}</div>
                   </li>
                   <li>
                     <div className={style.question}>계절</div>
@@ -248,15 +246,16 @@ const Detail = ({ item, codyData, loading }) => {
                       {codyItem.category.season}
                     </div>
                   </li>
-                  <li>
-                    <div className={style.question}>성별</div>
-                    <div className={style.answer}>{codyItem.category.sex}</div>
-                  </li>
+
                   <li>
                     <div className={style.question}>스타일</div>
                     <div className={style.answer}>
                       {codyItem.category.style}
                     </div>
+                  </li>
+                  <li>
+                    <div className={style.question}>분위기</div>
+                    <div className={style.answer}>{codyItem.category.mood}</div>
                   </li>
                 </ul>
                 <div className={style.info_margin} className={style.title}>

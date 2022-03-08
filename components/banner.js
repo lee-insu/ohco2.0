@@ -20,18 +20,27 @@ const Banner = () => {
         }}
         className="mySwiper"
       >
-        {/* <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
+        <SwiperSlide>
+          <img
+            style={{ backgroundColor: "#f9f9f9" }}
+            className={style.img}
+            src="/img/banner_1.svg"
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+          <img
+            style={{ backgroundColor: "#f9f9f9" }}
+            className={style.img}
+            src="/img/banner_2.svg"
+          />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+          <img
+            style={{ backgroundColor: "#f9f9f9" }}
+            className={style.img}
+            src="/img/banner_3.svg"
+          />
         </SwiperSlide>
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-        </SwiperSlide> */}
       </Swiper>
     </div>
   );
