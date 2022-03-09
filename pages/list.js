@@ -267,11 +267,17 @@ const list = () => {
     });
   };
 
-  const activeBookmark = async (id) => {
+  const activeBookmark = async (item) => {
     if (useremail) {
       if (confirm("이 코디를 옷장에 저장할까요?")) {
-        await setDoc(doc(fireStore, "bookmark", useremail, "like", id), {
+        await setDoc(doc(fireStore, "bookmark", useremail, "like", item.id), {
           active: true,
+          id: item.id,
+          img_url: item.img_url,
+          category: {
+            theme: item.category.theme,
+            style: item.category.style,
+          },
         });
         setBookmarkReset((counter) => (counter += 1));
       } else {
@@ -483,7 +489,7 @@ const list = () => {
                               onClick={
                                 bookmark.includes(item.id)
                                   ? () => unactiveBookmark(item.id)
-                                  : () => activeBookmark(item.id)
+                                  : () => activeBookmark(item)
                               }
                               className={style.bookmark}
                               src={

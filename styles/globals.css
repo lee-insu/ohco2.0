@@ -106,7 +106,16 @@ a {
   display: block;
   width: 100%;
 }
+.swiper-button-prev::after {
+  color: #a2ad9c;
+}
 
+.swiper-button-next::after {
+  color: #a2ad9c;
+}
+.swiper-pagination-bullet-active {
+  background-color: #a2ad9c !important;
+}
 .ant-menu-vertical {
   margin: 10px 0;
 }

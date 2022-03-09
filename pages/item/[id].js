@@ -120,6 +120,12 @@ const Detail = ({ item, codyData, loading }) => {
             doc(fireStore, "bookmark", userinfo.email.email, "like", item),
             {
               active: true,
+              id: codyItem.id,
+              img_url: codyItem.img_url,
+              category: {
+                theme: codyItem.category.theme,
+                style: codyItem.category.style,
+              },
             }
           );
           setActiveBookmark(true);

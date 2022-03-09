@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
   return (
     <div className={style.container}>
       <Head></Head>
-      <Sticky stickyStyle={{ zIndex: 1 }}>
+      <Sticky stickyStyle={{ zIndex: 2 }}>
         <Header />
       </Sticky>
       <div>{children}</div>

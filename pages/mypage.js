@@ -9,6 +9,8 @@ import { useQuery } from "@apollo/client";
 import { GET_CODY_BOOKMARK } from "../graphQL/schema";
 import * as codyAction from "../store/modules/cody";
 import * as productAction from "../store/modules/product";
+import * as musicAction from "../store/modules/music";
+import * as perfumeAction from "../store/modules/perfume";
 
 const mypage = () => {
   const user = useSelector((state) => state);
@@ -55,6 +57,7 @@ const mypage = () => {
       const data = await getDocs(q);
       const newData = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       getPerfumesPick(newData);
+      dispatch(perfumeAction.getPerfume(newData));
     }
 
     if (user.displayName.isLogin) {
@@ -64,6 +67,7 @@ const mypage = () => {
       const data = await getDocs(q);
       const newData = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       getMusicPick(newData);
+      dispatch(musicAction.getMusic(newData));
     }
   }, [triger]);
 
@@ -73,13 +77,6 @@ const mypage = () => {
       dispatch(codyAction.getCody(data.codyarray));
     }
   }, [data]);
-
-  const unactiveProduct = async (id) => {
-    if (confirm("이 상품을 북마크에서 뺄까요?")) {
-      await deleteDoc(doc(fireStore, "products", user.email.email, "like", id));
-      setTriger(true);
-    }
-  };
 
   return (
     <div className={style.container}>
@@ -190,7 +187,7 @@ const mypage = () => {
           <div className={style.product_container}>
             <div className={style.title_container}>
               <div className={style.sub_title}>관심 있는 향수</div>
-              {musicPick.length > 4 && (
+              {perfumesPick.length > 4 && (
                 <Link href="/mypage/perfume">
                   <div className={style.moreBtn}>더보기</div>
                 </Link>

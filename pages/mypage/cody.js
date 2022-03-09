@@ -6,8 +6,6 @@ import { useSelector } from "react-redux";
 import { fireStore } from "../../service/firebase";
 import Link from "next/link";
 import { collection, deleteDoc, doc, getDocs, query } from "firebase/firestore";
-import { useQuery } from "@apollo/client";
-import { GET_CODY_BOOKMARK } from "../../graphQL/schema";
 
 const cody = () => {
   const bookmarkStore = useSelector((state) => state.cody.cody);
@@ -22,14 +20,17 @@ const cody = () => {
     }
   };
 
-  // useEffect(() => {
-  //   return async () => {
-  //     const q = await query(collection(fireStore, "bookmark", user, "like"));
-  //     const data = await getDocs(q);
-  //     const newData = data.docs.map((doc) => doc.id);
-  //     getPick(newData);
-  //   };
-  // }, [triger]);
+  useEffect(() => {
+    return async () => {
+      const q = await query(collection(fireStore, "bookmark", user, "like"));
+      const data = await getDocs(q);
+      const newData = data.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      getBookmark(...[newData]);
+    };
+  }, [triger]);
 
   return (
     <div className={style.container}>

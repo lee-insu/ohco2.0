@@ -6,6 +6,8 @@ import email from "./email";
 import uid from "./uid";
 import cody from "./cody";
 import product from "./product";
+import music from "./music";
+import perfume from "./perfume";
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
@@ -20,6 +22,8 @@ const reducer = (state, action) => {
     uid,
     cody,
     product,
+    music,
+    perfume,
   })(state, action);
 };
 

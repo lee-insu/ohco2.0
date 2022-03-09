@@ -20,18 +20,22 @@ const product = () => {
     }
   };
 
-  //   useEffect(() => {
-  //     return async () => {
-  //       const q = await query(collection(fireStore, "product", user, "like"));
-  //       const data = await getDocs(q);
-  //       const newData = data.docs.map((doc) => doc.id);
-  //       getBookmark(...[newData]);
-  //     };
-  //   }, [triger]);
+  useEffect(() => {
+    return async () => {
+      const q = await query(collection(fireStore, "products", user, "like"));
+      const data = await getDocs(q);
+      const newData = data.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      getBookmark(...[newData]);
+    };
+  }, [triger]);
+
   return (
     <div className={style.container}>
       <div className={style.inner}>
-        <div className={style.title}>관심 코디</div>
+        <div className={style.title}>관심 상품</div>
         <Row className-={style.row} gutter={[8, 4]}>
           {bookmark
             ? bookmark.map((item) => (
@@ -45,7 +49,7 @@ const product = () => {
                   xl={6}
                 >
                   <div className={style.li}>
-                    <Link href={`/item/${item.id}`}>
+                    <Link href={`/product/${item.id}`}>
                       <div className={style.bookmark_img_container}>
                         <img className={style.img} src={item.img_url} />
                       </div>
