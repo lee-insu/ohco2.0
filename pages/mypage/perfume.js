@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import style from "../../styles/productPick.module.css";
 import { Row, Col } from "antd";
 import "antd/dist/antd.css";
 import { collection, deleteDoc, doc, getDocs, query } from "firebase/firestore";
 import Link from "next/link";
 import { fireStore } from "../../service/firebase";
+import * as perfumeAction from "../../store/modules/perfume";
 
 const perfume = () => {
   const bookmarkStore = useSelector((state) => state.perfume.perfume);
   const user = useSelector((state) => state.email.email);
   const [triger, setTriger] = useState(true);
   const [bookmark, getBookmark] = useState(bookmarkStore);
+  const dispatch = useDispatch();
 
   const unactiveItem = async (id) => {
     if (confirm("이 음악을 북마크에서 뺄까요?")) {
@@ -29,6 +31,7 @@ const perfume = () => {
         ...doc.data(),
       }));
       getBookmark(...[newData]);
+      dispatch(perfumeAction.getPerfume(newData));
     };
   }, [triger]);
 

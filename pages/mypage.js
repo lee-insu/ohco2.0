@@ -4,7 +4,7 @@ import style from "../styles/Mypage.module.css";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { fireStore } from "../service/firebase";
-import { doc, collection, getDocs, query, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, query } from "firebase/firestore";
 import { useQuery } from "@apollo/client";
 import { GET_CODY_BOOKMARK } from "../graphQL/schema";
 import * as codyAction from "../store/modules/cody";

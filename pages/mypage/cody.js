@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import style from "../../styles/Cody.module.css";
 import { Row, Col } from "antd";
 import "antd/dist/antd.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fireStore } from "../../service/firebase";
 import Link from "next/link";
 import { collection, deleteDoc, doc, getDocs, query } from "firebase/firestore";
+import * as codyAction from "../../store/modules/cody";
 
 const cody = () => {
   const bookmarkStore = useSelector((state) => state.cody.cody);
   const user = useSelector((state) => state.email.email);
   const [triger, setTriger] = useState(true);
   const [bookmark, getBookmark] = useState(bookmarkStore);
+  const dispatch = useDispatch();
 
   const unactiveBookmark = async (id) => {
     if (confirm("이 코디를 북마크에서 뺄까요?")) {
@@ -29,6 +31,7 @@ const cody = () => {
         ...doc.data(),
       }));
       getBookmark(...[newData]);
+      dispatch(codyAction.getCody(newData));
     };
   }, [triger]);
 
