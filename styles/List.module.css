@@ -214,8 +214,9 @@
 
 .bookmark {
   width: 24px;
-  top: 15px;
-  right: 10%;
+  position: relative;
+  top: 5px;
+  right: 3px;
   cursor: pointer;
 }
 
@@ -326,7 +327,7 @@
   }
 
   .bookmark {
-    width: 33px;
+    width: 28px;
     position: relative;
     top: 5px;
     right: 3px;
@@ -363,7 +364,7 @@
     width: 26px;
     position: relative;
     top: 2px;
-    right: 0;
+    right: 1px;
     cursor: pointer;
   }
   .mobile_filter {
