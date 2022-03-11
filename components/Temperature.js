@@ -1,56 +1,108 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { defaultGeo, handleGeoSuccess } from "../service/location";
+import { useDispatch } from "react-redux";
+import style from "../styles/Temperature.module.css";
+import * as tempAction from "../store/modules/temp";
 
-const handleWeather = (weather) => {
-  let main = "";
+const Temperature = () => {
+  const dispatch = useDispatch();
+  const [area, getArea] = useState("");
+  const [weather, getWeather] = useState("");
+  const [triger, setTriger] = useState(false);
 
-  switch (weather) {
-    case "Clear":
-      main = "맑음";
-      break;
-    case "Clouds":
-      main = "흐림";
-      break;
-    case "Atmosphere":
-      main = " 기압";
-      break;
-    case "Snow":
-      main = "눈";
-      break;
-    case "Rain":
-      main = "비";
-      break;
-    case "Drizzle":
-      main = "이슬비";
-      break;
-    case "Thunderstorm":
-      main = "천둥";
-      break;
-    case "Mist":
-      main = "안개";
-      break;
-    case "Haze":
-      main = "뿌옇";
-    default:
-      return main;
-  }
-  return main;
-};
+  const handleWeather = (weather) => {
+    let main = "";
 
-const Temperature = ({ weather, area }) => {
+    switch (weather) {
+      case "Clear":
+        main = "맑음";
+        break;
+      case "Clouds":
+        main = "흐림";
+        break;
+      case "Atmosphere":
+        main = " 기압";
+        break;
+      case "Snow":
+        main = "눈";
+        break;
+      case "Rain":
+        main = "비";
+        break;
+      case "Drizzle":
+        main = "이슬비";
+        break;
+      case "Thunderstorm":
+        main = "천둥";
+        break;
+      case "Mist":
+        main = "안개";
+        break;
+      case "Haze":
+        main = "뿌옇";
+      default:
+        return main;
+    }
+    return main;
+  };
   const weatherKr = handleWeather(weather);
 
-  return (
-    <div>
-      {
-        (area,
-        weather ? (
-          <>
-            {area}, {weatherKr}
-          </>
-        ) : (
-          <>날씨를 불러오고 있습니다..</>
-        ))
+  useEffect(() => {
+    defaultGeo().then(
+      axios.spread((res1, res2) => {
+        getArea(res1.data.documents[0].region_2depth_name);
+        dispatch(tempAction.getTemp(Math.round(res2.data.main.temp) - 273));
+        getWeather(res2.data.weather[0].main);
+      })
+    );
+  }, []);
+
+  const handleLocation = (e) => {
+    e.preventDefault();
+    navigator.geolocation.getCurrentPosition(handleGeo);
+
+    function handleGeo(position) {
+      try {
+        handleGeoSuccess(position).then(
+          axios.spread((res1, res2) => {
+            getArea(res1.data.documents[0].region_2depth_name);
+            dispatch(tempAction.getTemp(Math.round(res2.data.main.temp) - 273));
+            getWeather(res2.data.weather[0].main);
+            setTriger(true);
+          })
+        );
+      } catch (error) {
+        console.log(error);
       }
+    }
+  };
+
+  return (
+    <div className={style.container}>
+      {!triger ? (
+        <div className={style.flex}>
+          <div>
+            서울 {area}, {weatherKr}
+          </div>
+          <img
+            src="/icon/location.svg"
+            onClick={handleLocation}
+            className={style.location_btn}
+          />
+        </div>
+      ) : (
+        <div className={style.flex}>
+          <div>
+            {area}, {weatherKr}
+          </div>
+          <img
+            src="/icon/location.svg"
+            onClick={handleLocation}
+            className={style.location_btn}
+          />
+        </div>
+      )}
     </div>
   );
 };

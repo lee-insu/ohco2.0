@@ -5,6 +5,7 @@ import { GET_CODY_MAIN } from "../graphQL/schema";
 import { useQuery } from "@apollo/client";
 import style from "../styles/CodyList.module.css";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 const tempCody = (temp) => {
   let season = "";
@@ -43,7 +44,8 @@ const tempCody = (temp) => {
   return season;
 };
 
-const CodyList = ({ temp }) => {
+const CodyList = () => {
+  const temperature = useSelector((state) => state.temp.temp);
   const [cody, getCody] = useState([]);
   const [loadmore, setLoadmore] = useState(4);
   const [season, handleSeoson] = useState("");
@@ -57,12 +59,12 @@ const CodyList = ({ temp }) => {
   });
 
   useEffect(() => {
-    const tempSeason = tempCody(temp);
+    const tempSeason = tempCody(temperature);
     handleSeoson(tempSeason);
     if (data) {
       getCody(data.codymain);
     }
-  }, [data, temp]);
+  }, [data, temperature]);
 
   const handleFetchData = () => {
     setLoadmore((e) => e + 4);

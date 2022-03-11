@@ -1,16 +1,14 @@
 import Head from "next/head";
 import Image from "next/image";
 import style from "../styles/Home.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Banner from "../components/banner";
-import Temperature from "../components/Temperature";
 import CodyList from "../components/CodyList";
-import handleGeoSuccess from "../service/location";
-import axios from "axios";
 import SubList from "../components/SubList";
 import { GET_MUSIC_ARRAY, GET_PERFUMES_ARRAY } from "../graphQL/schema";
 import SubItemList from "../components/SubItemList";
 import { client } from "../service/apollo";
+import Temperature from "../components/temperature";
 
 export default function Home({
   musicArray,
@@ -18,29 +16,8 @@ export default function Home({
   perfumeArray,
   perfumeLoading,
 }) {
-  const [area, getArea] = useState("");
-  const [temp, getTemp] = useState("");
-  const [weather, getWeather] = useState("");
   const music = "music";
   const perfumes = "perfumes";
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(handleGeo);
-
-    function handleGeo(position) {
-      try {
-        handleGeoSuccess(position).then(
-          axios.spread((res1, res2) => {
-            getArea(res1.data.documents[0].region_2depth_name);
-            getTemp(Math.round(res2.data.main.temp) - 273);
-            getWeather(res2.data.weather[0].main);
-          })
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  }, []);
 
   return (
     <div className={style.container}>
@@ -52,10 +29,10 @@ export default function Home({
           <div className={style.title}>
             <div className={style.style_title}>today style</div>
             <div className={style.location}>
-              <Temperature temp={temp} weather={weather} area={area} />
+              <Temperature />
             </div>
           </div>
-          <CodyList temp={temp} />
+          <CodyList />
         </div>
       </div>
       <div className={style.sub_banner}>
