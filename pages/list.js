@@ -313,7 +313,7 @@ const list = () => {
   return (
     <div className={style.container}>
       <div className={style.banner}>
-        <div className={style.title}>날씨에 맞는 코디</div>
+        <div className={style.title}>나에게 어울리는 코디</div>
       </div>
       <div className={style.list_container}>
         <nav className={style.nav}>

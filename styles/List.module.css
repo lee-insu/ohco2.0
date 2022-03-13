@@ -45,12 +45,13 @@
 
 .title {
   position: relative;
-  width: 197px;
+  width: auto;
   margin: 0 auto;
   font-family: pretendard;
   font-weight: 700;
   font-size: 28px;
   top: 45%;
+  text-align: center;
 }
 
 .list_container {

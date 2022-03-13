@@ -80,7 +80,7 @@ const GET_CODY_ID = gql`
       }
       information {
         name
-        general
+        youtube
         instagram
         shop
       }

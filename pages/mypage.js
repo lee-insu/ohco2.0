@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fireStore } from "../service/firebase";
 import { collection, getDocs, query } from "firebase/firestore";
 import { useQuery } from "@apollo/client";
+import { Avatar } from "antd";
 import { GET_CODY_BOOKMARK } from "../graphQL/schema";
 import * as codyAction from "../store/modules/cody";
 import * as productAction from "../store/modules/product";
@@ -83,7 +84,10 @@ const mypage = () => {
       <div className={style.inner}>
         <div className={style.userinfo_container}>
           <div className={style.userinfo_box}>
-            <div className={style.profile_img}></div>
+            <div className={style.userinfo_profile}>
+              <div className={style.profile_img}></div>
+            </div>
+
             <div className={style.userinfo}>
               <div>{user.displayName.displayName}</div>
               <div>{user.email.email}</div>

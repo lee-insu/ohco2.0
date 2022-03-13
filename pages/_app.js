@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import * as userAction from "../store/modules/user";
 import * as emailAction from "../store/modules/email";
 import * as uidAction from "../store/modules/uid";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }) {
   const dispatch = useDispatch();
@@ -25,6 +26,10 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ApolloProvider client={client}>
+      <Head>
+        <title>OHCO | 나를 표현하는 코디 </title>
+        <link rel="shortcut icon" href="/img/favicon.ico" />
+      </Head>
       <Layout>
         <Component {...pageProps} />
       </Layout>

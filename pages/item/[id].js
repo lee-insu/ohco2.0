@@ -275,15 +275,15 @@ const Detail = ({ item, codyData, loading }) => {
                     </div>
                   </li>
                   <li>
-                    <div className={style.question}>세대</div>
-                    <div className={style.answer}>
-                      {codyItem.information.general}
-                    </div>
-                  </li>
-                  <li>
                     <div className={style.question}>인스타그램</div>
                     <div className={style.answer}>
                       {codyItem.information.instagram}
+                    </div>
+                  </li>
+                  <li>
+                    <div className={style.question}>유튜브</div>
+                    <div className={style.answer}>
+                      {codyItem.information.youtube}
                     </div>
                   </li>
                   <li>

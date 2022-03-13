@@ -18,6 +18,9 @@
   display: flex;
   padding: 14px;
 }
+.userinfo_profile {
+  width: auto;
+}
 .profile_img {
   width: 73px;
   height: 73px;
