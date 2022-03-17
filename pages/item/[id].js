@@ -140,16 +140,10 @@ const Detail = ({ item, codyData, loading }) => {
     if (userinfo.displayName.isLogin) {
       if (confirm("이 상품을 옷장에 저장할까요?")) {
         await setDoc(
-          doc(
-            fireStore,
-            "products",
-            userinfo.email.email,
-            "like",
-            item.product_id
-          ),
+          doc(fireStore, "products", userinfo.email.email, "like", item.id),
           {
             active: true,
-            product_id: item.product_id,
+            id: item.id,
             img_url: item.img_url,
             name: item.name,
             brand: item.brand,
@@ -442,22 +436,22 @@ const Detail = ({ item, codyData, loading }) => {
                 <div className={style.cody_ul_container}>
                   <ul className={style.product_ul}>
                     {codyItem.products.map((item) => (
-                      <li key={item.product_id} className={style.product_li}>
+                      <li key={item.id} className={style.product_li}>
                         <img
                           onClick={
-                            productId.includes(item.product_id)
-                              ? () => unactiveProduct(item.product_id)
+                            productId.includes(item.id)
+                              ? () => unactiveProduct(item.id)
                               : () => activeProduct(item)
                           }
                           className={style.product_bookmark}
                           src={
-                            productId.includes(item.product_id)
+                            productId.includes(item.id)
                               ? "/icon/icons8-bookmark-filled.svg"
                               : "/icon/icons8-bookmark.svg"
                           }
                         />
 
-                        <Link href={`/product/${item.product_id}`}>
+                        <Link href={`/product/${item.id}`}>
                           <img
                             className={style.product_img}
                             src={item.img_url}

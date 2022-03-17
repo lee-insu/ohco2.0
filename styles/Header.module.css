@@ -13,10 +13,18 @@
   display: flex;
 }
 .logo {
-  flex: none;
-  font-family: Staatliches;
-  font-size: 45px;
+  width: 6.5rem;
+  height: 65px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
+}
+.logdo {
+  width: 99px;
+  height: 65px;
+  background-color: red;
+  display: flex;
+  align-items: center;
 }
 .nav {
   margin-left: auto;

@@ -48,7 +48,7 @@ const Product = ({ item, data, loading }) => {
   useEffect(() => {
     if (product !== null) {
       product.recommand_products.map((x) =>
-        getProductItems((prev) => [...prev, x.product_id])
+        getProductItems((prev) => [...prev, x.id])
       );
     }
     return () => {
@@ -74,7 +74,7 @@ const Product = ({ item, data, loading }) => {
             doc(fireStore, "products", userinfo.email.email, "like", item),
             {
               active: true,
-              product_id: product.product_id,
+              id: product.id,
               img_url: product.img_url,
               name: product.name,
               brand: product.brand,
@@ -158,8 +158,8 @@ const Product = ({ item, data, loading }) => {
               <div className={style.cody_ul_container}>
                 <ul className={style.product_ul}>
                   {productItemsArray.productarray.map((item) => (
-                    <li key={item.product_id} className={style.product_li}>
-                      <Link href={`/product/${item.product_id}`}>
+                    <li key={item.id} className={style.product_li}>
+                      <Link href={`/product/${item.id}`}>
                         <img className={style.product_img} src={item.img_url} />
                       </Link>
                       <div className={style.product_category}>

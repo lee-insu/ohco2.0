@@ -85,7 +85,7 @@ const GET_CODY_ID = gql`
         shop
       }
       products {
-        product_id
+        id
         img_url
         name
         brand
@@ -162,7 +162,7 @@ const GET_CODY_BOOKMARK = gql`
 const GET_PRODUCT = gql`
   query Product($id: ID!) {
     product(id: $id) {
-      product_id
+      id
       img_url
       price
       name
@@ -170,7 +170,7 @@ const GET_PRODUCT = gql`
       cody
       shop_url
       recommand_products {
-        product_id
+        id
       }
     }
   }
@@ -179,7 +179,7 @@ const GET_PRODUCT = gql`
 const GET_PRODUCT_ITEMS = gql`
   query Productarray($id: [String]) {
     productarray(id: $id) {
-      product_id
+      id
       img_url
       name
       brand

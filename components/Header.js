@@ -30,8 +30,11 @@ const Header = () => {
       <BrowserView>
         <div className={style.inner}>
           <Link href="/">
-            <div className={style.logo}>OH CO!</div>
+            <div className={style.logo}>
+              <img src="/icon/logo.svg" />
+            </div>
           </Link>
+
           <nav className={style.nav}>
             <Link href="/list">
               <div>LIST</div>
@@ -60,7 +63,9 @@ const Header = () => {
       <MobileView>
         <div className={style.container}>
           <Link href="/">
-            <div className={style.logo}>OH CO!</div>
+            <div className={style.logo}>
+              <img src="/icon/logo.svg" />
+            </div>
           </Link>
           <button className={style.toggle} onClick={showDrawer}>
             <img src="/icon/menu.svg" />
