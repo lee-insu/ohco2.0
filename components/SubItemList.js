@@ -32,7 +32,7 @@ const SubItemList = ({ data, theme }) => {
             <Col lg={24} xl={24} className={style.list_container}>
               <div className={style.item_ul_container}>
                 <ul className={style.item_ul}>
-                  {itemData.map((item) => (
+                  {itemData.slice(0, 8).map((item) => (
                     <li key={item.id}>
                       <Link
                         href={

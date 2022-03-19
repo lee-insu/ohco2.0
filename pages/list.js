@@ -480,8 +480,10 @@ const list = () => {
                               <img className={style.img} src={item.img_url} />
                             </div>
                           </Link>
+
                           <div className={style.item_container}>
                             <div className={style.item_category}>
+                              <div>id:{item.id}</div>
                               <div>{item.category.style}</div>
                               <div>{item.category.theme}</div>
                             </div>

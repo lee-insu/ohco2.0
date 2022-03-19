@@ -150,7 +150,7 @@ const Music = ({ item, data, loading }) => {
               <div className={style.sub_head}>이 노래 분위기의 코디</div>
               <div className={style.cody_ul_container}>
                 <ul className={style.cody_ul}>
-                  {codyItem.codyarray.map((item) => (
+                  {codyItem.codyarray.slice(0, 20).map((item) => (
                     <li key={item.id}>
                       <Link href={`/item/${item.id}`}>
                         <img

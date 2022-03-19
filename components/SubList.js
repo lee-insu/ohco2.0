@@ -7,52 +7,43 @@ import { GET_CODY_BOOKMARK } from "../graphQL/schema";
 import Link from "next/link";
 
 const SubList = ({ data, theme }) => {
-  const [codyData, getCodyData] = useState([]);
   const [recommandCody, getRecommandCody] = useState([]);
 
   useEffect(() => {
-    if (data !== false) {
-      getCodyData(data);
-    }
-  }, [data]);
-
-  let cody = codyData[Math.floor(Math.random() * codyData.length)];
-
-  useEffect(() => {
-    if (cody) {
-      cody.recommand_cody.map((x) => {
+    if (data) {
+      data.recommand_cody.map((x) => {
         getRecommandCody((prev) => [...prev, x.id]);
       });
     }
     return () => {
       getRecommandCody([]);
     };
-  }, [cody]);
+  }, [data]);
 
   const { loading, data: codyArray } = useQuery(GET_CODY_BOOKMARK, {
     variables: { id: recommandCody },
   });
   return (
     <div className={style.sub_list}>
-      {cody ? (
+      {data ? (
         <div className={style.inner}>
           <div className={style.title}>
             {theme == "music" ? (
               <>
                 <div className={style.style_title}>
-                  '{cody.name}' 떠오르는 코디
+                  '{data.name}' 떠오르는 코디
                 </div>
                 <div className={style.sub_style_title}>
-                  {cody.artist}, {cody.mood}
+                  {data.artist}, {data.mood}
                 </div>
               </>
             ) : (
               <>
                 <div className={style.style_title}>
-                  '{cody.name}' 어울리는 코디
+                  '{data.name}' 어울리는 코디
                 </div>
                 <div className={style.sub_style_title}>
-                  {cody.brand}, {cody.scent}
+                  {data.brand}, {data.scent}
                 </div>
               </>
             )}
@@ -62,7 +53,7 @@ const SubList = ({ data, theme }) => {
               <Col lg={24} xl={24} className={style.list_container}>
                 <div className={style.cody_ul_container}>
                   <ul className={style.cody_ul}>
-                    {codyArray.codyarray.map((item) => (
+                    {codyArray.codyarray.slice(0, 20).map((item) => (
                       <li key={item.id}>
                         <Link href={`item/${item.id}`}>
                           <img
