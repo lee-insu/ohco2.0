@@ -46,13 +46,13 @@ const SubItemList = ({ data, theme }) => {
                       <div className={style.item_info_container}>
                         {theme == "music" ? (
                           <>
-                            <div>{item.name}</div>
                             <div>{item.mood}</div>
+                            <div>{item.name}</div>
                           </>
                         ) : (
                           <>
-                            <div>{item.name}</div>
                             <div>{item.mood}</div>
+                            <div>{item.name}</div>
                             <div>{item.scent}</div>
                           </>
                         )}

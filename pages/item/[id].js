@@ -43,10 +43,11 @@ const Detail = ({ item, codyData, loading }) => {
   });
   const { data: similarData } = useQuery(GET_SIMILAR_LIST, {
     variables: {
-      theme: codyData && codyData.category.theme,
+      mood: codyData && codyData.category.mood,
+      sex: codyData && codyData.category.sex,
     },
   });
-
+  console.log(codyItem);
   useEffect(async () => {
     if (codyData) {
       getCodyItem(codyData);
@@ -271,19 +272,27 @@ const Detail = ({ item, codyData, loading }) => {
                   <li>
                     <div className={style.question}>인스타그램</div>
                     <div className={style.answer}>
-                      {codyItem.information.instagram}
+                      <a
+                        href={`https://www.instagram.com/${codyItem.information.instagram}`}
+                      >
+                        @{codyItem.information.instagram}
+                      </a>
                     </div>
                   </li>
                   <li>
                     <div className={style.question}>유튜브</div>
                     <div className={style.answer}>
-                      {codyItem.information.youtube}
+                      {codyItem.information.youtube ? (
+                        <a href={codyItem.information.youtube}>바로가기</a>
+                      ) : null}
                     </div>
                   </li>
                   <li>
                     <div className={style.question}>쇼핑몰</div>
                     <div className={style.answer}>
-                      <a href={codyItem.information.shop}>바로가기</a>
+                      {codyItem.information.shop ? (
+                        <a href={codyItem.information.shop}>바로가기</a>
+                      ) : null}
                     </div>
                   </li>
                 </ul>
@@ -326,7 +335,9 @@ const Detail = ({ item, codyData, loading }) => {
               </div>
             </Col>
             <Col lg={24} xl={24} className={style.list_container}>
-              <div className={style.sub_head}>이 회원님의 다른 코디</div>
+              <div className={style.sub_head}>
+                {codyItem.information.name}님의 다른 코디
+              </div>
               <div className={style.cody_ul_container}>
                 <ul className={style.cody_ul}>
                   {userItem
@@ -348,7 +359,7 @@ const Detail = ({ item, codyData, loading }) => {
                 </ul>
               </div>
             </Col>
-            {codyItem.music ? (
+            {Array.isArray(codyItem.music) && codyItem.music.length !== 0 ? (
               <Col lg={24} xl={24} className={style.list_container}>
                 <div className={style.sub_head}>이 코디를 담은 곡</div>
                 <div className={style.cody_ul_container}>
@@ -387,7 +398,8 @@ const Detail = ({ item, codyData, loading }) => {
               </Col>
             ) : null}
 
-            {codyItem.perfumes && (
+            {Array.isArray(codyItem.perfumes) &&
+            codyItem.perfumes.length !== 0 ? (
               <Col lg={24} xl={24} className={style.list_container}>
                 <div className={style.sub_head}>함께 풍기면 좋은 향수</div>
                 <div className={style.cody_ul_container}>
@@ -429,8 +441,9 @@ const Detail = ({ item, codyData, loading }) => {
                   </ul>
                 </div>
               </Col>
-            )}
-            {codyItem.products && (
+            ) : null}
+            {Array.isArray(codyItem.products) &&
+            codyItem.products.length !== 0 ? (
               <Col lg={24} xl={24} className={style.list_container}>
                 <div className={style.sub_head}>이 코디와 연관된 상품</div>
                 <div className={style.cody_ul_container}>
@@ -472,7 +485,7 @@ const Detail = ({ item, codyData, loading }) => {
                   </ul>
                 </div>
               </Col>
-            )}
+            ) : null}
           </Row>
           <div className={style.comment_container}>
             <Comment item={item} />

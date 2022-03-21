@@ -128,8 +128,8 @@ const GET_USER_CODY_LIST = gql`
 `;
 
 const GET_SIMILAR_LIST = gql`
-  query Usersimilarlist($theme: String) {
-    usersimilarlist(theme: $theme) {
+  query Usersimilarlist($mood: String, $sex: String) {
+    usersimilarlist(mood: $mood, sex: $sex) {
       id
       img_url
       category {
