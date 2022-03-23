@@ -17,49 +17,9 @@ import {
 } from "firebase/firestore";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { filterList } from "../service/filterList";
 
 const list = () => {
-  const filterList = [
-    {
-      id: "테마",
-      filter: [
-        { id: "테마", value: "칼바람이 부는 날씨", isChecked: false },
-        { id: "테마", value: "따뜻하고 포근한 날씨", isChecked: false },
-      ],
-    },
-    {
-      id: "스타일",
-      filter: [
-        { id: "스타일", value: "캐주얼", isChecked: false },
-        { id: "스타일", value: "포멀", isChecked: false },
-        { id: "스타일", value: "스트릿", isChecked: false },
-      ],
-    },
-    {
-      id: "계절",
-      filter: [
-        { id: "계절", value: "봄", isChecked: false },
-        { id: "계절", value: "여름", isChecked: false },
-        { id: "계절", value: "가을", isChecked: false },
-        { id: "계절", value: "겨울", isChecked: false },
-      ],
-    },
-    {
-      id: "분위기",
-      filter: [
-        { id: "분위기", value: "시크한", isChecked: false },
-        { id: "분위기", value: "당당한", isChecked: false },
-        { id: "분위기", value: "활기찬", isChecked: false },
-      ],
-    },
-    {
-      id: "성별",
-      filter: [
-        { id: "성별", value: "남", isChecked: false },
-        { id: "성별", value: "여", isChecked: false },
-      ],
-    },
-  ];
   const useremail = useSelector((state) => state.email.email);
   const router = useRouter();
   const [bookmark, getBookmark] = useState([]);
@@ -210,24 +170,40 @@ const list = () => {
   const deleteFilter = (list) => {
     getFilterArray((prevState) => prevState.filter((item) => item != list));
     switch (list) {
-      case "칼바람이 부는 날씨":
-      case "따뜻하고 포근한 날씨":
+      case "감각 있는 도시":
+      case "따스하게 밝은 날":
+      case "캠퍼스 거리":
+      case "저녁의 서촌 거리":
+      case "주광색이 어울리는 카페":
+      case "집 앞 꾸안꾸":
         setFilTheme("");
         break;
       case "캐주얼":
       case "포멀":
       case "스트릿":
+      case "모던캐주얼":
+      case "원마일웨어":
+      case "아메카지":
+      case "시티보이":
+      case "러블리":
+      case "유니크":
+      case "스포티":
+      case "미니멀":
         setFilStyle("");
         break;
+      case "초봄":
+      case "초여름":
+      case "초가을":
+      case "초겨울":
       case "봄":
       case "여름":
       case "가을":
       case "겨울":
         setFilSeason("");
         break;
-      case "시크한":
-      case "활기찬":
-      case "당당한":
+      case "상쾌한 무드":
+      case "차분한 무드":
+      case "포근한 무드":
         setFilMood("");
         break;
       case "남":
@@ -483,7 +459,7 @@ const list = () => {
 
                           <div className={style.item_container}>
                             <div className={style.item_category}>
-                              <div>id:{item.id}</div>
+                              <div>{item.id}</div>
                               <div>{item.category.style}</div>
                               <div>{item.category.theme}</div>
                             </div>
