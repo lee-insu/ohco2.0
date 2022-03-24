@@ -459,7 +459,6 @@ const list = () => {
 
                           <div className={style.item_container}>
                             <div className={style.item_category}>
-                              <div>{item.id}</div>
                               <div>{item.category.style}</div>
                               <div>{item.category.theme}</div>
                             </div>

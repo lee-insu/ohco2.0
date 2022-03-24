@@ -31,7 +31,7 @@ const SubList = ({ data, theme }) => {
             {theme == "music" ? (
               <>
                 <div className={style.style_title}>
-                  '{data.name}' 떠오르는 코디
+                  '{data.name}' 떠오르는 분위기
                 </div>
                 <div className={style.sub_style_title}>
                   {data.artist}, {data.mood}

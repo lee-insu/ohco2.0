@@ -47,7 +47,7 @@ const Detail = ({ item, codyData, loading }) => {
       sex: codyData && codyData.category.sex,
     },
   });
-  console.log(codyItem);
+
   useEffect(async () => {
     if (codyData) {
       getCodyItem(codyData);

@@ -20,11 +20,11 @@ const SubItemList = ({ data, theme }) => {
           <div className={style.title}>
             {theme == "music" ? (
               <>
-                <div className={style.style_title}>음악으로 코디 찾기</div>
+                <div className={style.style_title}>이 음악이 떠오르는 코디</div>
               </>
             ) : (
               <>
-                <div className={style.style_title}>향수로 코디 찾기</div>
+                <div className={style.style_title}>이 향수와 조화로운 코디</div>
               </>
             )}
           </div>

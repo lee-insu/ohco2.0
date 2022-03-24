@@ -254,6 +254,59 @@ const GET_MUSIC_ARRAY = gql`
   }
 `;
 
+const GET_SEARCH_CODY = gql`
+  query Codysearch($search: String) {
+    codysearch(search: $search) {
+      id
+      img_url
+      category {
+        mood
+        season
+        sex
+        style
+        theme
+      }
+    }
+  }
+`;
+
+const GET_SEARCH_PRODUCTS = gql`
+  query Productsearch($search: String) {
+    productsearch(search: $search) {
+      id
+      img_url
+      name
+      brand
+      price
+    }
+  }
+`;
+
+const GET_SEARCH_MUSIC = gql`
+  query Musicsearch($search: String) {
+    musicsearch(search: $search) {
+      id
+      name
+      img_url
+      mood
+      artist
+    }
+  }
+`;
+
+const GET_SEARCH_PERFUMES = gql`
+  query Perfumesearch($search: String) {
+    perfumesearch(search: $search) {
+      id
+      name
+      mood
+      brand
+      img_url
+      scent
+    }
+  }
+`;
+
 export {
   GET_CODY_MAIN,
   GET_CODY_LIST,
@@ -268,4 +321,8 @@ export {
   GET_SIMILAR_LIST,
   GET_MUSIC,
   GET_MUSIC_ARRAY,
+  GET_SEARCH_CODY,
+  GET_SEARCH_PRODUCTS,
+  GET_SEARCH_MUSIC,
+  GET_SEARCH_PERFUMES,
 };

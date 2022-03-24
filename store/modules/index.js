@@ -9,6 +9,7 @@ import product from "./product";
 import music from "./music";
 import perfume from "./perfume";
 import temp from "./temp";
+import search from "./search";
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
@@ -26,6 +27,7 @@ const reducer = (state, action) => {
     music,
     perfume,
     temp,
+    search,
   })(state, action);
 };
 

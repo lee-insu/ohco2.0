@@ -40,25 +40,18 @@
   cursor: pointer;
 }
 
-.toggle {
+.nav_mobile {
   width: 100%;
-  position: relative;
-  text-align: right;
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
+  display: flex;
+  justify-content: right;
 }
 
-.toggle > img {
-  position: relative;
+.menu {
   width: 24px;
-  height: 24px;
-  right: 10px;
-  bottom: 3px;
+  position: relative;
+  margin-right: 10px;
+  margin-left: 15px;
+  cursor: pointer;
 }
 
 .close {
@@ -76,4 +69,81 @@
   font-family: pretendard;
   font-weight: 500;
   font-size: 17px;
+}
+.search {
+  width: 23px;
+  position: relative;
+  margin-right: 40px;
+  bottom: 11px;
+  cursor: pointer;
+}
+
+.search_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.result_container {
+  width: 44rem;
+  max-height: 400px;
+  overflow-y: scroll;
+  margin: 0 auto;
+}
+
+.input {
+  width: 40rem;
+  height: 40px;
+  border: 0;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  padding: 1rem;
+}
+.search_close {
+  width: 4rem;
+  position: relative;
+  font-family: pretendard;
+  font-weight: 400;
+  font-size: 14px;
+  color: #303030;
+  top: 8px;
+  left: 12px;
+  cursor: pointer;
+}
+
+.result_container {
+  margin-top: 10px;
+}
+
+.result_item_container {
+  width: 100%;
+  margin-top: 5px;
+  display: flex;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eeeeee;
+  cursor: pointer;
+}
+
+.cody_img {
+  width: 60px;
+  border-radius: 5px;
+}
+
+.sub {
+  width: 100%;
+  margin-left: 10px;
+  padding: 20px 0;
+}
+
+.sub > :nth-child(1) {
+  font-family: pretendard;
+  font-weight: 200;
+  font-size: 13px;
+  color: #727272;
+}
+.sub > :nth-child(2) {
+  font-family: pretendard;
+  font-weight: 300;
+  font-size: 15px;
+  color: #2e2e2e;
 }
