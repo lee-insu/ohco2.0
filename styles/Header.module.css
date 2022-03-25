@@ -110,6 +110,13 @@
   left: 12px;
   cursor: pointer;
 }
+.preview_title {
+  font-family: pretendard;
+  font-weight: 200;
+  font-size: 11px;
+  color: rgb(192, 192, 192);
+  margin-bottom: 2px;
+}
 
 .result_container {
   margin-top: 10px;

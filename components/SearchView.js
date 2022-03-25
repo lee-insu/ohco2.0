@@ -12,10 +12,11 @@ import {
   GET_SEARCH_PRODUCTS,
 } from "../graphQL/schema";
 import * as searchAction from "../store/modules/search";
+import { useRouter } from "next/router";
 
 const SearchView = () => {
   const search = useSelector((state) => state.search.search);
-
+  const router = useRouter();
   const [result, getResult] = useState("");
   const dispatch = useDispatch();
 
@@ -52,6 +53,12 @@ const SearchView = () => {
     e.preventDefault();
     dispatch(searchAction.getSearch(result));
   };
+
+  useEffect(() => {
+    if (search == null) {
+      router.push("/");
+    }
+  }, []);
 
   return (
     <div className={style.container}>

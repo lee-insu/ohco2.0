@@ -9,6 +9,7 @@ const Temperature = () => {
   const dispatch = useDispatch();
   const [area, getArea] = useState("");
   const [weather, getWeather] = useState("");
+  const [temp, getTemp] = useState("");
   const [triger, setTriger] = useState(false);
 
   const handleWeather = (weather) => {
@@ -40,7 +41,7 @@ const Temperature = () => {
         main = "안개";
         break;
       case "Haze":
-        main = "뿌옇";
+        main = "흐림";
       default:
         return main;
     }
@@ -53,6 +54,7 @@ const Temperature = () => {
       axios.spread((res1, res2) => {
         getArea(res1.data.documents[0].region_2depth_name);
         dispatch(tempAction.getTemp(Math.round(res2.data.main.temp) - 273));
+        getTemp(Math.round(res2.data.main.temp) - 273);
         getWeather(res2.data.weather[0].main);
       })
     );
@@ -68,6 +70,7 @@ const Temperature = () => {
           axios.spread((res1, res2) => {
             getArea(res1.data.documents[0].region_2depth_name);
             dispatch(tempAction.getTemp(Math.round(res2.data.main.temp) - 273));
+            getTemp(Math.round(res2.data.main.temp) - 273);
             getWeather(res2.data.weather[0].main);
             setTriger(true);
           })
@@ -83,7 +86,7 @@ const Temperature = () => {
       {!triger ? (
         <div className={style.flex}>
           <div>
-            서울 {area}, {weatherKr}
+            서울 {area}, {weatherKr} {temp ? `${temp}°C` : null}
           </div>
           <img
             src="/icon/location.svg"
@@ -94,7 +97,7 @@ const Temperature = () => {
       ) : (
         <div className={style.flex}>
           <div>
-            {area}, {weatherKr}
+            {area}, {weatherKr} {temp ? `${temp}°C` : null}
           </div>
           <img
             src="/icon/location.svg"

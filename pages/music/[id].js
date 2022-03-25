@@ -24,6 +24,7 @@ const Music = ({ item, data, loading }) => {
   const [triger, setTriger] = useState(false);
   const [activeBookmark, setActiveBookmark] = useState(false);
   const [music, getMusic] = useState(null);
+  const [similarStyle, getSimilerStyle] = useState([]);
   const [cody, getCody] = useState([]);
   useEffect(async () => {
     if (data) {
@@ -57,6 +58,15 @@ const Music = ({ item, data, loading }) => {
       id: cody,
     },
   });
+
+  useEffect(() => {
+    const shuffle = () => Math.random() - 0.5;
+
+    if (codyItem) {
+      const shuffleCody = [...codyItem.codyarray].sort(shuffle);
+      getSimilerStyle(shuffleCody);
+    }
+  }, [codyItem]);
 
   const handleBookmark = async () => {
     switch (activeBookmark) {
@@ -143,14 +153,12 @@ const Music = ({ item, data, loading }) => {
           ) : null}
         </Row>
         <Row>
-          {codyItem &&
-          Array.isArray(codyItem.codyarray) &&
-          codyItem.codyarray.length !== 0 ? (
+          {codyItem && Array.isArray(similarStyle) && similarStyle !== 0 ? (
             <Col lg={24} xl={24} className={style.list_container}>
-              <div className={style.sub_head}>이 노래 분위기의 코디</div>
+              <div className={style.sub_head}>노래 분위기와 찰떡 코디</div>
               <div className={style.cody_ul_container}>
                 <ul className={style.cody_ul}>
-                  {codyItem.codyarray.slice(0, 20).map((item) => (
+                  {similarStyle.slice(0, 15).map((item) => (
                     <li key={item.id}>
                       <Link href={`/item/${item.id}`}>
                         <img

@@ -48,7 +48,7 @@
   position: relative;
   margin-top: 18px;
   list-style: none;
-  overflow-x: auto;
+  overflow: auto;
   padding: 0;
 }
 .item_ul > li {

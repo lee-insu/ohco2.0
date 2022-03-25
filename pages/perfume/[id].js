@@ -136,7 +136,7 @@ const Perfume = ({ item, data, loading }) => {
                   </ul>
                   <div className={style.save_container}>
                     <div className={style.shop_link}>
-                      <a href={perfume.shop_url}>최저가 구매</a>
+                      <a href={perfume.shop_url}>상품 찾아보기</a>
                     </div>
                     <div onClick={handleBookmark} className={style.bookmark}>
                       <img
@@ -159,7 +159,7 @@ const Perfume = ({ item, data, loading }) => {
           Array.isArray(codyItem.codyarray) &&
           codyItem.codyarray.length !== 0 ? (
             <Col lg={24} xl={24} className={style.list_container}>
-              <div className={style.sub_head}>이 향수와 어울리는 코디</div>
+              <div className={style.sub_head}>이 향수와 찰떡 코디</div>
               <div className={style.cody_ul_container}>
                 <ul className={style.cody_ul}>
                   {codyItem.codyarray.map((item) => (

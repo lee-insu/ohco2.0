@@ -128,8 +128,8 @@ const GET_USER_CODY_LIST = gql`
 `;
 
 const GET_SIMILAR_LIST = gql`
-  query Usersimilarlist($mood: String, $sex: String) {
-    usersimilarlist(mood: $mood, sex: $sex) {
+  query Usersimilarlist($style: String, $sex: String) {
+    usersimilarlist(style: $style, sex: $sex) {
       id
       img_url
       category {
@@ -166,6 +166,7 @@ const GET_PRODUCT = gql`
       img_url
       price
       name
+      img_copyright
       brand
       cody
       shop_url

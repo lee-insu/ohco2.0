@@ -1,5 +1,6 @@
 .container {
   width: 100%;
+  margin-bottom: 25px;
 }
 
 .banner {
@@ -26,7 +27,15 @@
   overflow: hidden;
   object-fit: cover;
 }
-
+.copyright {
+  font-family: pretendard;
+  font-size: 12px;
+  width: 452px;
+  text-align: center;
+  font-weight: 200;
+  margin-top: 20px;
+  color: #cacaca;
+}
 .detail_container {
   padding-left: 52px;
 }
@@ -145,6 +154,7 @@
   list-style: none;
   overflow-x: auto;
   padding: 0;
+  overflow-y: hidden;
 }
 .product_ul > li {
   position: relative;
@@ -220,6 +230,10 @@
     overflow: hidden;
     object-fit: cover;
   }
+
+  .copyright {
+    width: 376px;
+  }
   .save_container {
     width: 100%;
     margin-top: 60px;
@@ -248,6 +262,11 @@
     border-radius: 0px;
     overflow: hidden;
     object-fit: cover;
+  }
+
+  .copyright {
+    width: 100%;
+    margin-top: 10px;
   }
   .img_container {
     border-right: none;
@@ -313,6 +332,10 @@
     border-radius: 0px;
     overflow: hidden;
     object-fit: cover;
+  }
+  .copyright {
+    width: 100%;
+    margin-top: 10px;
   }
   .img_container {
     border-right: none;

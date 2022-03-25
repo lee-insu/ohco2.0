@@ -101,6 +101,9 @@ const Product = ({ item, data, loading }) => {
               <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                 <div className={style.img_container}>
                   <img className={style.img} src={product.img_url} />
+                  <div className={style.copyright}>
+                    이미지 제공 : {product.img_copyright}
+                  </div>
                 </div>
               </Col>
               <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -131,7 +134,7 @@ const Product = ({ item, data, loading }) => {
                   </ul>
                   <div className={style.save_container}>
                     <div className={style.shop_link}>
-                      <a href={product.shop_url}>최저가 구매</a>
+                      <a href={product.shop_url}>상품 찾아보기</a>
                     </div>
                     <div onClick={handleBookmark} className={style.bookmark}>
                       <img
@@ -154,7 +157,7 @@ const Product = ({ item, data, loading }) => {
           Array.isArray(productItemsArray.productarray) &&
           productItemsArray.productarray.length !== 0 ? (
             <Col lg={24} xl={24} className={style.list_container}>
-              <div className={style.sub_head}>이 상품과 비슷한 스타일</div>
+              <div className={style.sub_head}>비슷한 상품 찾아보기</div>
               <div className={style.cody_ul_container}>
                 <ul className={style.product_ul}>
                   {productItemsArray.productarray.map((item) => (

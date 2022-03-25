@@ -40,7 +40,7 @@ const list = () => {
   const [hasNext, setHasNext] = useState(true);
   const intersecting = useInfiniteScroll(fetchMoreEl);
   const codyLen = Object.keys(cody).length;
-  const [isCount, setIsCount] = useState(codyLen + 4);
+  const [isCount, setIsCount] = useState(codyLen + 8);
   const [visible, setVisible] = useState(false);
 
   const { data } = useQuery(GET_CODY_FILTER, {
@@ -289,7 +289,7 @@ const list = () => {
   return (
     <div className={style.container}>
       <div className={style.banner}>
-        <div className={style.title}>나에게 어울리는 코디</div>
+        <div className={style.title}>나다운 분위기 찾기</div>
       </div>
       <div className={style.list_container}>
         <nav className={style.nav}>

@@ -14,29 +14,24 @@ const tempCody = (temp) => {
       season = "겨울";
       break;
     case temp < 4:
+      season = "겨울";
+      break;
+    case temp < 6:
       season = "초겨울";
       break;
-    case temp < 8:
+    case temp < 13:
       season = "초봄";
       break;
-    case temp < 11:
+    case temp < 21:
       season = "봄";
       break;
-    case temp < 16:
-      season = "봄";
-      break;
-    case temp < 19:
-      season = "초여음";
-      break;
-    case temp < 22:
+    case temp < 23:
       season = "초여름";
       break;
-    case temp < 27:
+    case temp < 40:
       season = "여름";
       break;
-    case temp < 35:
-      season = "여름";
-      break;
+
     default:
       return season;
   }

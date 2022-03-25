@@ -134,6 +134,7 @@
   list-style: none;
   overflow-x: auto;
   padding: 0;
+  overflow-y: hidden;
 }
 
 .cody_ul > li {
@@ -180,6 +181,7 @@
   list-style: none;
   overflow-x: auto;
   padding: 0;
+  overflow-y: hidden;
 }
 .product_ul > li {
   position: relative;

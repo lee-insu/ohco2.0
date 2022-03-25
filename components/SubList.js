@@ -31,7 +31,7 @@ const SubList = ({ data, theme }) => {
             {theme == "music" ? (
               <>
                 <div className={style.style_title}>
-                  '{data.name}' 떠오르는 분위기
+                  '{data.name}' 느낌의 코디
                 </div>
                 <div className={style.sub_style_title}>
                   {data.artist}, {data.mood}
@@ -40,11 +40,9 @@ const SubList = ({ data, theme }) => {
             ) : (
               <>
                 <div className={style.style_title}>
-                  '{data.name}' 어울리는 코디
+                  '{data.name}' 에 어울려요
                 </div>
-                <div className={style.sub_style_title}>
-                  {data.brand}, {data.scent}
-                </div>
+                <div className={style.sub_style_title}>{data.scent}향</div>
               </>
             )}
           </div>

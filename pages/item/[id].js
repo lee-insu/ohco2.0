@@ -30,6 +30,7 @@ const Detail = ({ item, codyData, loading }) => {
   const [productId, getProductId] = useState([]);
   const [perfumeId, getPerfumeId] = useState([]);
   const [musicId, getMusicId] = useState([]);
+  const [similarStyle, getSimilerStyle] = useState([]);
   const [triger, setTriger] = useState(false);
   const userinfo = useSelector((state) => state);
   const [activeBookmark, setActiveBookmark] = useState(false);
@@ -43,7 +44,7 @@ const Detail = ({ item, codyData, loading }) => {
   });
   const { data: similarData } = useQuery(GET_SIMILAR_LIST, {
     variables: {
-      mood: codyData && codyData.category.mood,
+      style: codyData && codyData.category.style,
       sex: codyData && codyData.category.sex,
     },
   });
@@ -220,6 +221,15 @@ const Detail = ({ item, codyData, loading }) => {
     setTriger(!triger);
   };
 
+  useEffect(() => {
+    const shuffle = () => Math.random() - 0.5;
+
+    if (similarData) {
+      const shuffleCody = [...similarData.usersimilarlist].sort(shuffle);
+      getSimilerStyle(shuffleCody);
+    }
+  }, [similarData]);
+
   return (
     <div className={style.container}>
       <div className={style.banner}></div>
@@ -316,8 +326,8 @@ const Detail = ({ item, codyData, loading }) => {
               <div className={style.sub_head}>비슷한 분위기의 코디</div>
               <div className={style.cody_ul_container}>
                 <ul className={style.cody_ul}>
-                  {similarData &&
-                    similarData.usersimilarlist.slice(0, 6).map((item) => (
+                  {similarStyle &&
+                    similarStyle.slice(0, 6).map((item) => (
                       <li key={item.id}>
                         <Link href={`/item/${item.id}`}>
                           <img
@@ -361,7 +371,7 @@ const Detail = ({ item, codyData, loading }) => {
             </Col>
             {Array.isArray(codyItem.music) && codyItem.music.length !== 0 ? (
               <Col lg={24} xl={24} className={style.list_container}>
-                <div className={style.sub_head}>이 코디를 담은 곡</div>
+                <div className={style.sub_head}>코디와 어울리는 노래</div>
                 <div className={style.cody_ul_container}>
                   <ul className={style.product_ul}>
                     {codyItem.music.map((item) => (

@@ -121,7 +121,7 @@ const Header = () => {
                 className={style.input}
                 type="text"
                 onChange={onChange}
-                placeholder="이름, 계절, 스타일, 노래 등.."
+                placeholder="이름, 계절, 스타일 등.."
               />
               <div onClick={searchClose} className={style.search_close}>
                 취소
@@ -132,6 +132,7 @@ const Header = () => {
             Array.isArray(cody.codysearch) &&
             cody.codysearch.length === 0 ? null : (
               <div className={style.result_container}>
+                <div className={style.preview_title}>검색 결과 미리보기</div>
                 {cody &&
                   cody.codysearch.slice(0, 5).map((item) => (
                     <div key={item.id}>
@@ -190,7 +191,7 @@ const Header = () => {
                 className={style.input}
                 type="text"
                 onChange={onChange}
-                placeholder="이름, 계절, 스타일, 노래 등.."
+                placeholder="이름, 계절, 스타일 등.."
               />
               <div onClick={searchClose} className={style.search_close}>
                 취소
@@ -201,6 +202,7 @@ const Header = () => {
             Array.isArray(cody.codysearch) &&
             cody.codysearch.length === 0 ? null : (
               <div className={style.result_container}>
+                <div className={style.preview_title}>검색 결과 미리보기</div>
                 {cody &&
                   cody.codysearch.slice(0, 5).map((item) => (
                     <div key={item.id}>

@@ -31,7 +31,7 @@ const Privacy = () => {
 
 export default Privacy;
 
-const privacyConsent = `
+export const privacyConsent = `
 [ 개인정보처리방침 ]
 
 
@@ -900,7 +900,7 @@ const privacyConsent = `
 
 `;
 
-const serviceScent = `
+export const serviceScent = `
 [ 서비스 처리 방침 ]
 
 (제 1 조) 목적

@@ -2,6 +2,8 @@ import Head from "next/head";
 import React from "react";
 import Sticky from "react-sticky-el";
 import style from "../styles/Layout.module.css";
+import FooterInfo from "./FooterInfo";
+
 import Header from "./Header";
 
 const Layout = ({ children }) => {
@@ -12,6 +14,7 @@ const Layout = ({ children }) => {
         <Header />
       </Sticky>
       <div>{children}</div>
+      <FooterInfo />
     </div>
   );
 };

@@ -41,6 +41,14 @@ const Banner = () => {
             src="/img/banner_3.svg"
           />
         </SwiperSlide>
+
+        <SwiperSlide>
+          <img
+            style={{ backgroundColor: "#f9f9f9" }}
+            className={style.img}
+            src="/img/banner_6.svg"
+          />
+        </SwiperSlide>
       </Swiper>
     </div>
   );
