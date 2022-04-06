@@ -4,6 +4,8 @@ import { defaultGeo, handleGeoSuccess } from "../service/location";
 import { useDispatch } from "react-redux";
 import style from "../styles/Temperature.module.css";
 import * as tempAction from "../store/modules/temp";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../service/firebase";
 
 const Temperature = () => {
   const dispatch = useDispatch();
@@ -62,22 +64,29 @@ const Temperature = () => {
 
   const handleLocation = (e) => {
     e.preventDefault();
-    navigator.geolocation.getCurrentPosition(handleGeo);
+    if (confirm("현재 위치로 코디를 찾을까요?")) {
+      navigator.geolocation.getCurrentPosition(handleGeo);
 
-    function handleGeo(position) {
-      try {
-        handleGeoSuccess(position).then(
-          axios.spread((res1, res2) => {
-            getArea(res1.data.documents[0].region_2depth_name);
-            dispatch(tempAction.getTemp(Math.round(res2.data.main.temp) - 273));
-            getTemp(Math.round(res2.data.main.temp) - 273);
-            getWeather(res2.data.weather[0].main);
-            setTriger(true);
-          })
-        );
-      } catch (error) {
-        console.log(error);
+      function handleGeo(position) {
+        try {
+          handleGeoSuccess(position).then(
+            axios.spread((res1, res2) => {
+              getArea(res1.data.documents[0].region_2depth_name);
+              dispatch(
+                tempAction.getTemp(Math.round(res2.data.main.temp) - 273)
+              );
+              getTemp(Math.round(res2.data.main.temp) - 273);
+              getWeather(res2.data.weather[0].main);
+              logEvent(analytics, "click_temperature", { name: "temperature" });
+              setTriger(true);
+            })
+          );
+        } catch (error) {
+          console.log(error);
+        }
       }
+    } else {
+      return;
     }
   };
 

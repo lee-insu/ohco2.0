@@ -5,6 +5,14 @@ import "antd/dist/antd.css";
 import Link from "next/link";
 
 const FooterInfo = () => {
+  const insta = () => {
+    if (confirm("ohco 인스타로 이동할까요?")) {
+      window.open(`https://www.instagram.com/ohco.im/`);
+    } else {
+      return;
+    }
+  };
+
   return (
     <div className={style.container}>
       <Row type="flex">
@@ -24,7 +32,7 @@ const FooterInfo = () => {
         </Col>
         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
           <div className={style.banner_1}>
-            <div className={style.banner_container}>
+            <div onClick={insta} className={style.banner_container}>
               <div className={style.text}>
                 <div className={style.title}>뭐든지 물어보세요!</div>
                 <div className={style.sub}>

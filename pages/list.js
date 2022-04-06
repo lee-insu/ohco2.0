@@ -6,7 +6,7 @@ import Link from "next/link";
 import { GET_CODY_FILTER } from "../graphQL/schema";
 import { useQuery } from "@apollo/client";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
-import { fireStore } from "../service/firebase";
+import { analytics, fireStore } from "../service/firebase";
 import {
   setDoc,
   doc,
@@ -15,9 +15,11 @@ import {
   query,
   deleteDoc,
 } from "firebase/firestore";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { filterList } from "../service/filterList";
+import { logEvent } from "firebase/analytics";
+import * as filterAction from "../store/modules/filter";
 
 const list = () => {
   const useremail = useSelector((state) => state.email.email);
@@ -43,13 +45,16 @@ const list = () => {
   const [isCount, setIsCount] = useState(codyLen + 8);
   const [visible, setVisible] = useState(false);
 
+  const filterStore = useSelector((state) => state.filter);
+  const dispatch = useDispatch();
+
   const { data } = useQuery(GET_CODY_FILTER, {
     variables: {
-      mood: filMood.value,
-      season: filSeason.value,
-      sex: filSex.value,
-      style: filStyle.value,
-      theme: filTheme.value,
+      mood: filterStore.mood,
+      season: filterStore.season,
+      sex: filterStore.sex,
+      style: filterStore.style,
+      theme: filterStore.theme,
       count: isCount,
     },
   });
@@ -60,11 +65,11 @@ const list = () => {
     }
 
     const filter = [
-      filSeason.value,
-      filSex.value,
-      filStyle.value,
-      filTheme.value,
-      filMood.value,
+      filterStore.season,
+      filterStore.sex,
+      filterStore.style,
+      filterStore.theme,
+      filterStore.mood,
     ];
 
     if (filter) {
@@ -72,7 +77,7 @@ const list = () => {
       getFilterArray(...[filternull]);
       getFilterArray((prevState) => prevState.filter((item) => item != ""));
     }
-  }, [data, filSeason, filSex, filStyle, filTheme, filMood]);
+  }, [data, filterStore]);
 
   useEffect(() => {
     if (intersecting && hasNext) {
@@ -134,18 +139,23 @@ const list = () => {
     switch (true) {
       case filter.id == "스타일":
         await setFilStyle(filter);
+        await dispatch(filterAction.getStyle(filter.value));
         break;
       case filter.id == "테마":
         await setFilTheme(filter);
+        await dispatch(filterAction.getTheme(filter.value));
         break;
       case filter.id == "계절":
         await setFilSeason(filter);
+        await dispatch(filterAction.getSeason(filter.value));
         break;
       case filter.id == "분위기":
         await setFilMood(filter);
+        await dispatch(filterAction.getMood(filter.value));
         break;
       case filter.id == "성별":
         await setFilSex(filter);
+        await dispatch(filterAction.getSex(filter.value));
         break;
       default:
     }
@@ -177,6 +187,7 @@ const list = () => {
       case "주광색이 어울리는 카페":
       case "집 앞 꾸안꾸":
         setFilTheme("");
+        dispatch(filterAction.getTheme(""));
         break;
       case "캐주얼":
       case "포멀":
@@ -190,6 +201,7 @@ const list = () => {
       case "스포티":
       case "미니멀":
         setFilStyle("");
+        dispatch(filterAction.getStyle(""));
         break;
       case "초봄":
       case "초여름":
@@ -200,15 +212,35 @@ const list = () => {
       case "가을":
       case "겨울":
         setFilSeason("");
+        dispatch(filterAction.getSeason(""));
         break;
-      case "상쾌한 무드":
-      case "차분한 무드":
-      case "포근한 무드":
+      case "네이비와 차분한 무드":
+      case "네이비와 포근한 무드":
+      case "버건디와 차분한 무드":
+      case "화이트와 차분한 무드":
+      case "화이트와 포근한 무드":
+      case "그레이와 차분한 무드":
+      case "그레이와 포근한 무드":
+      case "블랙과 차분한 무드":
+      case "블랙과 포근한 무드":
+      case "그린과 차분한 무드":
+      case "그린과 포근한 무드":
+      case "엘로우와 차분한 무드":
+      case "엘로우와 포근한 무드":
+      case "블루와 차분한 무드":
+      case "블루와 포근한 무드":
+      case "베이지와 차분한 무드":
+      case "베이지와 포근한 무드":
+      case "레드와 차분한 무드":
+      case "레드와 포근한 무드":
+      case "퍼플과 차분한 무드":
         setFilMood("");
+        dispatch(filterAction.getMood(""));
         break;
       case "남":
       case "여":
         setFilSex("");
+        dispatch(filterAction.getSex(""));
         break;
       default:
     }
@@ -284,6 +316,19 @@ const list = () => {
     setFilStyle("");
     setFilTheme("");
     setFilMood("");
+    dispatch(filterAction.getSeason(""));
+    dispatch(filterAction.getSex(""));
+    dispatch(filterAction.getStyle(""));
+    dispatch(filterAction.getTheme(""));
+    dispatch(filterAction.getMood(""));
+  };
+
+  const analyticsCodyList = (item) => {
+    logEvent(analytics, "list_cody", {
+      content_type: "image",
+      content_id: item.id,
+      items: [{ name: item.id }],
+    });
   };
 
   return (
@@ -450,7 +495,10 @@ const list = () => {
                         lg={6}
                         xl={6}
                       >
-                        <div className={style.cody_li}>
+                        <div
+                          onClick={() => analyticsCodyList(item)}
+                          className={style.cody_li}
+                        >
                           <Link href={`/item/${item.id}`}>
                             <div className={style.cody_img_container}>
                               <img className={style.img} src={item.img_url} />

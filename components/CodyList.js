@@ -6,6 +6,8 @@ import { useQuery } from "@apollo/client";
 import style from "../styles/CodyList.module.css";
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "../service/firebase";
 
 const tempCody = (temp) => {
   let season = "";
@@ -65,6 +67,14 @@ const CodyList = () => {
     setLoadmore((e) => e + 4);
   };
 
+  const analyticsEvent = (item) => {
+    logEvent(analytics, "click_index_weathercody", {
+      content_type: "image",
+      content_id: item.id,
+      items: [{ name: item.id }],
+    });
+  };
+
   return (
     <div>
       <Row className={style.cody_container} type="flex">
@@ -72,7 +82,10 @@ const CodyList = () => {
           cody.map((item) => (
             <Link key={item.id} href={`/item/${item.id}`}>
               <Col xs={12} sm={12} md={6} lg={6} xl={6}>
-                <div className={style.cody}>
+                <div
+                  onClick={() => analyticsEvent(item)}
+                  className={style.cody}
+                >
                   <img className={style.img} src={item.img_url} />
                   <div className={style.cody_info_container}>
                     <div>{item.category.style}</div>
