@@ -1,34 +1,117 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 소개
 
-## Getting Started
+[블로그에서 읽기](https://velog.io/@lamda/%EC%98%A4%EC%BD%942.0-%EA%B8%B0%ED%9A%8D%EA%B3%BC-%EB%B0%B0%ED%8F%AC%EA%B9%8C%EC%A7%80)
+위의 링크는 블로그에서 읽을 수 있습니다.
 
-First, run the development server:
+일교차가 큰 날, “지금 날씨에 어울리는 코디를 추천해주는 건 어떨까?”에서 시작했던 오코1.0, 사실 이 아이디어가 통할지 안 통할지 테스트했던 프로젝트입니다. 기대했던 것보다 반응이 괜찮아서 더 발전시켜야겠다고 생각했고 여러 기술들을 배우면서 3개월 동안 차근차근 발전시켜나갔습니다.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+이 글은 작업하는 동안 개발하면서 느꼈던 점과 새로 배웠던 것에 이야기합니다.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+전체적인 서비스 기획은 아래의 링크에서 따로 읽으실 수 있습니다.
+[오코 기획서](https://drive.google.com/file/d/1hpyqztxc0gen2AbCUJmvY1mjjaGKI1sZ/view?usp=sharing)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## 새로 적용한 스택
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### GraphQL
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+이전 작업인 헤이앱에서 백엔드, 데이터베이스, 스토리지를 firebase로 활용했는데 여러 컬렉션, 문서의 경로를 진입하고 데이터를 가져오는데 경로가 깊어질수록 반복되는 코드, 원하지 않는 데이터도 모두 불러왔습니다. 불필요하게 자원이 낭비되었고 개선할 방법으로 GraphQL를 활용하기로 했습니다.
 
-## Learn More
+GraphQL를 활용하게 된 이유는 REST API 경우 정보를 얻기 위해 여러 번 네트워크를 호출, 다양한 API를 호출해야 했는데 GraphQL은 하나의 EndPoint를 제공하며 합 번의 요청으로 모든 정보를 가져올 수 있습니다. 이 점은 정해진 데이터를 가져오기 때문에 빠른 속도와 자원 낭비를 줄일 수 있어 큰 장점이라고 생각했습니다.
 
-To learn more about Next.js, take a look at the following resources:
+### Apollo
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+GraphQL은 하나의 명세이기 때문에 이를 해석하고 DB로부터 정보를 꺼내 가공 및 처리하고 백엔드와 프론트엔드에 전달할 방법이 필요했습니다. Grqphql-yoga, apollo 등이 존재했고 가장 자료가 많고 문서가 깔끔한 apollo를 활용했습니다. cors 등 apollo에서 제공하는 기능이 많아 구축하는데 편리했습니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 기능
 
-## Deploy on Vercel
+### 날씨에 어울리는 옷 추천 기능
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![](https://velog.velcdn.com/images/lamda/post/d3d45421-2125-4e47-94d8-fcaa960d502e/image.gif)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Index 페이지에서 지금 날씨에 어울리는 코디 기능은 오코의 주요 기능입니다. 처음에는 유저에게 geolocation API를 통해 매번 사용자의 위치를 요청했지만, 첫 방문에 위치 추적 알람이 뜨면 바로 페이지를 닫을 거 같은 생각이 들었습니다.
+
+그래서 기본값과 현재 위칫값으로 나눠 작동하도록 구성했습니다. 기본값으로 20대들이 데이트를 자주 하는 곳인 서울 성동구를 기준으로 날씨와 온도를 가져오게 했습니다. 현재 사는 위치의 코디를 원한다면 버튼을 통해 현재 위치한 위도와 경도를 받아와 날씨와 기온에 따라 코디를 업데이트하도록 만들었습니다.
+
+또한, 요청하는 정보가 많을수록 속도와 자원이 낭비될 것을 방지하기 위해 4장의 이미지로 제한하고 “더 보기” 버튼을 만들어 클릭할 때마다 4장씩 요청하는 기능을 넣었습니다.
+
+### 필터 기능
+
+![](https://velog.velcdn.com/images/lamda/post/a55ac90b-c0af-49a8-a63b-5d0bb6ba7bcc/image.gif)
+
+유저가 원하는 코디를 찾을 수 있도록 핵심적인 기능을 하는 필터 기능입니다.
+테마, 스타일, 계절, 분위기, 성별의 카테고리가 있으며 필터를 선택하면 json에서 해당하는 정보만 불러옵니다.
+
+처음 기능을 구조할 때는 state로 잠시 데이터를 저장했다가 초기화하는 방향으로 계획했지만, 이 필터 카테고리를 통해 Index에서 “색 조합 코디”, “오늘의 아메카지” 등 다양한 방법으로 활용할 수 있어 Redux를 통해 관리하도록 했습니다.
+
+### Redux로 상태 관리
+
+필터에서 선택한 옵션을 저장하거나 다른 페이지에서 필터 기능을 선택할 때, 유저가 login, logout 중 어느 상태인지 알고 싶을 때, 검색 기능에 쓴 단어가 검색 창과 검색 결과 페이지에 활용될 때, 현재의 온도를 여러 페이지에서 써야 할 때 등 전역으로 상태 관리하고 업데이트하거나 삭제할 일이 많아서 Redux로 상태 관리가 필요했습니다.
+
+데이터를 따로 저장하고 활용하다가 Redux를 통해 store에서 관리하게 되니 신문물을 만난 것처럼 너무 편했습니다. 전역으로 관리할 게 많았는데 Redux가 없었으면 어떻게 관리했을까 싶을 정도로..
+
+### List 페이지 무한 스크롤
+
+![](https://velog.velcdn.com/images/lamda/post/849bb01a-c10b-4dd3-b5b3-2d1298ff4dc5/image.gif)
+
+Index는 어떤 기능이 사용자에게 좋은 경험을 줄까 테스트하는 데 초점이 맞춰져 있다면 코디만을 보여주는 list 페이지에선 모든 코디를 볼 수 있습니다. 매번 리스트 페이지에서 200장이 넘는 코디 사진을 불러오는 것은 자원 낭비가 심했고 코디를 전부 불러와도 전부를 보지 않기 때문에 효율적으로 데이터를 불러오는 방법을 생각했습니다.
+
+떠올린 아이디어는 무한 스크롤을 활용하는 것이었습니다. 무한 스크롤을 어떻게 만들면 좋을까 고민하다가 windowsize를 통해 height를 받아와 업데이트하는 방법을 생각했지만, 스크롤을 조금만 내려도 이 windowsize가 작동돼 엄청나게 속도가 느려지고 자원도 심하게 낭비되었습니다.
+
+고민을 하던 중 list 페이지 하단에 ref로 observer 기능을 더해 그 위치에 도달하면 observerRef가 발동되도록 했습니다. 해당 위치로 스크롤 하면 ObserverRef가 발동되고 코디를 8장씩 추가로 업데이트되도록 해 속도와 자원 낭비를 개선할 수 있었습니다.
+
+### 회원관리
+
+회원 관리도 직접 관리하는 방법을 생각했으나 비밀번호 찾기, 보안, 계정마다 북마크 저장 리스트, 구글 로그인 등 firebase Auth를 활용하는 것이 효율적일 것으로 생각했습니다. 로그인과 회원가입을 통한 회원 정보와 유저 정보 관리를 firebase Auth로 활용했고 로그인 상태와 마이페이지에 활용할 이메일과 닉네임은 Redux로 관리 했습니다.
+
+Firebase v8을 쓰다가 v9로 업데이트되면서 v8보다 사용하는 방법이 달라 처음부터 다시 배운다는 마음으로 문서를 봐야 했습니다.
+
+### 북마크 기능
+
+![업로드중..](blob:https://velog.io/bf9c1a35-4b14-4f00-8afd-f09f0352517e)
+
+북마크 기능도 코디, 상품, 향수, 음악의 id 를 저장하고 삭제하는 단순한 기능이기에 firebase store를 활용해 계정마다 생성하고 삭제되면 업데이트될 수 있도록 했습니다.
+
+### gcp를 통한 배포 과정(feat. nginx)
+
+예전 작업 중 오늘의 기분이라는 프로젝트를 배포할 때 AWS ec2를 활용했습니다. 하지만 유저도 많이 안 들어오고 매달 2만 원씩 나가는 게 아까워 3개월 동안 36만 원의 크레딧을 주는 구글 클라우드 플랫폼을 사용했습니다. GCP로는 처음 하는 배포에 구글링을 엄청나게 하다가 nginx가 그렇게 좋다는 글을 읽었습니다.
+
+Nginx가 뭔지 찾아봤을 때 제가 이해한 대로 한 줄 요약하자면 거대하고 복잡해진 웹 애플리케이션을 안정적으로 도와주는 역할입니다.
+
+SPA의 개념이 등장하고 정적 데이터와 동적 데이터를 하나의 서버에서 관리할 때 부하가 커지고 속도가 느려집니다. 그래서 web server와 client가 분리하게 되었고 nignix를 통해 웹을 가볍게 작동할 수 있도록 리버스 프록시와 로드밸런싱을 제공합니다.
+
+리버스 프록시보다 로드밸런싱이 개인적으로 와닿은 기능이었는데 수많은 사람이 접속하고 정보를 갱신한다면 부하가 걸릴 텐데 nginx를 통해 하나의 서버에서 처리하는 것이 아니라 여러 서버에서 처리해 훨씬 쾌적하고 안정적이지만 사용자에겐 하나의 서버로 돌아가는 경험을 줄 수 있다는 점이었습니다.
+
+문제는 처음 접해보는 구조라 도메인 적용하는 법, 경로 설정 등 시간이 많이 소요됐습니다. 배포 후 클라이언트는 https, 서버는 http라 mix contents 문제도 해결하느라 많은 시간이 소요되었습니다.
+
+(mix contents 문제는 서버에도 별도의 https를 적용해 서로 통신할 수 있도록 했습니다.)
+
+## 배운 점과 아쉬운 점
+
+하나의 서비스를 만들면서 프론트엔드부터 백엔드, 배포까지 경험하면서 보이는 곳보다 보이지 않는 곳에서 많은 시간과 노력이 필요하다는 것을 느꼈습니다.
+
+배움과 아쉬웠던 점은 항상 같이 따라오는 것 같습니다. 그 중 느꼈던 몇 가지를 적어보자면,
+
+**서비스 오픈은 끝이 아닌 또 다른 시작이다. 오픈하면 안 보였던 기능 오류가 보이기 시작하고 계속해서 개선하는 과정이다.**
+
+**기능은 최대한 독립적으로 움직이도록 한다. 기능을 수정하거나 업데이트할 때 독립적이지 않으면 연관된 코드를 수정하는데 시간이 많이 들어간다.**
+
+**세발자전거 타다가 두발자전거를 탈 때 많은 시행착오가 있지만 적응했을 때 훨씬 편한 것처럼 새로운 기술을 적용하는 건 배우는데 많은 시간과 시행착오와 스트레스가 있지만 적응하는 순간 훨씬 작업하기 편해진다.**
+
+**다 끝나고 리팩토링하지 말고 꾸준히 리팩토링하자. 다 끝나고 리팩토링하려고 하면 이미 방대해서 어디서부터 손을 대야 할 지 막막하다. 그러니 틈틈이 시간 될 때마다 코드를 개선하자. 어렸을 때 눈높이 학습지 밀린 걸 한 번에 하는 느낌이다.**
+
+**멘탈 관리를 잘하자. 결과물이 어떻든 많은 시간이 들어간 만큼 배우고, 문제를 찾고, 개선점을 찾고, 고치는 과정을 반복하면서 문제의 개선점을 찾는 부분에 많은 시간을 쓸 수 록 지친다. 하지만 피할 수 없는 부분인 만큼 지치지 않도록 멘탈 관리를 하는 것이 중요하다.**
+
+## 제작 상세
+
+기간 : 2022년 1월 - 3월 30일 약(90일)
+스택: Next.js, Javascript, Redux, GraphQL, Apollo, Express
+주요 라이브러리: Firebase, Kakao local API, openweather API, Antd
+배포: Google cloud Platform, nginx
+
+## 마치며
+
+"내 손으로 직접 서비스를 만들고 싶다"라고 생각하고 이것저것 배우면서 부딪치다 보니 이런 결과물이 나와 스스로 너무 뿌듯했습니다. 개발 공부를 잘 시작했다는 생각이 결과물 보니까 느껴지네요.
+
+고칠 점은 많지만, 독학으로 배우면서 처음 Html에 "hello world!"를 출력하게 하는 것도 하루가 걸렸던 걸 생각하면 많이 성장했다고 느껴집니다. (물론 배워야 하는 건 한참 많지만..)
+
+사실 개발 실력이 늘었다는 점에 기쁜 것보다 내가 상상하고 테스트해 보고 싶은 걸 전부 시도해 볼 수 있다! 라는 설렘에 더 기뻤던 것 같습니다. 세상에 도움이 될 사업가를 꿈꾸며 이 글을 마칩니다. 읽어주셔서 감사합니다!
