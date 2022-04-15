@@ -1,14 +1,14 @@
 ## 소개
 
-[블로그에서 읽기](https://velog.io/@lamda/%EC%98%A4%EC%BD%942.0-%EA%B8%B0%ED%9A%8D%EA%B3%BC-%EB%B0%B0%ED%8F%AC%EA%B9%8C%EC%A7%80)
+[블로그에서 읽기](https://velog.io/@lamda/%EC%98%A4%EC%BD%942.0-%EA%B8%B0%ED%9A%8D%EA%B3%BC-%EB%B0%B0%ED%8F%AC%EA%B9%8C%EC%A7%80)</br>
 위의 링크는 블로그에서 읽을 수 있습니다.
 
 일교차가 큰 날, “지금 날씨에 어울리는 코디를 추천해주는 건 어떨까?”에서 시작했던 오코1.0, 사실 이 아이디어가 통할지 안 통할지 테스트했던 프로젝트입니다. 기대했던 것보다 반응이 괜찮아서 더 발전시켜야겠다고 생각했고 여러 기술들을 배우면서 3개월 동안 차근차근 발전시켜나갔습니다.
 
 이 글은 작업하는 동안 개발하면서 느꼈던 점과 새로 배웠던 것에 이야기합니다.
 
-전체적인 서비스 기획은 아래의 링크에서 따로 읽으실 수 있습니다.
-[오코 기획서](https://drive.google.com/file/d/1hpyqztxc0gen2AbCUJmvY1mjjaGKI1sZ/view?usp=sharing)
+전체적인 서비스 기획은 아래의 링크에서 따로 읽으실 수 있습니다.</br>
+[오코 기획서](https://o365seowon-my.sharepoint.com/:b:/g/personal/201511226_office_seowon_ac_kr/EYkQDXkZkv1OjyemSbrXlksBUSRjPdpQJgPFzFnxxYgExQ?e=3mCtYO)
 
 ## 새로 적용한 스택
 
@@ -67,7 +67,7 @@ Firebase v8을 쓰다가 v9로 업데이트되면서 v8보다 사용하는 방�
 
 ### 북마크 기능
 
-![업로드중..](blob:https://velog.io/bf9c1a35-4b14-4f00-8afd-f09f0352517e)
+![](https://velog.velcdn.com/images/lamda/post/87a39b86-ee2c-4035-b6d4-31759f41675c/image.gif)
 
 북마크 기능도 코디, 상품, 향수, 음악의 id 를 저장하고 삭제하는 단순한 기능이기에 firebase store를 활용해 계정마다 생성하고 삭제되면 업데이트될 수 있도록 했습니다.
 
