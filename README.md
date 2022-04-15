@@ -8,7 +8,7 @@
 이 글은 작업하는 동안 개발하면서 느꼈던 점과 새로 배웠던 것에 이야기합니다.
 
 전체적인 서비스 기획은 아래의 링크에서 따로 읽으실 수 있습니다.</br>
-[오코 기획서](https://o365seowon-my.sharepoint.com/:b:/g/personal/201511226_office_seowon_ac_kr/EYkQDXkZkv1OjyemSbrXlksBUSRjPdpQJgPFzFnxxYgExQ?e=3mCtYO)
+[오코 기획서](https://1drv.ms/b/s!Av1zgG5EdqVFx3Uy8c2sTSd9xgr_)
 
 ## 새로 적용한 스택
 
